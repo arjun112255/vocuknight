@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback, useRef } from 'react';
+import { useEffect, useCallback, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { useMatchStore } from '../stores/match-store';
 import StudyCard from '../components/StudyCard';
@@ -6,41 +6,40 @@ import StudyCard from '../components/StudyCard';
 export default function StudyView() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { studyWindow, studySet, flippedCardIds, flipCard, markReady, isReady } =
-    useMatchStore();
+  const {
+    studyWindow,
+    studySet,
+    flippedCardIds,
+    flipCard,
+    markReady,
+    isReady,
+    isOpponentReady,
+    opponentInfo,
+    phase,
+    timeRemainingMs,
+  } = useMatchStore();
 
   const totalSeconds = studyWindow * 60;
-  const [timeLeft, setTimeLeft] = useState(totalSeconds);
+  // Calculate remaining seconds from engine timer if available, fallback to total
+  const secondsLeft =
+    timeRemainingMs > 0 ? Math.ceil(timeRemainingMs / 1000) : totalSeconds;
+
   const hasNavigated = useRef(false);
 
-  // Countdown timer — pauses when already ready.
+  // Navigate to countdown when phase transitions to countdown, or when timer hits zero
   useEffect(() => {
-    if (isReady) return;
-
-    const interval = setInterval(() => {
-      setTimeLeft((prev) => {
-        if (prev <= 1) {
-          clearInterval(interval);
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [isReady]);
-
-  // Navigate to duel placeholder when timer expires or player taps Ready.
-  useEffect(() => {
-    if ((timeLeft === 0 || isReady) && !hasNavigated.current) {
+    if ((phase === 'countdown' || (phase === 'study' && isReady && isOpponentReady)) && !hasNavigated.current) {
       hasNavigated.current = true;
-      navigate('/duel-placeholder');
+      navigate(`/countdown/${id}`);
     }
-  }, [timeLeft, isReady, navigate]);
+  }, [phase, isReady, isOpponentReady, id, navigate]);
 
   const handleReady = useCallback(() => {
     markReady();
-  }, [markReady]);
+    // If opponent is already ready or in Alpha 1 mode, ready initiates transition
+    hasNavigated.current = true;
+    navigate(`/countdown/${id}`);
+  }, [markReady, id, navigate]);
 
   const formatTime = (seconds: number) => {
     const m = Math.floor(seconds / 60);
@@ -66,29 +65,45 @@ export default function StudyView() {
   return (
     <div className="min-h-[100dvh] flex flex-col safe-area">
       {/* Sticky header: timer + progress + ready button */}
-      <div className="sticky top-0 z-10 bg-paper/95 backdrop-blur-sm border-b border-line">
+      <div className="sticky top-0 z-10 bg-paper/95 backdrop-blur-sm border-b border-line shadow-2xs">
         <div className="max-w-[480px] mx-auto w-full px-5 py-3 flex items-center justify-between">
           <div>
-            <span className="text-2xl font-bold text-ink tabular-nums">
-              {formatTime(timeLeft)}
-            </span>
-            <span className="text-sm text-mute ml-2">
-              {flippedCardIds.size} / {studySet.length} studied
-            </span>
+            <div className="flex items-center gap-2">
+              <span className="text-2xl font-bold text-ink tabular-nums">
+                {formatTime(secondsLeft)}
+              </span>
+              <span className="text-xs px-2 py-0.5 rounded-full bg-line text-mute font-medium">
+                {flippedCardIds.size}/{studySet.length} studied
+              </span>
+            </div>
+            {/* Opponent study status */}
+            <p className="text-xs text-mute mt-0.5">
+              {opponentInfo?.name ?? 'Opponent'}:{' '}
+              <span className={isOpponentReady ? 'text-ok font-semibold' : 'text-mute italic'}>
+                {isOpponentReady ? '✓ Ready' : 'Studying...'}
+              </span>
+            </p>
           </div>
+
           <button
             onClick={handleReady}
-            className="bg-accent text-white font-semibold px-5 py-2.5 rounded-xl min-h-12 active:scale-[0.97] transition-transform motion-reduce:transition-none"
+            disabled={isReady}
+            className={[
+              'px-5 py-2.5 rounded-xl min-h-12 font-semibold transition-all motion-reduce:transition-none',
+              isReady
+                ? 'bg-ok-bg text-ok border border-ok/40 cursor-default'
+                : 'bg-accent text-white active:scale-[0.97]',
+            ].join(' ')}
           >
-            Ready
+            {isReady ? 'Ready ✓' : 'Ready'}
           </button>
         </div>
 
         {/* Timer progress bar */}
         <div className="h-1 bg-line">
           <div
-            className="h-full bg-accent transition-all duration-1000 ease-linear motion-reduce:transition-none"
-            style={{ width: `${(timeLeft / totalSeconds) * 100}%` }}
+            className="h-full bg-accent transition-all duration-300 ease-linear motion-reduce:transition-none"
+            style={{ width: `${Math.min(100, (secondsLeft / totalSeconds) * 100)}%` }}
           />
         </div>
       </div>

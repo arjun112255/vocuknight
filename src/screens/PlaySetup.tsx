@@ -1,7 +1,6 @@
 import { useParams, useNavigate } from 'react-router';
 import { getDeckById } from '../data/sample-deck';
 import { useMatchStore } from '../stores/match-store';
-import { selectStudySet } from '../engine/study-set';
 import { StudyWindow, OpponentType, WINDOW_CARD_COUNT } from '../engine/types';
 
 const WINDOWS: { value: StudyWindow; label: string }[] = [
@@ -19,7 +18,7 @@ export default function PlaySetup() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const deck = getDeckById(id!);
-  const { studyWindow, opponentType, setWindow, setOpponent, initStudy } =
+  const { studyWindow, opponentType, setWindow, setOpponent, createEngine } =
     useMatchStore();
 
   if (!deck) {
@@ -31,9 +30,8 @@ export default function PlaySetup() {
   }
 
   const handleStart = () => {
-    const studySet = selectStudySet(deck, studyWindow);
-    initStudy(studySet);
-    navigate(`/study/${id}`);
+    createEngine(deck, studyWindow, opponentType);
+    navigate(`/matchmaking/${id}`);
   };
 
   return (
