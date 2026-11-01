@@ -1,110 +1,79 @@
-# Vocuknight: Development Plan
+# Vocuknight: Development Plan (v2, study-window format)
 
-Alpha 1 ships five English vocabulary decks with duels against computer opponents; beta brings in real players.
+Alpha 1 ships five English vocabulary decks with a timed study window and a card duel against a computer opponent; beta brings in real players.
 
-Platform note: Vocuknight is built as a mobile-first web app (PWA). Sections 12.1 and 13 reflect that stack. AGENTS.md holds the working rules for the build agents.
+Platform note: Vocuknight is built as a mobile-first web app (PWA). Section 10 holds the stack, and AGENTS.md holds the working rules for the build agents.
+
+Change note: this version removes the flashcard learning system, spaced repetition, and mastery tracking. Learning now happens inside each match, during a 1, 3, or 5 minute study window.
 
 ## 1. Product summary
 
-Vocuknight is a deck-based vocabulary app. Every deck offers flashcard learning and two kinds of duel: a practice duel against a Squire and a ranked duel against a Knight.
+Vocuknight is a head-to-head vocabulary game with the quick, competitive feel of Matiks. A player picks a deck, presses Play, and chooses a 1, 3, or 5 minute study window. The app connects them to an opponent (a computer opponent in Alpha 1). Both players study the same set of Vocuknight cards during the window. When the window ends, the duel starts, and whoever answers the most cards correctly wins. A results screen then shows the cards the player missed.
 
-A player picks a deck (for example, Deck 1 with 30 words), studies it with flashcards, and can start either duel at any moment, including halfway through learning. After each duel, a review window lists every word the player missed. When the review ends, the app offers a similar deck to learn and duel next.
-
-**Core promise:** every duel turns into learning, because missed words flow straight into the player’s review queue.
+**Core promise:** every match is a short, fair race, and every race ends with a clear list of cards to learn next time.
 
 **Starting scope:** English vocabulary. The data model carries a language field from day one so that other languages arrive later as new content.
 
 **Design theme:** minimalist doodle. Paper-white backgrounds, hand-drawn ink lines, and a small doodle knight mascot.
 
+**Vocuknight card:** one vocabulary entry. The front shows the word. The back shows the definition, part of speech, and an example sentence.
+
 ## 2. Release plan: Alpha 1 and beta
 
-Alpha 1 is a single-player product that validates the learning loop and the duel feel. Beta adds real people once the loop works.
+Alpha 1 is a single-player product that validates the match format. Beta adds real people once the format works.
 
 | Area | Alpha 1 | Beta |
 |---|---|---|
 | Decks | 5 curated English decks | The same 5 decks plus new decks from tester feedback (10 by public launch) |
-| Duel a Squire | Practice duel against a computer opponent | Same |
-| Duel a Knight | Ranked duel against a computer-controlled Knight scaled to the player’s deck rating | Ranked duel against a real player on the same deck, with a Knight bot or ghost when the queue is empty |
-| Learning | Flashcards, spaced repetition, mastery tracking | Same |
-| Social | None | Friend duel links, leaderboards, weekly tournament |
-| Backend | Accounts, deck content, and progress sync | Adds a real-time duel server and matchmaking |
+| Study window | 1, 3, or 5 minutes, identical for both sides | Same |
+| Opponent | Computer opponent: a Squire (practice) or a Knight (ranked) | Real player for ranked matches, with a Knight bot or ghost when the queue is empty |
+| Social | None | Friend match links, leaderboards, weekly tournament |
+| Backend | Accounts, deck content, and results sync | Adds a real-time match server and matchmaking |
 | Audience | 30 to 50 invited testers | Marketing-driven closed beta, then public launch |
 
-Out of scope for Alpha 1: real-time multiplayer, chat, payments, and languages other than English.
+Out of scope for Alpha 1: real-time multiplayer, chat, payments, flashcard review systems, and languages other than English.
 
-## 3. Core loop
+## 3. Core loop and match flow
 
-The loop runs from deck choice to duel to review and back to a new deck. Duels are open at every step, so a player can test a half-learned deck against a Squire or a Knight whenever they like.
+1. **Choose a deck** from the deck library.
+2. **Press Play** on the deck screen, then pick a study window (1, 3, or 5 minutes) and an opponent type (Squire or Knight).
+3. **Connect:** a short matchmaking screen shows the opponent’s name and doodle avatar. Alpha 1 labels computer opponents as computers.
+4. **Study window:** both players browse the same set of cards while a countdown runs.
+5. **Duel:** after a 3-second countdown, cards appear one at a time. Whoever answers the most cards correctly when the duel timer ends wins.
+6. **Results:** winner, both scores, rating change for ranked matches, and the list of missed cards.
+7. **Next:** Rematch, change the window, play a similar deck, or return to the library.
 
-1. **Choose a deck** from the deck library (categories, levels, and sizes vary).
-2. **Learn** the deck with flashcards.
-3. **Duel at any time:** Duel a Squire for practice or Duel a Knight for a ranked match.
-4. **Review mistakes** in a dedicated window after the duel.
-5. **Move on** to a similar deck, a rematch, or a harder deck.
+Match phases run in this order: Lobby, Study, Countdown, Duel, Results. The match engine treats each phase as a state with its own timer.
 
-Each deck shows a mastery meter that fills as words are mastered, and one of three states: *Not started*, *Learning*, or *Mastered*. A deck earns the *Conquered* badge when its mastery reaches 100 percent and the player has won one Knight duel on it. No state blocks a duel.
+## 4. Match format
 
-## 4. Duel options: Squire and Knight
+### 4.1 Study window
 
-Every deck screen carries three buttons: **Learn**, **Duel a Squire**, and **Duel a Knight**.
+| Window | Cards in the study set |
+|---|---|
+| 1 minute | 10 |
+| 3 minutes | 20 |
+| 5 minutes | 30 |
 
-| | Duel a Squire | Duel a Knight |
-|---|---|---|
-| Purpose | Practice and learning | Ranked competition |
-| Available | From the first minute of any deck | From the first minute of any deck |
-| Opponent in Alpha 1 | Friendly computer opponent | Computer-controlled Knight scaled to the player’s deck rating |
-| Opponent in beta | Same computer opponent | Real player on the same deck; Knight bot or ghost if the queue is empty |
-| Round timer | 12 seconds | 8 seconds |
-| Question mix | Weighted toward words the player has not mastered | Uniform across the deck |
-| Opponent accuracy | 55 to 70 percent, slower answers | Scales with rating, from 45 to 92 percent |
-| Rating | No change | Moves the deck rating |
-| Rewards | XP and stars | XP, stars, and rank progress |
+- If a deck holds fewer words than the study set size, the set contains the whole deck. Every deck holds at least 10 words.
+- The study view shows the set as a scrollable stack of cards. Tapping a card flips it to show the definition and example sentence. Players browse in any order.
+- A countdown timer sits at the top of the screen. A **Ready** button lets a player finish early, and the duel starts when both sides are ready or the timer ends.
+- The opponent’s status (studying or ready) shows on screen.
+- The app records which cards each player flipped, so the results screen can mark missed cards the player never opened.
+- In ranked matches, the server or engine picks one random study set shared by both players. In practice matches, the set favors cards the player missed earlier on that deck.
 
-The Squire exists for low-pressure learning, and the Knight exists for the competitive path. In Alpha 1 the match intro labels the Knight as a computer opponent so testers know who they face. In beta, real opponents carry a Player tag. Words a player has not studied yet appear in the review window with a *New* tag.
+### 4.2 Duel
 
-## 5. Key design decisions
+- A 3-second countdown precedes the duel.
+- Cards come from the study set, one at a time, in the same order for both sides. When the set runs out, it reshuffles.
+- Each card is a four-option question. The player taps an answer, and the next card appears right away.
+- A correct answer adds one point. A wrong answer adds zero and moves on, with no penalty beyond the lost time.
+- The duel lasts 60 seconds (proposed, tune with playtests).
+- Both live scores show at the top of the screen.
+- **Winner:** the player with the most correct cards. Ties go to the player with fewer wrong answers, then to the player with the faster average answer time. A tie after those checks counts as a draw.
 
-| Topic | Decision | Reason |
-|---|---|---|
-| Duel access | Both duels are open on every deck at any time | Players learn by playing, and no gate delays the first duel |
-| Opponent tiers | Squire for practice without rating risk; Knight for ranked play | Low-pressure practice and a competitive path sit side by side |
-| Alpha opponents | Computer opponents only | Validates the learning loop and duel feel before real-time infrastructure is built |
-| Beta opponents | Real players for Knight duels, with bot or ghost fallback | Marketing builds the first human pool |
-| Beta matchmaking pool | One pool per deck and deck version, matched by deck rating | Opponents share the same word set and similar skill |
-| Rating | Elo-style, one per deck, changed by Knight duels only | Squire duels stay pressure-free |
-| Duel questions | Drawn only from the chosen deck | Every question traces back to a deck word |
-| Duel length | 10 rounds for decks of 20 words or more; 5 to 8 rounds for smaller decks | Variable deck sizes need a length rule |
-| Opponent interface | The duel engine talks to an opponent adapter: BotOpponent in Alpha 1, RemoteOpponent in beta | Beta swaps the opponent without rebuilding screens |
-| Match authority | Alpha 1: the device runs the match. Beta: the server controls timing, questions, and scoring | Bots need no cheating protection; human matches do |
+### 4.3 Question types
 
-## 6. Learning phase
-
-### 6.1 Flashcard session
-- Card front shows the word, with audio and an example sentence available on tap.
-- Card back shows the definition, part of speech, and a second example.
-- The player marks each card *Got it* or *Again*. Cards marked *Again* return later in the same session.
-- A session finishes when every card has been marked *Got it* at least once.
-- A **Duel a Squire** shortcut sits at the end of every session, and the deck screen keeps both duel buttons visible throughout.
-
-### 6.2 Mastery tracking
-A word counts as mastered after two correct recalls on separate days. Recalls come from flashcards, the optional mastery check, and duels. The deck’s mastery meter shows the share of mastered words. Mastery drives badges and shapes the Squire question mix, and it never blocks a duel.
-
-### 6.3 Optional mastery check
-A solo quiz over the whole deck for players who want a quick progress read. Each correct word counts as one recall toward mastery, and each miss returns to the flashcard queue.
-
-### 6.4 Spaced repetition
-A simple box system schedules each word: correct answers move it to a longer interval, and misses move it back to box 1. Duel mistakes feed the same system, so a missed word returns in the next review session.
-
-## 7. Duel mode
-
-### 7.1 Match format
-- Both sides receive identical questions in identical order.
-- Round timers follow the opponent tier: 12 seconds for a Squire duel, 8 seconds for a Knight duel (tune with playtests).
-- Scoring: 100 points for a correct answer plus up to 100 for speed. Wrong answers and timeouts score zero.
-- The score bar shows both totals live.
-- A match picks 10 words at random from the deck (5 to 8 for decks under 20 words). Squire duels weight the pick toward unmastered words.
-
-### 7.2 Question types
 | Type | Phase |
 |---|---|
 | Word to meaning (pick the definition) | Alpha 1 |
@@ -115,45 +84,77 @@ A simple box system schedules each word: correct answers move it to a longer int
 
 Distractors come from the same deck, preferring words in the same part of speech and a similar length.
 
-### 7.3 Computer opponents in Alpha 1
-Both tiers share one BotOpponent engine with different profiles.
+### 4.4 Opponent types: Squire and Knight
+
+| | Squire (practice) | Knight (ranked) |
+|---|---|---|
+| Opponent in Alpha 1 | Friendly computer opponent | Computer-controlled Knight scaled to the player’s deck rating |
+| Opponent in beta | Same computer opponent | Real player on the same deck and window; Knight bot or ghost if the queue is empty |
+| Study set | Favors the player’s earlier missed cards | One random set shared by both players |
+| Opponent pace | 5 to 7 seconds per card | 2.5 to 5 seconds per card, scaled by rating |
+| Opponent accuracy | 55 to 70 percent | Scales with rating, from 45 to 92 percent |
+| Rating | No change | Moves the deck rating |
+| Rewards | XP and stars | XP, stars, and rank progress |
+
+In Alpha 1 the matchmaking screen labels the Knight as a computer opponent so testers know who they face. In beta, real opponents carry a Player tag.
+
+### 4.5 Computer opponents in Alpha 1
+
+Both opponent types share one BotOpponent engine with different profiles.
 
 - **Accuracy:** Squire profiles sit at 55 to 70 percent. Knight profiles follow the formula from the Wordduel prototype: accuracy = clamp(0.5 + (rating − 700) / 1200, 0.45, 0.92).
-- **Response time:** drawn from a skewed distribution, faster at higher ratings, with occasional timeouts.
+- **Pace:** time per card is drawn from a skewed distribution within the range for the opponent type, with occasional slow cards.
+- **Study behavior:** the bot shows a studying status and readies at a random moment between 70 and 100 percent of the window.
 - **Mistakes:** wrong answers pick plausible distractors, and short streaks of mistakes occur.
 - **Rating:** a Knight bot starts within 120 points of the player’s deck rating, so matches stay close.
 - **Identity:** a roster of about 20 named doodle characters keeps opponents varied.
 
-### 7.4 Matchmaking in beta
-1. The player taps **Duel a Knight** on a deck and joins that deck’s queue.
-2. The server looks for an opponent in the same deck pool with a rating inside a window that widens every few seconds.
+### 4.6 Matchmaking in beta
+
+1. The player taps Play with a deck, a window length, and the Knight option.
+2. The server looks for an opponent in the same pool (deck, version, and window) with a rating inside a window that widens every few seconds.
 3. After about 8 seconds, the server offers a fallback: a Knight bot or a **ghost**, which replays the recorded answers and timings of a real earlier match.
 4. Fallback matches carry a visible label and a reduced rating change.
-5. Each player’s deck mastery shows as a badge on the match intro, so both sides see how familiar the opponent is with the deck.
+5. Both players enter the same study lobby and see each other’s status.
 
-### 7.5 Fair play in beta
-- The server holds answer keys until each round closes.
-- Round timers run on the server clock.
+### 4.7 Fair play in beta
+
+- The server picks the study set and the duel card order, and holds answer keys until each answer arrives.
+- All timers (study, countdown, duel) run on the server clock.
 - Players who leave a match early forfeit it.
 - Reports and a simple anomaly check (answers consistently faster than human reaction time) feed a review queue.
 
-## 8. Mistake review window
+## 5. Results and missed cards
 
-After every duel, Squire or Knight, a review screen opens with:
+The results screen shows:
 
-- The list of missed words, each with definition, example sentence, and the answer the player chose.
-- A separate group for words tagged *New*, which the player had not studied yet.
-- A one-tap quiz on only those words.
-- A button that returns missed words to the spaced repetition queue.
-- Next actions: **Rematch**, **Play a similar deck**, or **Back to deck library**.
+- The winner, both scores, accuracy, and the rating change for ranked matches.
+- The list of missed cards, each with the word, the correct meaning, the example sentence, and the answer the player chose. Cards the player never opened during study carry a *Not studied* tag.
+- Next actions: **Rematch**, **Change window**, **Play a similar deck**, or **Back to deck library**.
 
-Similar deck suggestions use category, level, and size, in that order. After a Squire win, the screen also offers a **Duel a Knight** shortcut on the same deck.
+Missed cards save to the deck’s missed list. Squire matches draw from that list when building the study set. Similar deck suggestions use category, level, and size, in that order.
 
-## 9. Content system
+## 6. Key design decisions
 
-### 9.1 Decks
-- A deck has a title, category, level (CEFR A1 to C2), cover doodle, and a word list of any size.
-- Alpha 1 ships 5 decks. Sizes range from 20 to 40 words so the variable-size logic gets tested from the start.
+| Topic | Decision | Reason |
+|---|---|---|
+| Learning method | A timed study window inside every match | Matches stay short, and learning has a deadline that creates focus |
+| Study window options | 1, 3, or 5 minutes, which set the study set size to 10, 20, or 30 cards | Players choose how deep to go |
+| Winning rule | Most correct cards in the duel wins | Simple to understand and quick to read on screen |
+| Opponent types | Squire for practice without rating risk; Knight for ranked play | Low-pressure practice and a competitive path sit side by side |
+| Alpha opponents | Computer opponents only | Validates the match format before real-time infrastructure is built |
+| Beta opponents | Real players for Knight matches, with bot or ghost fallback | Marketing builds the first human pool |
+| Beta matchmaking pool | One pool per deck, deck version, and window length, matched by deck rating | Opponents share the same cards and similar skill |
+| Rating | Elo-style, one per deck, changed by Knight matches only | Squire matches stay pressure-free |
+| Question source | Drawn only from the study set | Every question traces back to a card both players could study |
+| Opponent interface | The match engine talks to an opponent adapter: BotOpponent in Alpha 1, RemoteOpponent in beta | Beta swaps the opponent without rebuilding screens |
+| Match authority | Alpha 1: the device runs the match. Beta: the server controls timing, study sets, and scoring | Bots need no cheating protection; human matches do |
+
+## 7. Content system
+
+### 7.1 Decks
+- A deck has a title, category, level (CEFR A1 to C2), cover doodle, and a word list of 10 or more words.
+- Alpha 1 ships 5 decks. Sizes range from 20 to 40 words so the study set logic gets tested from the start.
 - Beta adds decks from tester feedback, with a public launch target of 10.
 
 Proposed Alpha 1 lineup (to confirm):
@@ -166,30 +167,30 @@ Proposed Alpha 1 lineup (to confirm):
 | Academic Starters | Study | B2 | 40 |
 | Travel and Places | Travel | A2 to B1 | 20 |
 
-### 9.2 Word record
+### 7.2 Word record
 Word, part of speech, definition, two example sentences, pronunciation (IPA and audio file), level, tags, and optional distractor hints.
 
-### 9.3 Versioning
+### 7.3 Versioning
 Every deck edit creates a new deck version. Ratings and beta matchmaking pools stay tied to the version they were played on. Minor fixes (typos) update in place; word swaps create a new version and a new pool.
 
-### 9.4 Sourcing and licensing
+### 7.4 Sourcing and licensing
 - Draft word lists from CEFR-leveled sources and public corpora.
 - Definitions and examples can come from Wiktionary (CC BY-SA) and Tatoeba (CC BY); attribution pages are required.
 - Check the license of every commercial word list before use.
 - Every deck passes an editor review before publication.
 
-## 10. Progression and engagement
+## 8. Progression and engagement
 
-- **Rank ladder:** Cadet, Guard, Captain, Champion, Paladin, driven by deck ratings from Knight duels. Rank names avoid Squire and Knight, which label opponents.
+- **Rank ladder:** Cadet, Guard, Captain, Champion, Paladin, driven by deck ratings from Knight matches. Rank names avoid Squire and Knight, which label opponents.
 - **Squire stars:** each Squire win on a deck earns stars that fill the deck’s shield.
-- **Deck badges:** the shield fills with mastery, and the *Conquered* badge marks 100 percent mastery plus one Knight win.
-- **Daily quest:** one flashcard session or one duel.
+- **Deck stats:** matches, wins, and best score for each window length.
+- **Daily quest:** play one match.
 - **Streaks** with a weekly freeze.
-- **Beta only:** friend duels through invite links, leaderboards, and a weekly tournament on a featured deck.
+- **Beta only:** friend match links, leaderboards, and a weekly tournament on a featured deck.
 
-## 11. Design direction: minimalist doodle
+## 9. Design direction: minimalist doodle
 
-### 11.1 Visual language
+### 9.1 Visual language
 - **Canvas:** warm paper white with a faint dot grid. A dark chalkboard variant serves dark mode.
 - **Lines:** a single ink color for outlines, drawn with a slightly wobbly stroke. Shapes come from a sketch library (rough.js or an SVG turbulence filter) so edges feel hand-drawn.
 - **Color:** two highlighter accents on the ink-and-paper base, one for the player and one for the opponent.
@@ -197,21 +198,21 @@ Every deck edit creates a new deck version. Ratings and beta matchmaking pools s
 - **Opponents:** the Squire is a small doodle with a wooden sword, and the Knight wears doodle armor with a visor. Computer opponents draw from a roster of about 20 characters.
 - **Illustrations:** each deck has a one-color cover doodle.
 
-### 11.2 Typography
-A hand-lettered display face for titles and scores, paired with a clean, highly legible body face for words and definitions. Learning content stays easy to read at a glance.
+### 9.2 Typography
+A hand-lettered display face for titles and scores, paired with a clean, highly legible body face for words and definitions. Cards stay easy to read at a glance.
 
-### 11.3 Motion and sound
-- Cards flip with a quick paper-turn animation.
+### 9.3 Motion and sound
+- Cards flip with a quick paper-turn animation during study.
 - Correct answers get an ink-stamp check, and wrong answers get a small scribble.
-- Victory plays a short sword flourish. Sound effects are optional and off by default for quiet environments.
+- The duel countdown and the victory moment have short sound cues. Sound effects are optional and off by default for quiet environments.
 - All motion respects the reduced-motion setting.
 
-### 11.4 Screens
-Home (continue where you left off), deck library, deck screen (Learn, Duel a Squire, Duel a Knight, mastery meter), flashcard session, optional mastery check, duel intro, duel, results, mistake review, and profile with ranks. Beta adds the matchmaking wait screen and friend invite.
+### 9.4 Screens
+Home, deck library, deck screen (Play button, window picker, opponent toggle), matchmaking, study window, countdown, duel, results with missed cards, and profile with ranks. Beta adds the friend match invite.
 
-## 12. Technical architecture
+## 10. Technical architecture
 
-### 12.1 Stack by release
+### 10.1 Stack by release
 
 | Layer | Alpha 1 | Beta addition |
 |---|---|---|
@@ -219,117 +220,122 @@ Home (continue where you left off), deck library, deck screen (Learn, Duel a Squ
 | Styling | Tailwind CSS plus doodle theme tokens | Same |
 | State and offline data | Zustand and Dexie (IndexedDB), with a service worker from vite-plugin-pwa | Same |
 | Auth, database, storage | Supabase (Postgres, Row Level Security, Storage for audio) | Same |
-| Duel engine | On-device TypeScript module with a BotOpponent | Server-authoritative Colyseus rooms on Fly.io or Railway, with a RemoteOpponent |
-| Matchmaking | None | Redis queues, one sorted set per deck and version |
+| Match engine | On-device TypeScript module with a BotOpponent | Server-authoritative Colyseus rooms on Fly.io or Railway, with a RemoteOpponent |
+| Matchmaking | None | Redis queues, one sorted set per deck, version, and window |
 | Hosting | Vercel or Cloudflare Pages (HTTPS and preview links) | Same |
 | Tests | Vitest for logic, Playwright for flows | Same |
 | Analytics and crashes | PostHog and Sentry | Same |
-| Offline | Learning and bot duels work offline | Human duels need a connection |
+| Offline | Everything works offline, since opponents are computers | Human matches need a connection |
 
 A lighter route for the first beta test is Supabase Realtime channels with a server function acting as referee. Move to Colyseus when concurrent matches grow.
 
-### 12.2 Data model
+### 10.2 Data model
 - **users** (id, name, avatar)
 - **decks** (id, title, category, level, language, version, status)
 - **words** (id, text, pos, definition, examples, audio_url, level, language)
 - **deck_words** (deck_id, version, word_id, position)
-- **user_deck_progress** (user_id, deck_id, version, mastery_pct, state, stars, conquered_at)
-- **user_word_state** (user_id, word_id, box, due_at, recalls, lapses)
+- **user_deck_stats** (user_id, deck_id, version, matches, wins, stars, best_1m, best_3m, best_5m)
+- **user_card_stats** (user_id, word_id, seen_count, correct_count, wrong_count, last_missed_at)
 - **ratings** (user_id, deck_id, rating, matches, wins)
-- **matches** (id, deck_id, version, tier, opponent_type, player_a, player_b, scores, started_at, ended_at)
-- **match_rounds** (match_id, round, word_id, question_type, answers, timings)
+- **matches** (id, deck_id, version, tier, window_secs, opponent_type, player_a, player_b, study_set, scores, winner, started_at, ended_at)
+- **match_answers** (match_id, player, seq, word_id, question_type, answer, correct, ms)
 - **reports** (id, match_id, reporter, reason)
 
-`tier` takes the values *squire* or *knight*. `opponent_type` takes *bot*, *human*, or *ghost*. Alpha 1 computes ratings on the device and syncs them. Beta moves rating math to the server and seeds each beta rating from the alpha rating, compressed toward 1000.
+`tier` takes the values *squire* or *knight*. `opponent_type` takes *bot*, *human*, or *ghost*. `study_set` holds the word ids of the cards in the match. Alpha 1 computes ratings on the device and syncs them. Beta moves rating math to the server and seeds each beta rating from the alpha rating, compressed toward 1000.
 
-### 12.3 Alpha 1 duel engine
-- The engine owns rounds, timers, and scoring, and talks to an opponent adapter.
-- BotOpponent implements the adapter with a profile (accuracy, response-time curve, rating). The Wordduel prototype in reference/wordduel.html already holds the scoring, timer, and Elo logic to reuse.
-- Beta adds RemoteOpponent, which relays server messages through the same adapter, so duel screens stay unchanged.
-- Finished matches write to `matches` and `match_rounds`, and missed words write to `user_word_state`.
+### 10.3 Alpha 1 match engine
+- The engine owns the phases (Lobby, Study, Countdown, Duel, Results), their timers, and scoring, and talks to an opponent adapter.
+- BotOpponent implements the adapter with a profile (accuracy, pace, ready time, rating). The Wordduel prototype in reference/wordduel.html holds Elo logic, bot behavior, and answer handling to reuse. Its speed-bonus scoring and fixed round count do not apply here, since a match scores one point per correct card in a timed duel.
+- Beta adds RemoteOpponent, which relays server messages through the same adapter, so match screens stay unchanged.
+- Finished matches write to `matches` and `match_answers`, and missed cards write to `user_card_stats`.
 
-### 12.4 Beta duel server flow
-1. The client requests a Knight match for a deck.
+### 10.4 Beta match server flow
+1. The client requests a Knight match for a deck and window.
 2. The matchmaker pairs players by deck rating or assigns a fallback opponent.
-3. The room sends round prompts with a server timestamp.
-4. Clients send answers, and the server scores them by server-measured time.
-5. The room broadcasts scores each round and sends the final result with rating changes.
-6. The match record is saved, and missed words are written to `user_word_state`.
+3. The room picks the study set and starts the study timer, broadcasting each side’s status.
+4. When both sides are ready or the timer ends, the room starts the countdown and the duel timer.
+5. Clients send answers, and the server scores them and broadcasts live counts.
+6. The room sends the final result with rating changes, and the match record is saved.
 
-### 12.5 Offline and reliability
-Flashcards, mastery checks, and bot duels work offline and sync later. In beta, human duels give a dropped connection a 10-second reconnect window.
+### 10.5 Offline and reliability
+In Alpha 1 the whole game works offline and syncs results later. In beta, human matches give a dropped connection a 10-second reconnect window.
 
-## 13. Roadmap
+## 11. Roadmap
 
 Alpha 1 takes about 13 weeks, and beta starts in week 14. Estimates assume one full-stack developer plus part-time design; a second developer compresses the multiplayer phase. Gates sit at the end of Phase 4 (Alpha 1) and Phase 6 (closed beta).
 
 | Phase | Weeks | Deliverables | Exit gate |
 |---|---|---|---|
 | 0. Foundations | 1 | Repo, Vite app shell, Supabase project, design tokens, 2 sample decks | App loads a deck on a phone |
-| 1. Learning loop | 2 to 4 | Deck library, flashcards, spaced repetition, mastery meter, progress storage | A tester can learn a deck end to end |
-| 2. Duel engine with Squire and Knight bots | 5 to 7 | Opponent adapter, BotOpponent profiles, Squire and Knight buttons on the deck screen, scoring, deck ratings, results, mistake review, similar-deck suggestion | Both duel tiers play start to finish on any deck |
+| 1. Decks and study window | 2 to 4 | Deck library, deck screen, Play setup (window picker and opponent toggle), study view with timer and card flip, local storage | A tester can open a deck, pick a window, and study cards |
+| 2. Match engine with bots | 5 to 7 | Phase state machine, opponent adapter, BotOpponent profiles, countdown, timed duel, count scoring, deck ratings, results screen with missed cards | A full match plays start to finish against both opponent types |
 | 3. Content and polish | 8 to 10 | 5 decks, doodle art pass, sounds, onboarding, accessibility pass | Every deck editor-reviewed; usability test passes |
-| 4. Alpha 1 release | 11 to 13 | Web app live for 30 to 50 invited testers, analytics dashboard, bot tuning, bug fixing | Alpha 1 targets in section 15 met for two weeks |
-| 5. Multiplayer foundation | 14 to 19 | Colyseus server, matchmaking pools, ghosts, reconnects, server-side ratings, friend invite links, RemoteOpponent | 20 simultaneous test duels run without desync |
-| 6. Closed beta | 20 to 26 | Waitlist and marketing campaign (section 14), analytics, tuning, new decks from feedback | Beta targets in section 15 met for two weeks |
-| 7. Public launch | 27 onward | Store listings or web launch, weekly tournaments, creator and teacher decks | Stable pools on the featured decks |
+| 4. Alpha 1 release | 11 to 13 | Web app live for 30 to 50 invited testers, analytics dashboard, bot tuning, bug fixing | Alpha 1 targets in section 13 met for two weeks |
+| 5. Multiplayer foundation | 14 to 19 | Colyseus server, matchmaking pools, ghosts, reconnects, server-side ratings, friend match links, RemoteOpponent | 20 simultaneous test matches run without desync |
+| 6. Closed beta | 20 to 26 | Waitlist and marketing campaign (section 12), analytics, tuning, new decks from feedback | Beta targets in section 13 met for two weeks |
+| 7. Public launch | 27 onward | Web launch, weekly tournaments, creator and teacher decks | Stable pools on the featured decks |
 
-## 14. Beta marketing and player acquisition
+## 12. Beta marketing and player acquisition
 
-Beta marketing has one job: concentrate enough players on a few decks that a Knight duel finds a human opponent within about 10 seconds.
+Beta marketing has one job: concentrate enough players on a few decks and windows that a ranked match finds a human opponent within about 10 seconds.
 
 - **Pre-beta:** a waitlist page with deck previews and short doodle-knight clips goes live during Alpha 1. Alpha testers become seed players and referrers.
-- **Channels:** language-learning communities (subreddits and Discord servers), study groups and student communities, short-form video of duels and “beat the Knight” challenges, and partnerships with creators and teachers.
-- **Sharing mechanics:** friend duel links, shareable result cards, a referral reward (a Knight skin), and a weekly tournament.
-- **Traffic concentration:** a daily featured deck and scheduled duel hours (two evening windows) raise the chance of a live opponent. Ghosts and Knight bots cover the gaps.
+- **Hook:** a full match fits in one to six minutes, which suits short-form video of duels and “beat the Knight” challenges.
+- **Channels:** language-learning communities (subreddits and Discord servers), study groups and student communities, and partnerships with creators and teachers.
+- **Sharing mechanics:** friend match links, shareable result cards, a referral reward (a Knight skin), and a weekly tournament.
+- **Traffic concentration:** a daily featured deck and window, plus scheduled match hours (two evening windows), raise the chance of a live opponent. Ghosts and Knight bots cover the gaps.
 - **Planning number (approximate):** about 100 daily active players per featured deck keeps evening queues short. Confirm the figure with beta data.
-- **Funnel to track:** waitlist signup, install, first duel, and the share of Knight duels played against humans.
+- **Funnel to track:** waitlist signup, install, first match, and the share of ranked matches played against humans.
 
-## 15. Success metrics
+## 13. Success metrics
 
 Targets are proposals to tune after the first test cohort.
 
 | Metric | Alpha 1 target | Beta target |
 |---|---|---|
 | Day 1 and Day 7 retention | 35 percent and 12 percent | 40 percent and 15 percent |
-| Full flashcard pass on a deck (testers who start one) | 60 percent | 50 percent of new users |
-| First duel within the first session | 70 percent | 70 percent |
-| Share of testers who try a Knight duel | 30 percent or more | 50 percent or more |
-| Duel completion rate | 90 percent | 90 percent |
-| Review completion after a duel | 60 percent | 60 percent |
+| First match within the first session | 70 percent | 70 percent |
+| Study window completed (not abandoned) | 85 percent | 85 percent |
+| Match completion rate | 90 percent | 90 percent |
+| Share of testers who try a Knight match | 30 percent or more | 50 percent or more |
+| Results screen viewed with missed cards opened | 60 percent | 60 percent |
 | Rematch or next-deck rate | 50 percent | 50 percent |
+| Window choice split (1, 3, 5 minutes) | Track only | Track only |
 | Tester fun rating (survey, 1 to 5) | 4.0 | 4.0 |
 | Median wait for a human opponent | Not applicable | Under 10 seconds on top decks |
 | Share of fallback matches | Not applicable | Under 40 percent by end of beta |
 
-## 16. Risks and mitigations
+## 14. Risks and mitigations
 
 | Risk | Mitigation |
 |---|---|
-| Computer opponents feel artificial or repetitive | Human-like timing and mistakes, a roster of about 20 characters, and tuning from playtest feedback |
-| Testers lose trust if a bot looks like a person | Label the Knight as a computer opponent in Alpha 1 |
-| Alpha 1 results reflect bot behavior and may differ from human play | Use Alpha 1 to validate the learning loop and interface; set beta metrics separately |
-| Open duels let unprepared players meet strong opponents in beta | Rating-based matching, a deck mastery badge on the match intro, and a Squire suggestion on decks the player has just started |
-| Thin human pools in beta | Concentrate marketing on 1 or 2 featured decks, schedule duel hours, and use ghosts and Knight bots |
+| The study window feels like waiting | Offer the 1-minute option, add a Ready button, and show the opponent’s status |
+| Computer opponents feel artificial or repetitive | Human-like pace and mistakes, a roster of about 20 characters, and tuning from playtest feedback |
+| Testers lose trust if a bot looks like a person | Label computer opponents in Alpha 1 |
+| Alpha 1 results reflect bot behavior and may differ from human play | Use Alpha 1 to validate the match format and interface; set beta metrics separately |
+| Beta pools split across decks and window lengths | Concentrate marketing on 1 or 2 featured decks and windows, schedule match hours, and use ghosts and Knight bots |
+| The 60-second duel rewards luck on a small study set | Reshuffle the set and tune duel length and set sizes from playtests |
+| Players skip studying and guess | Keep the Ready button available, since the match score and rating provide the feedback |
 | Alpha ratings drift away from human skill | Compress alpha ratings toward 1000 when seeding beta ratings |
-| Content quality varies across decks | Editor review, in-app word reports, and versioned fixes |
+| Content quality varies across decks | Editor review, in-app card reports, and versioned fixes |
 | Licensing issues with word lists | Use openly licensed sources and keep an attribution file |
 | Real-time infrastructure cost and complexity in beta | Start with one region, cap room counts, and instrument load early |
 | Scope growth toward other languages | Keep a language field in the schema and add languages after English retention proves out |
 
-## 17. Decisions to confirm
+## 15. Decisions to confirm
 
-1. **Squire and Knight meaning:** this plan reads a Squire as a practice computer opponent and a Knight as the ranked opponent (a computer in Alpha 1, a real player in beta). Confirm or adjust.
-2. **Knight labeling in Alpha 1:** the plan shows the Knight as a computer opponent so testers know who they face.
-3. **Squire rating effect:** the plan gives Squire duels no rating change.
-4. **Five Alpha 1 decks:** confirm the lineup in section 9.1.
-5. **Alpha 1 distribution:** decided, a mobile-first PWA hosted on Vercel or Cloudflare Pages.
-6. **Team size and timeline:** the roadmap assumes one developer.
-7. **Monetization:** options include a free tier with limited decks and a premium pass for all decks, tournaments, and cosmetic knight skins.
+1. **Match flow:** this plan reads the idea as Play, then connect to an opponent, then a shared study window, then the duel. Confirm or adjust.
+2. **Study set sizes:** 10, 20, and 30 cards for the 1, 3, and 5 minute windows.
+3. **Duel length:** 60 seconds, counting correct cards. The alternative is one pass through the study set.
+4. **Squire and Knight:** kept as the practice and ranked opponent types chosen at the Play step.
+5. **Wrong answers:** no penalty beyond lost time.
+6. **Five Alpha 1 decks:** confirm the lineup in section 7.1.
+7. **Team size and timeline:** the roadmap assumes one developer.
+8. **Monetization:** options include a free tier with limited decks and a premium pass for all decks, tournaments, and cosmetic knight skins.
 
-## 18. Immediate next steps
+## 16. Immediate next steps
 
-1. Confirm the open decisions in section 17.
+1. Confirm the open decisions in section 15.
 2. Write the first two decks in full.
-3. Sketch the doodle style on three screens (deck screen with both duel buttons, flashcard, duel) to lock the visual direction.
-4. Start Phase 0, reusing the scoring, timer, and Elo logic from the Wordduel prototype.
+3. Sketch the doodle style on three screens (deck screen with Play setup, study window, duel) to lock the visual direction.
+4. Start Phase 0, reusing the Elo and bot logic from the Wordduel prototype.
