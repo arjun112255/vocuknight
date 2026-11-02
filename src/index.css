@@ -1,41 +1,80 @@
 @import "tailwindcss";
 
 @theme {
-  --color-paper: #FAF8F5;
+  /* Ocean Sunset Palette */
+  --color-ink: #001219;
+  --color-teal-dark: #005F73;
+  --color-teal: #0A9396;
+  --color-sage: #94D2BD;
+  --color-parchment: #E9D8A6;
+  --color-amber: #EE9B00;
+  --color-terracotta: #CA6702;
+  --color-rust: #BB3E03;
+  --color-crimson: #AE2012;
+  --color-wine: #9B2226;
+
+  /* Semantic UI Tokens */
+  --color-paper: #FAF7EF;
   --color-surface: #FFFFFF;
-  --color-ink: #14213D;
-  --color-mute: #5B6784;
-  --color-line: #D5DCEA;
-  --color-accent: #2F5BFF;
-  --color-opponent: #E08A00;
-  --color-ok: #13875A;
-  --color-bad: #C63A3A;
-  --color-ok-bg: #DCF3E8;
-  --color-bad-bg: #F8E0E0;
+  --color-line: #E2D9C5;
+  --color-mute: #5C6B73;
+
+  --color-accent: #0A9396;
+  --color-opponent: #EE9B00;
+
+  --color-ok: #0A9396;
+  --color-ok-bg: #E7F6F2;
+  --color-bad: #AE2012;
+  --color-bad-bg: #FDF0F0;
 }
 
-@keyframes flip-in {
-  from {
-    transform: rotateY(90deg);
-    opacity: 0;
-  }
-  to {
-    transform: rotateY(0deg);
-    opacity: 1;
-  }
+/* 3D Flip Card Styles */
+.perspective-1000 {
+  perspective: 1000px;
 }
 
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+/* Card stack shadow & textures */
+.deck-card-shadow {
+  box-shadow: 0 4px 16px -2px rgba(0, 18, 25, 0.08), 0 2px 6px -1px rgba(0, 18, 25, 0.04);
+}
+
+.deck-card-peek-1 {
+  transform: translateY(8px) scale(0.96);
+  opacity: 0.75;
+}
+
+.deck-card-peek-2 {
+  transform: translateY(16px) scale(0.92);
+  opacity: 0.45;
+}
+
+/* Base Body Styles */
 body {
   margin: 0;
   background-color: var(--color-paper);
   color: var(--color-ink);
-  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
   min-height: 100dvh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-image: radial-gradient(var(--color-line) 1px, transparent 1px);
+  background-size: 20px 20px;
 }
 
-/* Safe-area utility for full-screen layouts */
+/* Safe-area utility for full-screen mobile layouts */
 .safe-area {
   padding-top: env(safe-area-inset-top, 0px);
   padding-right: env(safe-area-inset-right, 0px);
