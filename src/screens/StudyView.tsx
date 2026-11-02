@@ -2,7 +2,7 @@ import { useEffect, useCallback, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { useMatchStore } from '../stores/match-store';
 import CardDeckStack from '../components/CardDeckStack';
-import { DoodleHourglass } from '../components/doodles/DoodleItems';
+import { DoodleHourglass, DoodleTorch, DoodleCastle } from '../components/doodles/DoodleItems';
 
 export default function StudyView() {
   const { id } = useParams<{ id: string }>();
@@ -26,7 +26,6 @@ export default function StudyView() {
 
   const hasNavigated = useRef(false);
 
-  // Navigate to countdown when phase transitions to countdown, or when both are ready / timer ends
   useEffect(() => {
     if (
       (phase === 'countdown' || (phase === 'study' && isReady && isOpponentReady)) &&
@@ -51,13 +50,14 @@ export default function StudyView() {
 
   if (studySet.length === 0) {
     return (
-      <div className="min-h-[100dvh] flex flex-col items-center justify-center p-4 safe-area">
-        <p className="text-mute text-lg mb-4">No study set loaded.</p>
+      <div className="min-h-[100dvh] flex flex-col items-center justify-center p-4 safe-area bg-bg-base text-white">
+        <p className="text-mute text-lg mb-4 font-bold">No study set loaded.</p>
         <button
           onClick={() => navigate(`/deck/${id ?? 'everyday-essentials'}`)}
-          className="text-teal font-semibold min-h-12"
+          className="text-cyan-glow font-black italic uppercase min-h-12 flex items-center gap-2"
         >
-          ← Back to deck
+          <DoodleCastle size={20} />
+          <span>← Back to deck</span>
         </button>
       </div>
     );
@@ -68,60 +68,61 @@ export default function StudyView() {
 
   return (
     <div className="min-h-[100dvh] flex flex-col justify-between safe-area max-w-[480px] mx-auto w-full px-4 py-3">
-      {/* Top Header: Timer + Opponent Readiness + Ready Button */}
-      <div className="bg-surface/90 backdrop-blur-md rounded-2xl border-2 border-line p-3.5 shadow-xs">
+      {/* Top Header */}
+      <div className="bg-surface/90 backdrop-blur-md rounded-2xl border-2 border-line p-3.5 shadow-lg">
         <div className="flex items-center justify-between gap-3">
           {/* Left: Timer & Studied badge */}
           <div className="flex items-center gap-2.5">
             <DoodleHourglass size={32} />
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-2xl font-black text-ink tabular-nums tracking-tight">
+                <span className="text-2xl font-black italic text-white tabular-nums tracking-tight text-extrude-sm">
                   {formatTime(secondsLeft)}
                 </span>
-                <span className="text-xs px-2 py-0.5 rounded-full bg-parchment/60 border border-line font-bold text-ink">
-                  {studiedCount}/{totalCards} studied
+                <span className="text-xs px-2.5 py-0.5 rounded-full bg-surface-card border border-cyan-glow/40 font-black italic uppercase text-cyan-glow">
+                  {studiedCount}/{totalCards} STUDIED
                 </span>
               </div>
-              <p className="text-xs text-mute mt-0.5">
+              <p className="text-xs font-semibold text-mute mt-0.5">
                 {opponentInfo?.name ?? 'Opponent'}:{' '}
                 <span
                   className={
-                    isOpponentReady ? 'text-teal font-bold' : 'text-mute italic'
+                    isOpponentReady ? 'text-cyan-bright font-black italic' : 'text-mute italic'
                   }
                 >
-                  {isOpponentReady ? '✓ Ready' : 'Studying...'}
+                  {isOpponentReady ? '✓ READY' : 'STUDYING...'}
                 </span>
               </p>
             </div>
           </div>
 
-          {/* Right: Ready Button */}
+          {/* Right: Ready Button with Doodle Torch */}
           <button
             onClick={handleReady}
             disabled={isReady}
             className={[
-              'px-4 py-2.5 rounded-xl min-h-12 font-bold text-sm transition-all active:scale-95 motion-reduce:transition-none shadow-xs',
+              'px-4 py-2.5 rounded-xl min-h-12 font-black italic uppercase text-xs flex items-center gap-2 transition-all active:scale-95 motion-reduce:transition-none shadow-md',
               isReady
-                ? 'bg-ok-bg text-ok border border-ok/40 cursor-default'
-                : 'bg-teal text-white border-2 border-ink active:bg-teal-dark',
+                ? 'bg-ok/20 text-ok border border-ok/40 cursor-default'
+                : 'bg-teal text-white border-2 border-cyan-glow active:bg-teal-dark text-extrude-sm',
             ].join(' ')}
           >
-            {isReady ? 'Ready ✓' : 'Ready'}
+            <DoodleTorch size={20} />
+            <span>{isReady ? 'READY ✓' : 'READY'}</span>
           </button>
         </div>
 
-        {/* Linear Timer Depletion Bar */}
+        {/* Depletion Bar */}
         <div className="h-1.5 bg-line rounded-full overflow-hidden mt-3">
           <div
-            className="h-full bg-teal transition-all duration-300 ease-linear motion-reduce:transition-none"
+            className="h-full bg-cyan-glow transition-all duration-300 ease-linear motion-reduce:transition-none"
             style={{ width: `${Math.min(100, (secondsLeft / totalSeconds) * 100)}%` }}
           />
         </div>
       </div>
 
       {/* Main Center Area: Swipeable Card Deck Stack */}
-      <div className="my-auto py-4 w-full flex items-center justify-center">
+      <div className="my-auto py-3 w-full flex items-center justify-center">
         <CardDeckStack
           cards={studySet}
           flippedCardIds={flippedCardIds}
@@ -130,8 +131,8 @@ export default function StudyView() {
       </div>
 
       {/* Bottom Hint */}
-      <div className="text-center pb-1 text-xs text-mute/80">
-        Swipe cards or tap arrows to navigate · Tap to flip
+      <div className="text-center pb-1 text-xs font-semibold text-mute/80 uppercase tracking-wider">
+        Swipe cards or tap arrows to browse · Tap to flip
       </div>
     </div>
   );

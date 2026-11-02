@@ -1,31 +1,51 @@
 @import "tailwindcss";
 
 @theme {
-  /* Ocean Sunset Palette */
-  --color-ink: #001219;
+  /* Ocean Sunset & Night Medieval Theme */
+  --color-ink: #000000;
+  --color-white: #FFFFFF;
+  --color-cyan-glow: #38BDF8;
+  --color-cyan-light: #7DD3FC;
+  --color-cyan-bright: #67E8F9;
+
   --color-teal-dark: #005F73;
   --color-teal: #0A9396;
   --color-sage: #94D2BD;
-  --color-parchment: #E9D8A6;
   --color-amber: #EE9B00;
   --color-terracotta: #CA6702;
-  --color-rust: #BB3E03;
-  --color-crimson: #AE2012;
+  --color-crimson: #EF4444;
   --color-wine: #9B2226;
 
-  /* Semantic UI Tokens */
-  --color-paper: #FAF7EF;
-  --color-surface: #FFFFFF;
-  --color-line: #E2D9C5;
-  --color-mute: #5C6B73;
+  /* Black with a hint of blue background & dark medieval surfaces */
+  --color-bg-base: #060A14;
+  --color-bg-glow: #0F1D38;
+  --color-surface: #0E172C;
+  --color-surface-card: #131E38;
+  --color-line: #1F3056;
+  --color-line-glow: #38BDF844;
+  --color-mute: #94A3B8;
 
-  --color-accent: #0A9396;
-  --color-opponent: #EE9B00;
+  --color-ok: #10B981;
+  --color-ok-bg: #064E3B44;
+  --color-bad: #EF4444;
+  --color-bad-bg: #7F1D1D44;
+}
 
-  --color-ok: #0A9396;
-  --color-ok-bg: #E7F6F2;
-  --color-bad: #AE2012;
-  --color-bad-bg: #FDF0F0;
+/* 3D Extruded Block Shadow (matching the NEW YORK reference lettering) */
+.text-extrude-sm {
+  text-shadow: 1.5px 1.5px 0 #000, 2.5px 2.5px 0 #000;
+}
+
+.text-extrude {
+  text-shadow: 2px 2px 0 #000, 4px 4px 0 #000;
+}
+
+.text-extrude-lg {
+  text-shadow: 3px 3px 0 #000, 5px 5px 0 #000, 7px 7px 0 #000;
+}
+
+.text-extrude-cyan {
+  text-shadow: 2px 2px 0 #021124, 4px 4px 0 #021124;
 }
 
 /* 3D Flip Card Styles */
@@ -46,35 +66,40 @@
   transform: rotateY(180deg);
 }
 
-/* Card stack shadow & textures */
+/* Sticker Drop Shadow Effect for Doodles */
+.doodle-sticker-glow {
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.8)) drop-shadow(0 0 4px rgba(56, 189, 248, 0.25));
+}
+
+/* Card Stack 3D Layering */
 .deck-card-shadow {
-  box-shadow: 0 4px 16px -2px rgba(0, 18, 25, 0.08), 0 2px 6px -1px rgba(0, 18, 25, 0.04);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.6), 0 0 15px rgba(56, 189, 248, 0.15);
 }
 
 .deck-card-peek-1 {
-  transform: translateY(8px) scale(0.96);
-  opacity: 0.75;
+  transform: translateY(10px) scale(0.96);
+  opacity: 0.8;
 }
 
 .deck-card-peek-2 {
-  transform: translateY(16px) scale(0.92);
-  opacity: 0.45;
+  transform: translateY(20px) scale(0.92);
+  opacity: 0.5;
 }
 
-/* Base Body Styles */
+/* Base Body: Black with a hint of deep blue */
 body {
   margin: 0;
-  background-color: var(--color-paper);
-  color: var(--color-ink);
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  background-color: var(--color-bg-base);
+  color: #FFFFFF;
+  font-family: 'Rubik', system-ui, -apple-system, sans-serif;
   min-height: 100dvh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-image: radial-gradient(var(--color-line) 1px, transparent 1px);
-  background-size: 20px 20px;
+  background-image: radial-gradient(circle at 50% 12%, #102142 0%, #060A14 75%);
+  background-attachment: fixed;
 }
 
-/* Safe-area utility for full-screen mobile layouts */
+/* Safe-area utility for mobile full-screen */
 .safe-area {
   padding-top: env(safe-area-inset-top, 0px);
   padding-right: env(safe-area-inset-right, 0px);
