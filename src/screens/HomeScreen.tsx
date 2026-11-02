@@ -66,7 +66,7 @@ export default function HomeScreen() {
   };
 
   return (
-    <div className="min-h-[100dvh] flex flex-col bg-[#060913] text-white safe-area font-barriecito">
+    <div className="min-h-[100dvh] flex flex-col bg-[#060913] text-white safe-area font-canto">
       {/* Top Horizontal Navigation Bar */}
       <TopNav
         activeTab="play"
@@ -79,15 +79,15 @@ export default function HomeScreen() {
         <div className="text-center pt-1">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#005F73]/30 border border-[#0A9396]/40 mb-2">
             <span className="w-2 h-2 rounded-full bg-[#38BDF8] animate-pulse" />
-            <span className="font-barriecito text-xs tracking-widest text-[#38BDF8]">
-              Arena Ready
+            <span className="font-sundays text-[10px] tracking-[0.2em] text-[#38BDF8]">
+              ARENA READY
             </span>
           </div>
-          <h1 className="font-barriecito text-3xl sm:text-4xl text-white tracking-wide leading-tight text-extrude-sm">
+          <h1 className="font-canto text-4xl sm:text-5xl font-bold text-white tracking-normal leading-tight text-extrude-sm">
             Vocabulary Duel
           </h1>
-          <p className="font-barriecito text-sm text-[#38BDF8] mt-1 tracking-wide">
-            Timed Study · 60s Card Duel · Real-time Opponent
+          <p className="font-sundays text-[11px] tracking-[0.16em] text-[#38BDF8] mt-1.5">
+            TIMED STUDY · 60S CARD DUEL · OPPONENT
           </p>
         </div>
 
@@ -100,10 +100,10 @@ export default function HomeScreen() {
                 <DoodleCrown size={34} />
               </div>
               <div>
-                <span className="inline-block font-barriecito text-xs tracking-wider text-[#38BDF8] bg-[#0E1B36] px-2.5 py-0.5 rounded-full border border-[#1E305C]">
-                  All Decks Mixed · 140 Cards
+                <span className="inline-block font-sundays text-[10px] tracking-[0.2em] text-[#38BDF8] bg-[#0E1B36] px-2.5 py-0.5 rounded-full border border-[#1E305C]">
+                  ALL DECKS MIXED · 140 CARDS
                 </span>
-                <h2 className="font-barriecito text-2xl text-white tracking-wide leading-tight mt-0.5">
+                <h2 className="font-canto font-bold text-2xl text-white tracking-normal leading-tight mt-0.5">
                   Random Deck
                 </h2>
               </div>
@@ -117,11 +117,11 @@ export default function HomeScreen() {
           {/* Option Controls: 1. Study Window */}
           <div className="mb-3.5">
             <div className="flex items-center justify-between mb-2">
-              <span className="font-barriecito text-sm tracking-wider text-[#38BDF8] flex items-center gap-1.5">
-                <DoodleHourglass size={16} />
-                Study Window
+              <span className="font-sundays text-xs tracking-[0.16em] text-[#38BDF8] flex items-center gap-1.5">
+                <DoodleHourglass size={14} />
+                STUDY WINDOW
               </span>
-              <span className="font-barriecito text-xs text-white/70">
+              <span className="font-sundays text-[10px] tracking-wider text-white/70">
                 {randomWindow === 1 ? '10 Cards' : randomWindow === 3 ? '20 Cards' : '30 Cards'}
               </span>
             </div>
@@ -135,14 +135,14 @@ export default function HomeScreen() {
                     type="button"
                     onClick={() => setRandomWindow(w)}
                     className={[
-                      'py-2 px-2 rounded-xl font-barriecito text-center border min-h-[48px] transition-all duration-150 flex flex-col items-center justify-center active:scale-95',
+                      'py-2 px-2 rounded-xl text-center border min-h-[48px] transition-all duration-150 flex flex-col items-center justify-center active:scale-95',
                       isSelected
                         ? 'bg-[#0A9396]/25 border-[#38BDF8] text-white shadow-[0_0_10px_rgba(56,189,248,0.25)]'
                         : 'bg-[#090F1E] border-[#1C2B4B] text-white/70 hover:border-[#38BDF8]/40 hover:text-white',
                     ].join(' ')}
                   >
-                    <span className="text-base leading-none">{w} Min</span>
-                    <span className={`text-xs mt-0.5 ${isSelected ? 'text-[#38BDF8]' : 'text-[#8E9DB8]'}`}>
+                    <span className="font-canto font-bold text-lg leading-none">{w} Min</span>
+                    <span className={`font-sundays text-[9px] tracking-wider mt-0.5 ${isSelected ? 'text-[#38BDF8]' : 'text-[#8E9DB8]'}`}>
                       {w === 1 ? '10 cards' : w === 3 ? '20 cards' : '30 cards'}
                     </span>
                   </button>
@@ -153,9 +153,9 @@ export default function HomeScreen() {
 
           {/* Option Controls: 2. Opponent Tier */}
           <div className="mb-5">
-            <span className="font-barriecito text-sm tracking-wider text-[#38BDF8] flex items-center gap-1.5 mb-2">
-              <DoodleShield size={16} />
-              Opponent Tier
+            <span className="font-sundays text-xs tracking-[0.16em] text-[#38BDF8] flex items-center gap-1.5 mb-2">
+              <DoodleShield size={14} />
+              OPPONENT TIER
             </span>
 
             <div className="grid grid-cols-2 gap-2.5">
@@ -172,7 +172,7 @@ export default function HomeScreen() {
               >
                 <DoodleSquire size={28} />
                 <div className="overflow-hidden">
-                  <span className="block font-barriecito text-base leading-tight text-white">
+                  <span className="block font-canto font-bold text-lg leading-tight text-white">
                     Squire
                   </span>
                   <span className="block font-body text-[10px] text-[#8E9DB8] truncate">
@@ -194,7 +194,7 @@ export default function HomeScreen() {
               >
                 <DoodleKnight size={28} />
                 <div className="overflow-hidden">
-                  <span className="block font-barriecito text-base leading-tight text-white">
+                  <span className="block font-canto font-bold text-lg leading-tight text-white">
                     Knight
                   </span>
                   <span className="block font-body text-[10px] text-[#EE9B00] truncate">
@@ -209,11 +209,11 @@ export default function HomeScreen() {
           <button
             type="button"
             onClick={handleStartRandomMatch}
-            className="w-full py-3.5 px-4 rounded-xl font-barriecito text-xl min-h-[52px] flex items-center justify-center gap-2.5 bg-[#0A9396] text-white border border-[#38BDF8]/60 shadow-[0_4px_16px_rgba(10,147,150,0.4)] transition-all duration-150 hover:bg-[#005F73] active:scale-[0.98]"
+            className="w-full py-3.5 px-4 rounded-xl font-sundays text-xs tracking-[0.16em] min-h-[52px] flex items-center justify-center gap-2.5 bg-[#0A9396] text-white border border-[#38BDF8]/60 shadow-[0_4px_16px_rgba(10,147,150,0.4)] transition-all duration-150 hover:bg-[#005F73] active:scale-[0.98]"
             aria-label="Start Random Deck Match"
           >
-            <DoodleTorch size={22} />
-            <span>Start Random Duel ({randomWindow} Min)</span>
+            <DoodleTorch size={20} />
+            <span>START RANDOM DUEL ({randomWindow} MIN)</span>
           </button>
         </section>
 
@@ -226,10 +226,10 @@ export default function HomeScreen() {
                 <DoodleBook size={34} />
               </div>
               <div>
-                <span className="inline-block font-barriecito text-xs tracking-wider text-[#EE9B00] bg-[#1E1910] px-2.5 py-0.5 rounded-full border border-[#422C10]">
-                  5 Thematic Realms
+                <span className="inline-block font-sundays text-[10px] tracking-[0.2em] text-[#EE9B00] bg-[#1E1910] px-2.5 py-0.5 rounded-full border border-[#422C10]">
+                  5 THEMATIC REALMS
                 </span>
-                <h2 className="font-barriecito text-2xl text-white tracking-wide leading-tight mt-0.5">
+                <h2 className="font-canto font-bold text-2xl text-white tracking-normal leading-tight mt-0.5">
                   Select Deck
                 </h2>
               </div>
@@ -258,7 +258,7 @@ export default function HomeScreen() {
                     {getDeckDoodle(deck.id)}
                   </div>
                   <div className="overflow-hidden">
-                    <span className="block font-barriecito text-lg text-white tracking-wide truncate group-hover:text-[#38BDF8] transition-colors">
+                    <span className="block font-canto font-bold text-xl text-white tracking-normal truncate group-hover:text-[#38BDF8] transition-colors">
                       {deck.title}
                     </span>
                     <span className="block font-body text-[11px] text-[#8E9DB8] truncate">
@@ -269,8 +269,8 @@ export default function HomeScreen() {
 
                 <div className="shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#0E1628] border border-[#1E2D4E] group-hover:border-[#38BDF8] transition-colors">
                   <DoodleSword size={16} />
-                  <span className="font-barriecito text-sm text-white group-hover:text-[#38BDF8]">
-                    Play
+                  <span className="font-sundays text-[10px] tracking-wider text-white group-hover:text-[#38BDF8]">
+                    PLAY
                   </span>
                 </div>
               </button>
@@ -288,7 +288,7 @@ export default function HomeScreen() {
               <div className="flex items-center gap-2.5">
                 {getDeckDoodle(selectedDeck.id)}
                 <div>
-                  <h3 className="font-barriecito text-2xl text-white leading-none">
+                  <h3 className="font-canto font-bold text-2xl text-white leading-none">
                     {selectedDeck.title}
                   </h3>
                   <span className="font-body text-xs text-[#38BDF8]">
@@ -307,9 +307,9 @@ export default function HomeScreen() {
 
             {/* Study Window */}
             <div>
-              <span className="font-barriecito text-sm tracking-wider text-[#38BDF8] flex items-center gap-1.5 mb-2">
-                <DoodleHourglass size={16} />
-                Study Window
+              <span className="font-sundays text-xs tracking-[0.16em] text-[#38BDF8] flex items-center gap-1.5 mb-2">
+                <DoodleHourglass size={14} />
+                STUDY WINDOW
               </span>
               <div className="grid grid-cols-3 gap-2">
                 {([1, 3, 5] as StudyWindow[]).map((w) => {
@@ -320,14 +320,14 @@ export default function HomeScreen() {
                       type="button"
                       onClick={() => setDeckWindow(w)}
                       className={[
-                        'py-2 px-1 rounded-xl font-barriecito text-center border min-h-[48px] transition-all flex flex-col items-center justify-center active:scale-95',
+                        'py-2 px-1 rounded-xl text-center border min-h-[48px] transition-all flex flex-col items-center justify-center active:scale-95',
                         isSelected
                           ? 'bg-[#0A9396]/25 border-[#38BDF8] text-white shadow-[0_0_10px_rgba(56,189,248,0.25)]'
                           : 'bg-[#090F1E] border-[#1C2B4B] text-white/70 hover:border-[#38BDF8]/40 hover:text-white',
                       ].join(' ')}
                     >
-                      <span className="text-base leading-none">{w} Min</span>
-                      <span className={`text-xs mt-0.5 ${isSelected ? 'text-[#38BDF8]' : 'text-[#8E9DB8]'}`}>
+                      <span className="font-canto font-bold text-lg leading-none">{w} Min</span>
+                      <span className={`font-sundays text-[9px] tracking-wider mt-0.5 ${isSelected ? 'text-[#38BDF8]' : 'text-[#8E9DB8]'}`}>
                         {w === 1 ? '10 cards' : w === 3 ? '20 cards' : `${Math.min(30, selectedDeck.words.length)} cards`}
                       </span>
                     </button>
@@ -338,9 +338,9 @@ export default function HomeScreen() {
 
             {/* Opponent Tier */}
             <div>
-              <span className="font-barriecito text-sm tracking-wider text-[#38BDF8] flex items-center gap-1.5 mb-2">
-                <DoodleShield size={16} />
-                Opponent Tier
+              <span className="font-sundays text-xs tracking-[0.16em] text-[#38BDF8] flex items-center gap-1.5 mb-2">
+                <DoodleShield size={14} />
+                OPPONENT TIER
               </span>
               <div className="grid grid-cols-2 gap-2.5">
                 <button
@@ -355,7 +355,7 @@ export default function HomeScreen() {
                 >
                   <DoodleSquire size={26} />
                   <div>
-                    <span className="block font-barriecito text-base leading-tight text-white">Squire</span>
+                    <span className="block font-canto font-bold text-lg leading-tight text-white">Squire</span>
                     <span className="block font-body text-[10px] text-[#8E9DB8]">Practice</span>
                   </div>
                 </button>
@@ -372,7 +372,7 @@ export default function HomeScreen() {
                 >
                   <DoodleKnight size={26} />
                   <div>
-                    <span className="block font-barriecito text-base leading-tight text-white">Knight</span>
+                    <span className="block font-canto font-bold text-lg leading-tight text-white">Knight</span>
                     <span className="block font-body text-[10px] text-[#EE9B00]">Ranked Elo</span>
                   </div>
                 </button>
@@ -384,10 +384,10 @@ export default function HomeScreen() {
               <button
                 type="button"
                 onClick={() => handleStartDeckMatch(selectedDeck)}
-                className="w-full py-3.5 px-4 rounded-xl font-barriecito text-xl min-h-[52px] flex items-center justify-center gap-2 bg-[#0A9396] text-white border border-[#38BDF8]/60 shadow-[0_4px_16px_rgba(10,147,150,0.4)] transition-all hover:bg-[#005F73] active:scale-[0.98]"
+                className="w-full py-3.5 px-4 rounded-xl font-sundays text-xs tracking-[0.16em] min-h-[52px] flex items-center justify-center gap-2 bg-[#0A9396] text-white border border-[#38BDF8]/60 shadow-[0_4px_16px_rgba(10,147,150,0.4)] transition-all hover:bg-[#005F73] active:scale-[0.98]"
               >
-                <DoodleSword size={22} />
-                <span>Start Duel ({deckWindow} Min)</span>
+                <DoodleSword size={20} />
+                <span>START DUEL ({deckWindow} MIN)</span>
               </button>
             </div>
           </div>
@@ -402,7 +402,7 @@ export default function HomeScreen() {
             <div className="flex items-center justify-between pb-3 border-b border-[#1C2B4B]">
               <div className="flex items-center gap-2.5">
                 <DoodleGear size={26} />
-                <h3 className="font-barriecito text-2xl text-white leading-none">
+                <h3 className="font-canto font-bold text-2xl text-white leading-none">
                   Settings
                 </h3>
               </div>
@@ -420,7 +420,7 @@ export default function HomeScreen() {
               {/* Audio */}
               <div className="flex items-center justify-between p-3.5 rounded-xl bg-[#090F1E] border border-[#1C2B4B]">
                 <div>
-                  <span className="block font-barriecito text-base text-white">Sound Effects</span>
+                  <span className="block font-canto font-bold text-lg text-white">Sound Effects</span>
                   <span className="block font-body text-xs text-[#8E9DB8]">Audio starts after user tap</span>
                 </div>
                 <button
@@ -443,7 +443,7 @@ export default function HomeScreen() {
               {/* Haptics */}
               <div className="flex items-center justify-between p-3.5 rounded-xl bg-[#090F1E] border border-[#1C2B4B]">
                 <div>
-                  <span className="block font-barriecito text-base text-white">Haptic Vibration</span>
+                  <span className="block font-canto font-bold text-lg text-white">Haptic Vibration</span>
                   <span className="block font-body text-xs text-[#8E9DB8]">Tactile feedback on mobile</span>
                 </div>
                 <button
@@ -466,16 +466,16 @@ export default function HomeScreen() {
               {/* Theme & Elo Stats */}
               <div className="p-3.5 rounded-xl bg-[#090F1E] border border-[#1C2B4B] flex flex-col gap-2">
                 <div className="flex justify-between items-center text-sm">
-                  <span className="font-barriecito text-white/70">Theme</span>
-                  <span className="font-barriecito text-[#38BDF8]">Ocean Sunset Medieval</span>
+                  <span className="font-sundays text-xs text-white/70">THEME</span>
+                  <span className="font-canto font-bold text-[#38BDF8]">Ocean Sunset Medieval</span>
                 </div>
                 <div className="flex justify-between items-center text-sm">
-                  <span className="font-barriecito text-white/70">Player Elo</span>
-                  <span className="font-barriecito text-[#EE9B00]">1000 Initial</span>
+                  <span className="font-sundays text-xs text-white/70">PLAYER ELO</span>
+                  <span className="font-canto font-bold text-[#EE9B00]">1000 Initial</span>
                 </div>
                 <div className="flex justify-between items-center text-sm">
-                  <span className="font-barriecito text-white/70">Version</span>
-                  <span className="font-barriecito text-[#8E9DB8]">Beta 1.0</span>
+                  <span className="font-sundays text-xs text-white/70">VERSION</span>
+                  <span className="font-sundays text-xs text-[#8E9DB8]">BETA 1.0</span>
                 </div>
               </div>
             </div>
@@ -487,10 +487,10 @@ export default function HomeScreen() {
             <button
               type="button"
               onClick={() => setSettingsOpen(false)}
-              className="w-full py-3 rounded-xl font-barriecito text-lg min-h-[48px] bg-[#141F38] border border-[#24355A] text-white hover:bg-[#1A284A] active:scale-[0.98] transition-all flex items-center justify-center gap-2"
+              className="w-full py-3 rounded-xl font-sundays text-xs tracking-[0.16em] min-h-[48px] bg-[#141F38] border border-[#24355A] text-white hover:bg-[#1A284A] active:scale-[0.98] transition-all flex items-center justify-center gap-2"
             >
               <DoodleShield size={18} />
-              <span>Return to Arena</span>
+              <span>RETURN TO ARENA</span>
             </button>
           </div>
         </div>

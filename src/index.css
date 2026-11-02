@@ -1,11 +1,27 @@
 @import "tailwindcss";
 
 @font-face {
-  font-family: 'Barriecito';
+  font-family: 'Canto';
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url('/fonts/Barriecito-Regular.ttf') format('truetype');
+  src: url('/fonts/Canto-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Canto';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/Canto-Bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'SundaysSans';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/Sundays-Sans.ttf') format('truetype');
 }
 
 @theme {
@@ -40,36 +56,41 @@
   --color-bad-bg: #7F1D1D44;
 }
 
-/* Typography: Barriecito as primary display font */
-.font-barriecito {
-  font-family: 'Barriecito', cursive, display, sans-serif;
-  letter-spacing: 0.02em;
+/* Typography: Canto & Sundays styling */
+.font-canto {
+  font-family: 'Canto', 'Cormorant Garamond', Georgia, serif;
 }
 
+.font-sundays {
+  font-family: 'SundaysSans', 'Montserrat', system-ui, sans-serif;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.font-barriecito,
 .font-impact {
-  font-family: 'Barriecito', cursive, display, sans-serif;
-  letter-spacing: 0.02em;
+  font-family: 'Canto', 'Cormorant Garamond', Georgia, serif;
 }
 
 .font-body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif;
 }
 
-/* 3D Extruded Block Shadow (tuned for Barriecito's organic curves) */
+/* Refined text shadows for Canto */
 .text-extrude-sm {
-  text-shadow: 1.5px 1.5px 0 #000, 2px 2px 0 #000;
+  text-shadow: 1px 1px 0 #000, 1.5px 1.5px 0 #000;
 }
 
 .text-extrude {
-  text-shadow: 2px 2px 0 #000, 3.5px 3.5px 0 #000;
+  text-shadow: 1.5px 1.5px 0 #000, 2.5px 2.5px 0 #000;
 }
 
 .text-extrude-lg {
-  text-shadow: 2.5px 2.5px 0 #000, 4.5px 4.5px 0 #000, 6px 6px 0 #000;
+  text-shadow: 2px 2px 0 #000, 3.5px 3.5px 0 #000;
 }
 
 .text-extrude-cyan {
-  text-shadow: 2px 2px 0 #021124, 3.5px 3.5px 0 #021124;
+  text-shadow: 1.5px 1.5px 0 #021124, 2.5px 2.5px 0 #021124;
 }
 
 /* iOS Matte Card Surface with refined border */
@@ -126,13 +147,12 @@
   opacity: 0.5;
 }
 
-/* Base Body: Black with a hint of deep blue & Barriecito font */
+/* Base Body: Black with a hint of deep blue & Canto font */
 body {
   margin: 0;
   background-color: var(--color-bg-base);
   color: #FFFFFF;
-  font-family: 'Barriecito', cursive, display, sans-serif;
-  letter-spacing: 0.02em;
+  font-family: 'Canto', 'Cormorant Garamond', Georgia, serif;
   min-height: 100dvh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
