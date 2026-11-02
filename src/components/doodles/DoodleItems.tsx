@@ -274,3 +274,123 @@ export function DoodleTorch({ size = 32, className = '' }: DoodleProps) {
     </svg>
   );
 }
+
+/** Crossed Knight Duel Swords */
+export function DoodleSwords({ size = 32, className = '' }: DoodleProps) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 64 64"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={`shrink-0 filter drop-shadow-sm ${className}`}
+    >
+      {/* Sword 1 (top-left to bottom-right) */}
+      <g transform="rotate(45 32 32)">
+        <path d="M30 4 L34 4 L35 44 L32 48 L29 44 Z" fill="#FFFFFF" stroke="#000000" strokeWidth="2" />
+        <line x1="32" y1="6" x2="32" y2="42" stroke="#38BDF8" strokeWidth="1.5" />
+        <rect x="20" y="44" width="24" height="4" rx="2" fill="#EE9B00" stroke="#000000" strokeWidth="1.5" />
+        <rect x="30" y="48" width="4" height="8" rx="1" fill="#CA6702" stroke="#000000" strokeWidth="1.5" />
+        <circle cx="32" cy="58" r="3.5" fill="#EE9B00" stroke="#000000" strokeWidth="1.5" />
+      </g>
+      {/* Sword 2 (top-right to bottom-left) */}
+      <g transform="rotate(-45 32 32)">
+        <path d="M30 4 L34 4 L35 44 L32 48 L29 44 Z" fill="#E0F2FE" stroke="#000000" strokeWidth="2" />
+        <line x1="32" y1="6" x2="32" y2="42" stroke="#0A9396" strokeWidth="1.5" />
+        <rect x="20" y="44" width="24" height="4" rx="2" fill="#EE9B00" stroke="#000000" strokeWidth="1.5" />
+        <rect x="30" y="48" width="4" height="8" rx="1" fill="#CA6702" stroke="#000000" strokeWidth="1.5" />
+        <circle cx="32" cy="58" r="3.5" fill="#EE9B00" stroke="#000000" strokeWidth="1.5" />
+      </g>
+    </svg>
+  );
+}
+
+/** Medieval Settings Astrolabe / Cog Gear with Compass Star */
+export function DoodleGear({ size = 32, className = '' }: DoodleProps) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 64 64"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={`shrink-0 filter drop-shadow-sm ${className}`}
+    >
+      {/* Outer Gear Teeth ring */}
+      <circle cx="32" cy="32" r="22" fill="#0E1628" stroke="#EE9B00" strokeWidth="3" />
+      {/* 8 Cog Teeth */}
+      <rect x="29" y="4" width="6" height="8" rx="1.5" fill="#EE9B00" stroke="#000" strokeWidth="1.5" />
+      <rect x="29" y="52" width="6" height="8" rx="1.5" fill="#EE9B00" stroke="#000" strokeWidth="1.5" />
+      <rect x="4" y="29" width="8" height="6" rx="1.5" fill="#EE9B00" stroke="#000" strokeWidth="1.5" />
+      <rect x="52" y="29" width="8" height="6" rx="1.5" fill="#EE9B00" stroke="#000" strokeWidth="1.5" />
+      <g transform="rotate(45 32 32)">
+        <rect x="29" y="4" width="6" height="8" rx="1.5" fill="#CA6702" stroke="#000" strokeWidth="1.5" />
+        <rect x="29" y="52" width="6" height="8" rx="1.5" fill="#CA6702" stroke="#000" strokeWidth="1.5" />
+        <rect x="4" y="29" width="8" height="6" rx="1.5" fill="#CA6702" stroke="#000" strokeWidth="1.5" />
+        <rect x="52" y="29" width="8" height="6" rx="1.5" fill="#CA6702" stroke="#000" strokeWidth="1.5" />
+      </g>
+      {/* Inner Astrolabe Ring */}
+      <circle cx="32" cy="32" r="14" fill="#005F73" stroke="#FFFFFF" strokeWidth="2" />
+      {/* Center 4-Point Compass Star */}
+      <path
+        d="M32 20 L34 30 L44 32 L34 34 L32 44 L30 34 L20 32 L30 30 Z"
+        fill="#EE9B00"
+        stroke="#FFFFFF"
+        strokeWidth="1"
+      />
+      <circle cx="32" cy="32" r="3" fill="#FFFFFF" stroke="#000000" strokeWidth="1" />
+    </svg>
+  );
+}
+
+/** Heraldic Banner / Pennant */
+export function DoodleBanner({ size = 32, className = '' }: DoodleProps) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 64 64"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={`shrink-0 filter drop-shadow-sm ${className}`}
+    >
+      <rect x="10" y="8" width="44" height="5" rx="2" fill="#CA6702" stroke="#000" strokeWidth="1.5" />
+      <circle cx="10" cy="10.5" r="3" fill="#EE9B00" stroke="#000" strokeWidth="1.2" />
+      <circle cx="54" cy="10.5" r="3" fill="#EE9B00" stroke="#000" strokeWidth="1.2" />
+      {/* Pennant Flag */}
+      <path
+        d="M14 13 L50 13 L50 44 L32 36 L14 44 Z"
+        fill="#005F73"
+        stroke="#FFFFFF"
+        strokeWidth="2"
+      />
+      {/* Banner Crest */}
+      <circle cx="32" cy="24" r="7" fill="#EE9B00" stroke="#000" strokeWidth="1.5" />
+      <path d="M32 19 L34 23 L38 24 L34 26 L32 30 L30 26 L26 24 L30 23 Z" fill="#FFFFFF" />
+    </svg>
+  );
+}
+
+/** 8-Point Medieval Compass Star */
+export function DoodleStar({ size = 32, className = '' }: DoodleProps) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 64 64"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={`shrink-0 filter drop-shadow-sm ${className}`}
+    >
+      <path
+        d="M32 6 L35 25 L48 12 L39 28 L58 32 L39 36 L48 52 L35 39 L32 58 L29 39 L16 52 L25 36 L6 32 L25 28 L16 12 L29 25 Z"
+        fill="#EE9B00"
+        stroke="#FFFFFF"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+      <circle cx="32" cy="32" r="4.5" fill="#38BDF8" stroke="#000" strokeWidth="1.5" />
+    </svg>
+  );
+}

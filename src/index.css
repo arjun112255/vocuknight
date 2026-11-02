@@ -16,14 +16,15 @@
   --color-crimson: #EF4444;
   --color-wine: #9B2226;
 
-  /* Black with a hint of blue background & dark medieval surfaces */
-  --color-bg-base: #060A14;
-  --color-bg-glow: #0F1D38;
-  --color-surface: #0E172C;
-  --color-surface-card: #131E38;
-  --color-line: #1F3056;
-  --color-line-glow: #38BDF844;
-  --color-mute: #94A3B8;
+  /* Black with a hint of blue background & dark matte surfaces */
+  --color-bg-base: #060913;
+  --color-bg-glow: #0B1324;
+  --color-surface: #0E1628;
+  --color-surface-card: #121C34;
+  --color-surface-hover: #182542;
+  --color-line: #1C2B4B;
+  --color-line-glow: #38BDF833;
+  --color-mute: #8E9DB8;
 
   --color-ok: #10B981;
   --color-ok-bg: #064E3B44;
@@ -31,21 +32,47 @@
   --color-bad-bg: #7F1D1D44;
 }
 
+/* Typography: Impact default as requested */
+.font-impact {
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  letter-spacing: 0.03em;
+}
+
+.font-body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif;
+}
+
 /* 3D Extruded Block Shadow (matching the NEW YORK reference lettering) */
 .text-extrude-sm {
-  text-shadow: 1.5px 1.5px 0 #000, 2.5px 2.5px 0 #000;
+  text-shadow: 1.5px 1.5px 0 #000, 2px 2px 0 #000;
 }
 
 .text-extrude {
-  text-shadow: 2px 2px 0 #000, 4px 4px 0 #000;
+  text-shadow: 2px 2px 0 #000, 3.5px 3.5px 0 #000;
 }
 
 .text-extrude-lg {
-  text-shadow: 3px 3px 0 #000, 5px 5px 0 #000, 7px 7px 0 #000;
+  text-shadow: 2.5px 2.5px 0 #000, 4.5px 4.5px 0 #000, 6px 6px 0 #000;
 }
 
 .text-extrude-cyan {
-  text-shadow: 2px 2px 0 #021124, 4px 4px 0 #021124;
+  text-shadow: 2px 2px 0 #021124, 3.5px 3.5px 0 #021124;
+}
+
+/* iOS Matte Card Surface with refined border */
+.ios-matte-card {
+  background: rgba(14, 22, 40, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(56, 189, 248, 0.15);
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.6);
+}
+
+.ios-matte-pill {
+  background: rgba(9, 14, 27, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 /* 3D Flip Card Styles */
@@ -73,29 +100,30 @@
 
 /* Card Stack 3D Layering */
 .deck-card-shadow {
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.6), 0 0 15px rgba(56, 189, 248, 0.15);
+  box-shadow: 0 12px 30px -6px rgba(0, 0, 0, 0.7), 0 0 15px rgba(56, 189, 248, 0.12);
 }
 
 .deck-card-peek-1 {
-  transform: translateY(10px) scale(0.96);
+  transform: translateY(8px) scale(0.96);
   opacity: 0.8;
 }
 
 .deck-card-peek-2 {
-  transform: translateY(20px) scale(0.92);
+  transform: translateY(16px) scale(0.92);
   opacity: 0.5;
 }
 
-/* Base Body: Black with a hint of deep blue */
+/* Base Body: Black with a hint of deep blue & Impact font */
 body {
   margin: 0;
   background-color: var(--color-bg-base);
   color: #FFFFFF;
-  font-family: 'Rubik', system-ui, -apple-system, sans-serif;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  letter-spacing: 0.02em;
   min-height: 100dvh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-image: radial-gradient(circle at 50% 12%, #102142 0%, #060A14 75%);
+  background-image: radial-gradient(circle at 50% 0%, #0E1830 0%, #060913 65%);
   background-attachment: fixed;
 }
 

@@ -50,14 +50,14 @@ export default function StudyView() {
 
   if (studySet.length === 0) {
     return (
-      <div className="min-h-[100dvh] flex flex-col items-center justify-center p-4 safe-area bg-bg-base text-white">
-        <p className="text-mute text-lg mb-4 font-bold">No study set loaded.</p>
+      <div className="min-h-[100dvh] flex flex-col items-center justify-center p-4 safe-area bg-[#060913] text-white">
+        <p className="font-impact text-lg text-[#8E9DB8] mb-4">NO STUDY SET LOADED</p>
         <button
-          onClick={() => navigate(`/deck/${id ?? 'everyday-essentials'}`)}
-          className="text-cyan-glow font-black italic uppercase min-h-12 flex items-center gap-2"
+          onClick={() => navigate('/')}
+          className="px-5 py-2.5 rounded-xl bg-[#0E1528] border border-[#1E2D4E] font-impact uppercase text-sm text-[#38BDF8] flex items-center gap-2"
         >
           <DoodleCastle size={20} />
-          <span>← Back to deck</span>
+          <span>RETURN TO ARENA</span>
         </button>
       </div>
     );
@@ -67,27 +67,27 @@ export default function StudyView() {
   const totalCards = studySet.length;
 
   return (
-    <div className="min-h-[100dvh] flex flex-col justify-between safe-area max-w-[480px] mx-auto w-full px-4 py-3">
+    <div className="min-h-[100dvh] flex flex-col justify-between safe-area max-w-[480px] mx-auto w-full px-4 py-3 bg-[#060913]">
       {/* Top Header */}
-      <div className="bg-surface/90 backdrop-blur-md rounded-2xl border-2 border-line p-3.5 shadow-lg">
+      <div className="ios-matte-card rounded-[22px] p-3.5 shadow-lg">
         <div className="flex items-center justify-between gap-3">
           {/* Left: Timer & Studied badge */}
           <div className="flex items-center gap-2.5">
-            <DoodleHourglass size={32} />
+            <DoodleHourglass size={30} />
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-2xl font-black italic text-white tabular-nums tracking-tight text-extrude-sm">
+                <span className="font-impact text-2xl text-white tabular-nums tracking-tight">
                   {formatTime(secondsLeft)}
                 </span>
-                <span className="text-xs px-2.5 py-0.5 rounded-full bg-surface-card border border-cyan-glow/40 font-black italic uppercase text-cyan-glow">
+                <span className="font-impact uppercase text-xs px-2.5 py-0.5 rounded-full bg-[#0E1528] border border-[#38BDF8]/40 text-[#38BDF8]">
                   {studiedCount}/{totalCards} STUDIED
                 </span>
               </div>
-              <p className="text-xs font-semibold text-mute mt-0.5">
+              <p className="font-body text-xs text-[#8E9DB8] mt-0.5">
                 {opponentInfo?.name ?? 'Opponent'}:{' '}
                 <span
                   className={
-                    isOpponentReady ? 'text-cyan-bright font-black italic' : 'text-mute italic'
+                    isOpponentReady ? 'text-[#38BDF8] font-impact uppercase' : 'text-[#8E9DB8] italic'
                   }
                 >
                   {isOpponentReady ? '✓ READY' : 'STUDYING...'}
@@ -101,21 +101,21 @@ export default function StudyView() {
             onClick={handleReady}
             disabled={isReady}
             className={[
-              'px-4 py-2.5 rounded-xl min-h-12 font-black italic uppercase text-xs flex items-center gap-2 transition-all active:scale-95 motion-reduce:transition-none shadow-md',
+              'px-4 py-2.5 rounded-xl min-h-[48px] font-impact uppercase text-xs flex items-center gap-2 transition-all active:scale-95 shadow-md',
               isReady
-                ? 'bg-ok/20 text-ok border border-ok/40 cursor-default'
-                : 'bg-teal text-white border-2 border-cyan-glow active:bg-teal-dark text-extrude-sm',
+                ? 'bg-[#10B981]/20 text-[#10B981] border border-[#10B981]/40 cursor-default'
+                : 'bg-[#0A9396] text-white border border-[#38BDF8]/50 hover:bg-[#005F73]',
             ].join(' ')}
           >
-            <DoodleTorch size={20} />
+            <DoodleTorch size={18} />
             <span>{isReady ? 'READY ✓' : 'READY'}</span>
           </button>
         </div>
 
         {/* Depletion Bar */}
-        <div className="h-1.5 bg-line rounded-full overflow-hidden mt-3">
+        <div className="h-1.5 bg-[#0A1020] rounded-full overflow-hidden mt-3 border border-[#18233C]">
           <div
-            className="h-full bg-cyan-glow transition-all duration-300 ease-linear motion-reduce:transition-none"
+            className="h-full bg-[#38BDF8] transition-all duration-300 ease-linear"
             style={{ width: `${Math.min(100, (secondsLeft / totalSeconds) * 100)}%` }}
           />
         </div>
@@ -131,7 +131,7 @@ export default function StudyView() {
       </div>
 
       {/* Bottom Hint */}
-      <div className="text-center pb-1 text-xs font-semibold text-mute/80 uppercase tracking-wider">
+      <div className="text-center pb-1 font-impact uppercase text-xs text-[#8E9DB8] tracking-wider">
         Swipe cards or tap arrows to browse · Tap to flip
       </div>
     </div>

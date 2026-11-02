@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router';
+import HomeScreen from './screens/HomeScreen';
 import DeckScreen from './screens/DeckScreen';
 import PlaySetup from './screens/PlaySetup';
 import MatchmakingScreen from './screens/MatchmakingScreen';
@@ -11,7 +12,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Navigate to="/deck/everyday-essentials" replace />} />
+        <Route path="/" element={<HomeScreen />} />
         <Route path="/deck/:id" element={<DeckScreen />} />
         <Route path="/play/:id" element={<PlaySetup />} />
         <Route path="/matchmaking/:id" element={<MatchmakingScreen />} />
@@ -19,7 +20,7 @@ export default function App() {
         <Route path="/countdown/:id" element={<CountdownScreen />} />
         <Route path="/duel/:id" element={<DuelScreen />} />
         <Route path="/results/:id" element={<ResultsScreen />} />
-        <Route path="*" element={<Navigate to="/deck/everyday-essentials" replace />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   );

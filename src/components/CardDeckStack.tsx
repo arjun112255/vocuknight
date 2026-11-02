@@ -76,7 +76,7 @@ export default function CardDeckStack({
   const handleTouchEnd = () => {
     if (!touchStartRef.current) return;
     const dx = dragOffset.x;
-    const threshold = 55;
+    const threshold = 50;
 
     if (dx < -threshold && currentIndex < cardCount - 1) {
       goToNext();
@@ -110,7 +110,7 @@ export default function CardDeckStack({
   const peekCard2 = cards[currentIndex + 2];
   const wasStudied = flippedCardIds.has(currentCard.id);
 
-  const dragRotation = dragOffset.x * 0.06;
+  const dragRotation = dragOffset.x * 0.05;
   const cardStyle = isDragging
     ? {
         transform: `translate3d(${dragOffset.x}px, ${dragOffset.y}px, 0) rotate(${dragRotation}deg)`,
@@ -118,12 +118,12 @@ export default function CardDeckStack({
       }
     : slideDirection === 'left'
       ? {
-          transform: 'translate3d(-120%, 0, 0) rotate(-14deg)',
+          transform: 'translate3d(-120%, 0, 0) rotate(-12deg)',
           transition: 'transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1)',
         }
       : slideDirection === 'right'
         ? {
-            transform: 'translate3d(120%, 0, 0) rotate(14deg)',
+            transform: 'translate3d(120%, 0, 0) rotate(12deg)',
             transition: 'transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1)',
           }
         : undefined;
@@ -132,15 +132,15 @@ export default function CardDeckStack({
     <div className="flex flex-col items-center w-full max-w-[360px] mx-auto select-none">
       {/* Deck Indicator */}
       <div className="flex items-center justify-between w-full px-2 mb-3">
-        <span className="text-xs font-black italic uppercase tracking-wider text-cyan-glow flex items-center gap-1.5">
-          <DoodleScroll size={20} />
+        <span className="font-impact uppercase text-xs tracking-wider text-[#38BDF8] flex items-center gap-1.5">
+          <DoodleScroll size={18} />
           CARD {currentIndex + 1} OF {cardCount}
         </span>
         <span
-          className={`text-xs px-3 py-1 rounded-full font-black italic uppercase transition-colors ${
+          className={`font-impact uppercase text-xs px-3 py-1 rounded-full transition-colors ${
             wasStudied
-              ? 'bg-ok/20 text-ok border border-ok/40'
-              : 'bg-surface-card text-mute border border-line'
+              ? 'bg-[#005F73]/40 text-[#38BDF8] border border-[#0A9396]/60'
+              : 'bg-[#0E1528] text-[#8E9DB8] border border-[#1C2B4B]'
           }`}
         >
           {wasStudied ? '✓ STUDIED' : 'NOT FLIPPED'}
@@ -152,7 +152,7 @@ export default function CardDeckStack({
         {/* Peek Card 2 */}
         {peekCard2 && (
           <div
-            className="absolute w-full h-full rounded-3xl bg-surface border-2 border-line deck-card-peek-2 pointer-events-none"
+            className="absolute w-full h-full rounded-[24px] bg-[#0A1020] border border-[#16223B] deck-card-peek-2 pointer-events-none"
             aria-hidden="true"
           />
         )}
@@ -160,7 +160,7 @@ export default function CardDeckStack({
         {/* Peek Card 1 */}
         {peekCard1 && (
           <div
-            className="absolute w-full h-full rounded-3xl bg-surface-card border-2 border-line deck-card-peek-1 deck-card-shadow pointer-events-none"
+            className="absolute w-full h-full rounded-[24px] bg-[#0E1628] border border-[#1C2C4E] deck-card-peek-1 deck-card-shadow pointer-events-none"
             aria-hidden="true"
           />
         )}
@@ -173,7 +173,7 @@ export default function CardDeckStack({
           onTouchEnd={handleTouchEnd}
           style={cardStyle}
           className={[
-            'relative w-full h-full rounded-3xl border-2 border-cyan-glow/50 deck-card-shadow cursor-pointer',
+            'relative w-full h-full rounded-[24px] border border-[#38BDF8]/40 deck-card-shadow cursor-pointer',
             'transition-transform duration-500 preserve-3d',
             isFlipped ? 'rotate-y-180' : '',
           ].join(' ')}
@@ -186,10 +186,10 @@ export default function CardDeckStack({
           }
         >
           {/* FRONT FACE (Word) */}
-          <div className="absolute inset-0 w-full h-full rounded-3xl bg-surface p-6 flex flex-col justify-between backface-hidden border border-line">
+          <div className="absolute inset-0 w-full h-full rounded-[24px] bg-[#0E1528] p-6 flex flex-col justify-between backface-hidden border border-[#1C2C4E]">
             {/* Top row */}
             <div className="flex items-center justify-between">
-              <span className="text-xs font-black italic uppercase tracking-wider px-3 py-1 rounded-full bg-teal-dark/50 text-cyan-glow border border-cyan-glow/40">
+              <span className="font-impact uppercase text-xs tracking-wider px-3 py-1 rounded-full bg-[#005F73]/40 text-[#38BDF8] border border-[#0A9396]/40">
                 {currentCard.partOfSpeech}
               </span>
               <DoodleBook size={28} />
@@ -197,29 +197,29 @@ export default function CardDeckStack({
 
             {/* Center Word Display */}
             <div className="text-center my-auto">
-              <h2 className="text-3xl sm:text-4xl font-black italic uppercase text-white tracking-tight break-words text-extrude-lg">
+              <h2 className="font-impact uppercase text-3xl sm:text-4xl text-white tracking-wide break-words text-extrude">
                 {currentCard.word}
               </h2>
-              <div className="w-16 h-1.5 bg-cyan-glow rounded-full mx-auto mt-4" />
+              <div className="w-16 h-1 bg-[#38BDF8] rounded-full mx-auto mt-4" />
             </div>
 
             {/* Bottom prompt */}
-            <div className="text-center pt-3 border-t border-line">
-              <span className="text-xs text-mute font-black italic uppercase flex items-center justify-center gap-2">
+            <div className="text-center pt-3 border-t border-[#1C2C4E]">
+              <span className="font-impact uppercase text-xs text-[#8E9DB8] flex items-center justify-center gap-2">
                 <span>TAP CARD TO FLIP</span>
-                <span className="text-cyan-glow text-base">↻</span>
+                <span className="text-[#38BDF8] text-base">↻</span>
               </span>
             </div>
           </div>
 
           {/* BACK FACE (Definition & Example) */}
-          <div className="absolute inset-0 w-full h-full rounded-3xl bg-surface-card p-6 flex flex-col justify-between backface-hidden rotate-y-180 border-2 border-cyan-glow">
+          <div className="absolute inset-0 w-full h-full rounded-[24px] bg-[#111A30] p-6 flex flex-col justify-between backface-hidden rotate-y-180 border border-[#38BDF8]/60">
             {/* Back Header */}
-            <div className="flex items-center justify-between border-b border-line pb-2">
-              <span className="text-xl font-black italic uppercase text-white text-extrude-sm">
+            <div className="flex items-center justify-between border-b border-[#1C2C4E] pb-2">
+              <span className="font-impact uppercase text-xl text-white">
                 {currentCard.word}
               </span>
-              <span className="text-xs font-black italic uppercase text-cyan-glow bg-teal-dark/60 px-2.5 py-1 rounded-full border border-cyan-glow/30">
+              <span className="font-impact uppercase text-xs text-[#38BDF8] bg-[#005F73]/40 px-2.5 py-0.5 rounded-full border border-[#0A9396]/40">
                 {currentCard.partOfSpeech}
               </span>
             </div>
@@ -227,45 +227,44 @@ export default function CardDeckStack({
             {/* Definition & Example */}
             <div className="my-auto space-y-3 text-left">
               <div>
-                <span className="text-xs font-black italic uppercase tracking-wider text-cyan-glow block mb-1">
-                  Definition
+                <span className="font-impact uppercase text-xs tracking-wider text-[#38BDF8] block mb-1">
+                  DEFINITION
                 </span>
-                <p className="text-base font-bold text-white leading-relaxed">
+                <p className="font-body text-sm font-semibold text-white leading-relaxed">
                   {currentCard.definition}
                 </p>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-surface border border-line">
-                <span className="text-xs font-black italic uppercase tracking-wider text-amber block mb-1">
-                  Example
+              <div className="p-3 rounded-xl bg-[#0A1020] border border-[#1C2C4E]">
+                <span className="font-impact uppercase text-xs tracking-wider text-[#EE9B00] block mb-1">
+                  EXAMPLE
                 </span>
-                <p className="text-xs sm:text-sm text-cyan-bright font-medium italic leading-snug">
+                <p className="font-body text-xs text-[#BAE6FD] leading-relaxed italic">
                   "{currentCard.example}"
                 </p>
               </div>
             </div>
 
             {/* Back Footer */}
-            <div className="text-center pt-2 border-t border-line flex items-center justify-between text-xs font-black italic uppercase text-mute">
+            <div className="text-center pt-2 border-t border-[#1C2C4E] flex items-center justify-between font-impact uppercase text-xs text-[#8E9DB8]">
               <span>SWIPE LEFT FOR NEXT ➔</span>
-              <span className="text-ok">STUDIED ✓</span>
+              <span className="text-[#10B981]">STUDIED ✓</span>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Bottom Navigation Buttons: EVERY button has a doodle icon! */}
+      {/* Bottom Navigation Buttons */}
       <div className="flex items-center justify-between w-full mt-5 gap-2.5">
         <button
           type="button"
           onClick={goToPrev}
           disabled={currentIndex === 0}
           className={[
-            'flex-1 py-3 px-3 rounded-xl border-2 font-black italic uppercase text-xs min-h-12 flex items-center justify-center gap-1.5',
-            'transition-transform active:scale-95 motion-reduce:transition-none',
+            'flex-1 py-3 px-3 rounded-xl border font-impact uppercase text-xs min-h-[48px] flex items-center justify-center gap-1.5 transition-all active:scale-95',
             currentIndex === 0
-              ? 'border-line text-mute/30 bg-surface/30 cursor-not-allowed'
-              : 'border-line bg-surface text-white hover:border-cyan-glow active:bg-surface-card',
+              ? 'border-[#18233C] text-white/30 bg-[#0A1020] cursor-not-allowed'
+              : 'border-[#1C2C4E] bg-[#0E1528] text-white hover:border-[#38BDF8] active:bg-[#121B32]',
           ].join(' ')}
           aria-label="Previous card"
         >
@@ -276,7 +275,7 @@ export default function CardDeckStack({
         <button
           type="button"
           onClick={handleFlip}
-          className="py-3 px-4 rounded-xl border-2 border-cyan-glow/50 bg-surface-card font-black italic uppercase text-xs min-h-12 flex items-center justify-center gap-1.5 text-cyan-glow active:scale-95 transition-transform"
+          className="py-3 px-4 rounded-xl border border-[#38BDF8]/50 bg-[#0E1528] font-impact uppercase text-xs min-h-[48px] flex items-center justify-center gap-1.5 text-[#38BDF8] active:scale-95 transition-all hover:bg-[#121B32]"
           aria-label="Flip card"
         >
           <DoodleBook size={18} />
@@ -288,11 +287,10 @@ export default function CardDeckStack({
           onClick={goToNext}
           disabled={currentIndex === cardCount - 1}
           className={[
-            'flex-1 py-3 px-3 rounded-xl border-2 font-black italic uppercase text-xs min-h-12 flex items-center justify-center gap-1.5',
-            'transition-transform active:scale-95 motion-reduce:transition-none',
+            'flex-1 py-3 px-3 rounded-xl border font-impact uppercase text-xs min-h-[48px] flex items-center justify-center gap-1.5 transition-all active:scale-95',
             currentIndex === cardCount - 1
-              ? 'border-line text-mute/30 bg-surface/30 cursor-not-allowed'
-              : 'border-cyan-glow bg-teal text-white shadow-md active:scale-95 text-extrude-sm',
+              ? 'border-[#18233C] text-white/30 bg-[#0A1020] cursor-not-allowed'
+              : 'border-[#38BDF8]/60 bg-[#0A9396] text-white shadow-md hover:bg-[#005F73]',
           ].join(' ')}
           aria-label="Next card"
         >
