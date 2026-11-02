@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router';
+import MatiksArena from './screens/MatiksArena';
 import HomeScreen from './screens/HomeScreen';
 import DeckScreen from './screens/DeckScreen';
 import PlaySetup from './screens/PlaySetup';
@@ -12,7 +13,8 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<HomeScreen />} />
+        <Route path="/" element={<MatiksArena />} />
+        <Route path="/classic" element={<HomeScreen />} />
         <Route path="/deck/:id" element={<DeckScreen />} />
         <Route path="/play/:id" element={<PlaySetup />} />
         <Route path="/matchmaking/:id" element={<MatchmakingScreen />} />
