@@ -31,14 +31,14 @@ export default function MatchmakingScreen() {
 
   if (!deck || !opponentInfo || !engine) {
     return (
-      <div className="min-h-[100dvh] flex flex-col items-center justify-center p-5 safe-area bg-[#060913] text-white">
-        <p className="font-impact text-lg text-[#8E9DB8] mb-4">NO ACTIVE MATCH FOUND</p>
+      <div className="min-h-[100dvh] flex flex-col items-center justify-center p-5 safe-area bg-[#060913] text-white font-barriecito">
+        <p className="text-xl text-[#8E9DB8] mb-4">No Active Match Found</p>
         <button
           onClick={() => navigate('/')}
-          className="px-5 py-2.5 rounded-xl bg-[#0E1528] border border-[#1E2D4E] font-impact uppercase text-sm text-[#38BDF8] flex items-center gap-2"
+          className="px-5 py-2.5 rounded-xl bg-[#0E1528] border border-[#1E2D4E] text-base text-[#38BDF8] flex items-center gap-2"
         >
           <DoodleCastle size={20} />
-          <span>RETURN TO ARENA</span>
+          <span>Return to Arena</span>
         </button>
       </div>
     );
@@ -47,14 +47,14 @@ export default function MatchmakingScreen() {
   const isKnight = opponentInfo.type === 'knight';
 
   return (
-    <div className="min-h-[100dvh] flex flex-col justify-between safe-area max-w-[480px] mx-auto w-full px-5 py-8 bg-[#060913]">
+    <div className="min-h-[100dvh] flex flex-col justify-between safe-area max-w-[480px] mx-auto w-full px-5 py-8 bg-[#060913] font-barriecito">
       {/* Top Header */}
       <div className="text-center pt-2">
-        <span className="font-impact uppercase text-xs tracking-widest text-[#38BDF8]">
+        <span className="text-sm tracking-widest text-[#38BDF8]">
           {deck.title}
         </span>
-        <h1 className="font-impact uppercase text-3xl sm:text-4xl text-white mt-1 tracking-tight text-extrude">
-          {isFound ? 'MATCH FOUND!' : 'SEARCHING FOR MATCH...'}
+        <h1 className="text-3xl sm:text-4xl text-white mt-1 tracking-wide text-extrude">
+          {isFound ? 'Match Found!' : 'Searching for Match...'}
         </h1>
       </div>
 
@@ -66,19 +66,19 @@ export default function MatchmakingScreen() {
             <div className="w-20 h-20 rounded-2xl bg-[#0E172C] border border-[#38BDF8]/40 flex items-center justify-center overflow-hidden mb-3 doodle-sticker-glow">
               <DoodleKnight size={58} />
             </div>
-            <span className="font-impact uppercase text-xs text-[#38BDF8] tracking-wider">
-              YOU
+            <span className="text-xs text-[#38BDF8] tracking-wider">
+              You
             </span>
-            <span className="font-impact uppercase text-lg text-white mt-0.5">
-              PLAYER
+            <span className="text-xl text-white mt-0.5">
+              Player
             </span>
-            <span className="font-body text-xs text-[#8E9DB8] mt-1 font-semibold">RATING 1000</span>
+            <span className="font-body text-xs text-[#8E9DB8] mt-1 font-semibold">Rating 1000</span>
           </div>
 
           {/* Center VS Emblem with Swords */}
           <div className="flex flex-col items-center justify-center shrink-0 px-1">
             <div className="w-12 h-12 rounded-full bg-[#0E1628] border border-[#38BDF8]/40 flex items-center justify-center shadow-lg">
-              <span className="font-impact text-sm text-white">VS</span>
+              <span className="text-base text-white">VS</span>
             </div>
             <div className="mt-2">
               <DoodleSwords size={26} />
@@ -95,35 +95,35 @@ export default function MatchmakingScreen() {
               />
             </div>
             <span
-              className={`font-impact uppercase text-xs tracking-wider ${
+              className={`text-xs tracking-wider ${
                 isKnight ? 'text-[#EE9B00]' : 'text-[#38BDF8]'
               }`}
             >
-              {isKnight ? 'KNIGHT' : 'SQUIRE'}
+              {isKnight ? 'Knight' : 'Squire'}
             </span>
-            <span className="font-impact uppercase text-lg text-white mt-0.5 truncate max-w-[110px]">
+            <span className="text-xl text-white mt-0.5 truncate max-w-[110px]">
               {opponentInfo.name}
             </span>
             <span className="font-body text-xs text-[#8E9DB8] mt-1 font-semibold">
-              {isKnight ? `RATING ${opponentInfo.rating}` : 'UNRANKED'}
+              {isKnight ? `Rating ${opponentInfo.rating}` : 'Unranked'}
             </span>
           </div>
         </div>
 
         {/* Alpha 1 Disclosure Badge */}
         <div className="mt-6 flex justify-center">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#0E1528] border border-[#1C2B4B] text-xs font-impact uppercase text-[#8E9DB8] shadow-md">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#0E1528] border border-[#1C2B4B] text-xs text-[#8E9DB8] shadow-md">
             <span>🤖</span>
-            <span>COMPUTER OPPONENT ({isKnight ? 'RANKED BOT' : 'PRACTICE BOT'})</span>
+            <span>Computer Opponent ({isKnight ? 'Ranked Bot' : 'Practice Bot'})</span>
           </div>
         </div>
       </div>
 
       {/* Bottom Loading Indicator */}
       <div className="w-full text-center pb-4">
-        <div className="flex justify-center items-center gap-2 text-[#38BDF8] text-xs font-impact uppercase tracking-wider">
+        <div className="flex justify-center items-center gap-2 text-[#38BDF8] text-sm tracking-wider">
           <div className="w-2 h-2 rounded-full bg-[#38BDF8] animate-pulse" />
-          <span>ENTERING STUDY WINDOW...</span>
+          <span>Entering Study Window...</span>
         </div>
       </div>
     </div>

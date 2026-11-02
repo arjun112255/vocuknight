@@ -34,26 +34,26 @@ export default function CountdownScreen() {
 
   if (!opponentInfo || !engine) {
     return (
-      <div className="min-h-[100dvh] flex flex-col items-center justify-center p-5 safe-area bg-[#060913] text-white">
-        <p className="font-impact text-lg text-[#8E9DB8] mb-4">NO ACTIVE MATCH FOUND</p>
+      <div className="min-h-[100dvh] flex flex-col items-center justify-center p-5 safe-area bg-[#060913] text-white font-barriecito">
+        <p className="text-xl text-[#8E9DB8] mb-4">No Active Match Found</p>
         <button
           onClick={() => navigate('/')}
-          className="px-5 py-2.5 rounded-xl bg-[#0E1528] border border-[#1E2D4E] font-impact uppercase text-sm text-[#38BDF8] flex items-center gap-2"
+          className="px-5 py-2.5 rounded-xl bg-[#0E1528] border border-[#1E2D4E] text-base text-[#38BDF8] flex items-center gap-2"
         >
           <DoodleCastle size={20} />
-          <span>RETURN TO ARENA</span>
+          <span>Return to Arena</span>
         </button>
       </div>
     );
   }
 
   return (
-    <div className="min-h-[100dvh] flex flex-col items-center justify-between safe-area max-w-[480px] mx-auto w-full px-5 py-10 bg-[#060913]">
+    <div className="min-h-[100dvh] flex flex-col items-center justify-between safe-area max-w-[480px] mx-auto w-full px-5 py-10 bg-[#060913] font-barriecito">
       {/* Top Banner */}
       <div className="flex items-center gap-2 pt-4">
         <DoodleTorch size={26} />
-        <span className="font-impact uppercase text-xs tracking-widest text-[#38BDF8]">
-          STUDY COMPLETE · PREPARE FOR BATTLE
+        <span className="text-sm tracking-widest text-[#38BDF8]">
+          Study Complete · Prepare for Battle
         </span>
         <DoodleTorch size={26} className="transform -scale-x-100" />
       </div>
@@ -64,25 +64,25 @@ export default function CountdownScreen() {
           <DoodleAvatar type={opponentInfo.type} name={opponentInfo.name} size={90} />
         </div>
 
-        <p className="font-impact uppercase text-xs tracking-wider text-[#8E9DB8] mb-2">
-          DUELING <span className="text-white">{opponentInfo.name}</span>
+        <p className="text-sm tracking-wider text-[#8E9DB8] mb-2">
+          Dueling <span className="text-white">{opponentInfo.name}</span>
         </p>
 
         {/* Animated Big Number */}
         <div
           key={count}
-          className="text-8xl sm:text-9xl font-impact text-white tracking-tighter transform transition-transform duration-300 scale-100 text-extrude-lg"
+          className="text-8xl sm:text-9xl text-white tracking-tighter transform transition-transform duration-300 scale-100 text-extrude-lg"
         >
           {count > 0 ? count : '⚔️'}
         </div>
 
-        <span className="font-impact uppercase text-sm text-[#38BDF8] tracking-widest mt-4">
-          {count > 0 ? 'Cards begin immediately' : 'DUEL!'}
+        <span className="text-lg text-[#38BDF8] tracking-widest mt-4">
+          {count > 0 ? 'Cards begin immediately' : 'Duel!'}
         </span>
       </div>
 
       {/* Bottom Hint */}
-      <div className="text-center pb-4 font-impact uppercase text-xs text-[#8E9DB8] tracking-wider">
+      <div className="text-center pb-4 text-xs text-[#8E9DB8] tracking-wider">
         60 Seconds · 1 Point per Correct Card
       </div>
     </div>

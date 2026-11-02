@@ -50,14 +50,14 @@ export default function StudyView() {
 
   if (studySet.length === 0) {
     return (
-      <div className="min-h-[100dvh] flex flex-col items-center justify-center p-4 safe-area bg-[#060913] text-white">
-        <p className="font-impact text-lg text-[#8E9DB8] mb-4">NO STUDY SET LOADED</p>
+      <div className="min-h-[100dvh] flex flex-col items-center justify-center p-4 safe-area bg-[#060913] text-white font-barriecito">
+        <p className="text-xl text-[#8E9DB8] mb-4">No Study Set Loaded</p>
         <button
           onClick={() => navigate('/')}
-          className="px-5 py-2.5 rounded-xl bg-[#0E1528] border border-[#1E2D4E] font-impact uppercase text-sm text-[#38BDF8] flex items-center gap-2"
+          className="px-5 py-2.5 rounded-xl bg-[#0E1528] border border-[#1E2D4E] text-base text-[#38BDF8] flex items-center gap-2"
         >
           <DoodleCastle size={20} />
-          <span>RETURN TO ARENA</span>
+          <span>Return to Arena</span>
         </button>
       </div>
     );
@@ -67,7 +67,7 @@ export default function StudyView() {
   const totalCards = studySet.length;
 
   return (
-    <div className="min-h-[100dvh] flex flex-col justify-between safe-area max-w-[480px] mx-auto w-full px-4 py-3 bg-[#060913]">
+    <div className="min-h-[100dvh] flex flex-col justify-between safe-area max-w-[480px] mx-auto w-full px-4 py-3 bg-[#060913] font-barriecito">
       {/* Top Header */}
       <div className="ios-matte-card rounded-[22px] p-3.5 shadow-lg">
         <div className="flex items-center justify-between gap-3">
@@ -76,21 +76,21 @@ export default function StudyView() {
             <DoodleHourglass size={30} />
             <div>
               <div className="flex items-center gap-2">
-                <span className="font-impact text-2xl text-white tabular-nums tracking-tight">
+                <span className="text-2xl text-white tabular-nums tracking-tight">
                   {formatTime(secondsLeft)}
                 </span>
-                <span className="font-impact uppercase text-xs px-2.5 py-0.5 rounded-full bg-[#0E1528] border border-[#38BDF8]/40 text-[#38BDF8]">
-                  {studiedCount}/{totalCards} STUDIED
+                <span className="text-xs px-2.5 py-0.5 rounded-full bg-[#0E1528] border border-[#38BDF8]/40 text-[#38BDF8]">
+                  {studiedCount}/{totalCards} Studied
                 </span>
               </div>
               <p className="font-body text-xs text-[#8E9DB8] mt-0.5">
                 {opponentInfo?.name ?? 'Opponent'}:{' '}
                 <span
                   className={
-                    isOpponentReady ? 'text-[#38BDF8] font-impact uppercase' : 'text-[#8E9DB8] italic'
+                    isOpponentReady ? 'text-[#38BDF8] font-semibold' : 'text-[#8E9DB8] italic'
                   }
                 >
-                  {isOpponentReady ? '✓ READY' : 'STUDYING...'}
+                  {isOpponentReady ? '✓ Ready' : 'Studying...'}
                 </span>
               </p>
             </div>
@@ -101,14 +101,14 @@ export default function StudyView() {
             onClick={handleReady}
             disabled={isReady}
             className={[
-              'px-4 py-2.5 rounded-xl min-h-[48px] font-impact uppercase text-xs flex items-center gap-2 transition-all active:scale-95 shadow-md',
+              'px-4 py-2.5 rounded-xl min-h-[48px] text-base flex items-center gap-2 transition-all active:scale-95 shadow-md',
               isReady
                 ? 'bg-[#10B981]/20 text-[#10B981] border border-[#10B981]/40 cursor-default'
                 : 'bg-[#0A9396] text-white border border-[#38BDF8]/50 hover:bg-[#005F73]',
             ].join(' ')}
           >
             <DoodleTorch size={18} />
-            <span>{isReady ? 'READY ✓' : 'READY'}</span>
+            <span>{isReady ? 'Ready ✓' : 'Ready'}</span>
           </button>
         </div>
 
@@ -131,7 +131,7 @@ export default function StudyView() {
       </div>
 
       {/* Bottom Hint */}
-      <div className="text-center pb-1 font-impact uppercase text-xs text-[#8E9DB8] tracking-wider">
+      <div className="text-center pb-1 text-xs text-[#8E9DB8] tracking-wider">
         Swipe cards or tap arrows to browse · Tap to flip
       </div>
     </div>

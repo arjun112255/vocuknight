@@ -6,9 +6,9 @@ import { DoodleHourglass, DoodleSword, DoodleCastle } from '../components/doodle
 import { DoodleKnight, DoodleSquire } from '../components/doodles/DoodleCharacters';
 
 const WINDOWS: { value: StudyWindow; label: string; desc: string }[] = [
-  { value: 1, label: '1 MIN', desc: 'Sprint' },
-  { value: 3, label: '3 MIN', desc: 'Standard' },
-  { value: 5, label: '5 MIN', desc: 'Deep Dive' },
+  { value: 1, label: '1 Min', desc: 'Sprint' },
+  { value: 3, label: '3 Min', desc: 'Standard' },
+  { value: 5, label: '5 Min', desc: 'Deep Dive' },
 ];
 
 export default function PlaySetup() {
@@ -20,14 +20,14 @@ export default function PlaySetup() {
 
   if (!deck) {
     return (
-      <div className="min-h-[100dvh] flex flex-col items-center justify-center p-4 safe-area bg-[#060913] text-white">
-        <p className="font-impact text-lg text-[#8E9DB8] mb-4">DECK NOT FOUND</p>
+      <div className="min-h-[100dvh] flex flex-col items-center justify-center p-4 safe-area bg-[#060913] text-white font-barriecito">
+        <p className="text-xl text-[#8E9DB8] mb-4">Deck Not Found</p>
         <button
           onClick={() => navigate('/')}
-          className="px-5 py-2.5 rounded-xl bg-[#0E1528] border border-[#1E2D4E] font-impact uppercase text-sm text-[#38BDF8] flex items-center gap-2"
+          className="px-5 py-2.5 rounded-xl bg-[#0E1528] border border-[#1E2D4E] text-base text-[#38BDF8] flex items-center gap-2"
         >
           <DoodleCastle size={20} />
-          <span>RETURN TO ARENA</span>
+          <span>Return to Arena</span>
         </button>
       </div>
     );
@@ -39,23 +39,23 @@ export default function PlaySetup() {
   };
 
   return (
-    <div className="min-h-[100dvh] flex flex-col justify-between safe-area max-w-[480px] mx-auto w-full px-5 py-6 bg-[#060913]">
+    <div className="min-h-[100dvh] flex flex-col justify-between safe-area max-w-[480px] mx-auto w-full px-5 py-6 bg-[#060913] font-barriecito">
       <div>
         {/* Top Header */}
         <div className="flex items-center justify-between mb-4 pb-2 border-b border-[#18233C]">
           <button
             onClick={() => navigate('/')}
-            className="text-white/80 hover:text-white font-impact uppercase text-sm min-h-12 flex items-center gap-2 active:scale-95 transition-transform"
+            className="text-white/80 hover:text-white text-base min-h-12 flex items-center gap-2 active:scale-95 transition-transform"
           >
             <DoodleCastle size={20} />
-            <span>← ARENA</span>
+            <span>← Arena</span>
           </button>
-          <span className="font-impact uppercase text-xs px-3 py-1 rounded-full bg-[#0E1628] border border-[#38BDF8]/40 tracking-wider text-[#38BDF8]">
-            MATCH CONFIG
+          <span className="text-xs px-3 py-1 rounded-full bg-[#0E1628] border border-[#38BDF8]/40 tracking-wider text-[#38BDF8]">
+            Match Config
           </span>
         </div>
 
-        <h1 className="font-impact uppercase text-3xl sm:text-4xl text-white tracking-tight leading-tight text-extrude">
+        <h1 className="text-3xl sm:text-4xl text-white tracking-wide leading-tight text-extrude">
           {deck.title}
         </h1>
         <p className="font-body text-xs text-[#8E9DB8] mt-1">
@@ -66,8 +66,8 @@ export default function PlaySetup() {
         <section className="mt-6">
           <div className="flex items-center gap-2 mb-2.5">
             <DoodleHourglass size={18} />
-            <h2 className="font-impact uppercase text-xs tracking-wider text-[#38BDF8]">
-              STUDY WINDOW
+            <h2 className="text-sm tracking-wider text-[#38BDF8]">
+              Study Window
             </h2>
           </div>
 
@@ -91,9 +91,9 @@ export default function PlaySetup() {
                   ].join(' ')}
                 >
                   <DoodleHourglass size={20} className="mb-1" />
-                  <span className="block font-impact uppercase text-base leading-none text-white">{label}</span>
-                  <span className={`block font-impact uppercase text-xs mt-1 ${isSelected ? 'text-[#38BDF8]' : 'text-[#8E9DB8]'}`}>
-                    {cardCount} CARDS
+                  <span className="block text-lg leading-none text-white">{label}</span>
+                  <span className={`block text-xs mt-1 ${isSelected ? 'text-[#38BDF8]' : 'text-[#8E9DB8]'}`}>
+                    {cardCount} Cards
                   </span>
                   <span className={`block font-body text-[10px] mt-0.5 ${isSelected ? 'text-white/90' : 'text-[#8E9DB8]'}`}>
                     {desc}
@@ -106,8 +106,8 @@ export default function PlaySetup() {
 
         {/* 2. Opponent Tier Selection */}
         <section className="mt-6">
-          <h2 className="font-impact uppercase text-xs tracking-wider text-[#38BDF8] mb-2.5">
-            OPPONENT TIER
+          <h2 className="text-sm tracking-wider text-[#38BDF8] mb-2.5">
+            Opponent Tier
           </h2>
 
           <div className="grid grid-cols-2 gap-3">
@@ -124,12 +124,12 @@ export default function PlaySetup() {
             >
               <div className="flex items-center justify-between mb-2">
                 <DoodleSquire size={38} />
-                <span className="font-impact uppercase text-[10px] px-2 py-0.5 rounded-full bg-[#005F73]/50 text-[#38BDF8] border border-[#0A9396]/40">
-                  PRACTICE
+                <span className="text-[11px] px-2.5 py-0.5 rounded-full bg-[#005F73]/50 text-[#38BDF8] border border-[#0A9396]/40">
+                  Practice
                 </span>
               </div>
               <div>
-                <span className="block font-impact uppercase text-lg text-white">SQUIRE</span>
+                <span className="block text-xl text-white">Squire</span>
                 <span className="block font-body text-xs text-[#8E9DB8] mt-0.5">
                   Relaxed pace · No rating loss
                 </span>
@@ -149,12 +149,12 @@ export default function PlaySetup() {
             >
               <div className="flex items-center justify-between mb-2">
                 <DoodleKnight size={38} />
-                <span className="font-impact uppercase text-[10px] px-2 py-0.5 rounded-full bg-[#EE9B00]/20 text-[#EE9B00] border border-[#EE9B00]/40">
-                  RANKED
+                <span className="text-[11px] px-2.5 py-0.5 rounded-full bg-[#EE9B00]/20 text-[#EE9B00] border border-[#EE9B00]/40">
+                  Ranked
                 </span>
               </div>
               <div>
-                <span className="block font-impact uppercase text-lg text-white">KNIGHT</span>
+                <span className="block text-xl text-white">Knight</span>
                 <span className="block font-body text-xs text-[#EE9B00] mt-0.5">
                   Competitive Elo · Fast pace
                 </span>
@@ -168,10 +168,10 @@ export default function PlaySetup() {
       <div className="pt-6 pb-2">
         <button
           onClick={handleStart}
-          className="w-full py-4 px-6 rounded-2xl font-impact uppercase text-xl min-h-[54px] flex items-center justify-center gap-3 bg-[#0A9396] text-white border border-[#38BDF8]/60 shadow-[0_4px_20px_rgba(10,147,150,0.4)] transition-all active:scale-[0.98] hover:bg-[#005F73]"
+          className="w-full py-4 px-6 rounded-2xl text-2xl min-h-[54px] flex items-center justify-center gap-3 bg-[#0A9396] text-white border border-[#38BDF8]/60 shadow-[0_4px_20px_rgba(10,147,150,0.4)] transition-all active:scale-[0.98] hover:bg-[#005F73]"
         >
           <DoodleSword size={26} />
-          <span>START MATCH ({studyWindow} MIN)</span>
+          <span>Start Match ({studyWindow} Min)</span>
         </button>
       </div>
     </div>

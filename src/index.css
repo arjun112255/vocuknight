@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'Barriecito';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/Barriecito-Regular.ttf') format('truetype');
+}
+
 @theme {
   /* Ocean Sunset & Night Medieval Theme */
   --color-ink: #000000;
@@ -32,17 +40,22 @@
   --color-bad-bg: #7F1D1D44;
 }
 
-/* Typography: Impact default as requested */
+/* Typography: Barriecito as primary display font */
+.font-barriecito {
+  font-family: 'Barriecito', cursive, display, sans-serif;
+  letter-spacing: 0.02em;
+}
+
 .font-impact {
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-  letter-spacing: 0.03em;
+  font-family: 'Barriecito', cursive, display, sans-serif;
+  letter-spacing: 0.02em;
 }
 
 .font-body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif;
 }
 
-/* 3D Extruded Block Shadow (matching the NEW YORK reference lettering) */
+/* 3D Extruded Block Shadow (tuned for Barriecito's organic curves) */
 .text-extrude-sm {
   text-shadow: 1.5px 1.5px 0 #000, 2px 2px 0 #000;
 }
@@ -113,12 +126,12 @@
   opacity: 0.5;
 }
 
-/* Base Body: Black with a hint of deep blue & Impact font */
+/* Base Body: Black with a hint of deep blue & Barriecito font */
 body {
   margin: 0;
   background-color: var(--color-bg-base);
   color: #FFFFFF;
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-family: 'Barriecito', cursive, display, sans-serif;
   letter-spacing: 0.02em;
   min-height: 100dvh;
   -webkit-font-smoothing: antialiased;

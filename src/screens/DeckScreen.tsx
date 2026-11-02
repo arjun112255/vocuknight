@@ -9,14 +9,14 @@ export default function DeckScreen() {
 
   if (!deck) {
     return (
-      <div className="min-h-[100dvh] flex flex-col items-center justify-center p-4 safe-area bg-[#060913] text-white">
-        <p className="font-impact text-lg text-[#8E9DB8] mb-4">DECK NOT FOUND</p>
+      <div className="min-h-[100dvh] flex flex-col items-center justify-center p-4 safe-area bg-[#060913] text-white font-barriecito">
+        <p className="text-xl text-[#8E9DB8] mb-4">Deck Not Found</p>
         <button
           onClick={() => navigate('/')}
-          className="px-5 py-2.5 rounded-xl bg-[#0E1528] border border-[#1E2D4E] font-impact uppercase text-sm text-[#38BDF8] flex items-center gap-2"
+          className="px-5 py-2.5 rounded-xl bg-[#0E1528] border border-[#1E2D4E] text-base text-[#38BDF8] flex items-center gap-2"
         >
           <DoodleCastle size={20} />
-          <span>RETURN TO ARENA</span>
+          <span>Return to Arena</span>
         </button>
       </div>
     );
@@ -41,18 +41,18 @@ export default function DeckScreen() {
   };
 
   return (
-    <div className="min-h-[100dvh] flex flex-col justify-between safe-area max-w-[480px] mx-auto w-full px-5 py-6 bg-[#060913]">
+    <div className="min-h-[100dvh] flex flex-col justify-between safe-area max-w-[480px] mx-auto w-full px-5 py-6 bg-[#060913] font-barriecito">
       {/* Top Bar: Medieval Header */}
       <div className="flex items-center justify-between border-b border-[#18233C] pb-3">
         <button
           onClick={() => navigate('/')}
-          className="flex items-center gap-2 text-white/80 hover:text-white font-impact uppercase text-sm active:scale-95 transition-all"
+          className="flex items-center gap-2 text-white/80 hover:text-white text-base active:scale-95 transition-all"
         >
           <DoodleCastle size={22} />
-          <span>← ARENA</span>
+          <span>← Arena</span>
         </button>
-        <span className="font-impact uppercase text-xs px-3 py-1 rounded-full bg-[#0E1628] border border-[#38BDF8]/40 tracking-wider text-[#38BDF8]">
-          DECK VAULT
+        <span className="text-xs px-3 py-1 rounded-full bg-[#0E1628] border border-[#38BDF8]/40 tracking-wider text-[#38BDF8]">
+          Deck Vault
         </span>
       </div>
 
@@ -62,11 +62,11 @@ export default function DeckScreen() {
           {renderHeroDoodle()}
         </div>
 
-        <span className="font-impact uppercase text-xs tracking-widest px-3.5 py-1 rounded-full bg-[#005F73]/40 text-[#38BDF8] border border-[#0A9396]/40">
-          {deck.category} · LEVEL {deck.level}
+        <span className="text-xs tracking-widest px-3.5 py-1 rounded-full bg-[#005F73]/40 text-[#38BDF8] border border-[#0A9396]/40">
+          {deck.category} · Level {deck.level}
         </span>
 
-        <h1 className="font-impact uppercase text-4xl sm:text-5xl text-white mt-4 tracking-tight leading-none text-extrude">
+        <h1 className="text-4xl sm:text-5xl text-white mt-4 tracking-wide leading-tight text-extrude">
           {deck.title}
         </h1>
 
@@ -77,16 +77,16 @@ export default function DeckScreen() {
         {/* Floating Stats Badges */}
         <div className="grid grid-cols-3 gap-2 mt-6 p-3.5 rounded-2xl ios-matte-card">
           <div className="text-center">
-            <span className="font-impact uppercase text-[11px] text-[#8E9DB8] block tracking-wider">CARDS</span>
-            <span className="font-impact text-2xl text-white text-extrude-sm">{deck.words.length}</span>
+            <span className="text-xs text-[#8E9DB8] block tracking-wider">Cards</span>
+            <span className="text-2xl text-white text-extrude-sm">{deck.words.length}</span>
           </div>
           <div className="text-center border-x border-[#1C2B4B]">
-            <span className="font-impact uppercase text-[11px] text-[#8E9DB8] block tracking-wider">RATING</span>
-            <span className="font-impact text-2xl text-[#38BDF8] text-extrude-sm">1000</span>
+            <span className="text-xs text-[#8E9DB8] block tracking-wider">Rating</span>
+            <span className="text-2xl text-[#38BDF8] text-extrude-sm">1000</span>
           </div>
           <div className="text-center">
-            <span className="font-impact uppercase text-[11px] text-[#8E9DB8] block tracking-wider">LANG</span>
-            <span className="font-impact text-2xl text-white text-extrude-sm uppercase">{deck.language}</span>
+            <span className="text-xs text-[#8E9DB8] block tracking-wider">Lang</span>
+            <span className="text-2xl text-white text-extrude-sm uppercase">{deck.language}</span>
           </div>
         </div>
       </div>
@@ -95,11 +95,11 @@ export default function DeckScreen() {
       <div className="pb-4">
         <button
           onClick={() => navigate(`/play/${id}`)}
-          className="w-full py-4 px-6 rounded-2xl font-impact uppercase text-2xl min-h-[54px] flex items-center justify-center gap-3 bg-[#0A9396] text-white border border-[#38BDF8]/60 shadow-[0_4px_20px_rgba(10,147,150,0.4)] transition-all active:scale-[0.98] hover:bg-[#005F73]"
+          className="w-full py-4 px-6 rounded-2xl text-2xl min-h-[54px] flex items-center justify-center gap-3 bg-[#0A9396] text-white border border-[#38BDF8]/60 shadow-[0_4px_20px_rgba(10,147,150,0.4)] transition-all active:scale-[0.98] hover:bg-[#005F73]"
           aria-label={`Play deck ${deck.title}`}
         >
           <DoodleSword size={26} />
-          <span>CONFIGURE MATCH</span>
+          <span>Configure Match</span>
         </button>
       </div>
     </div>

@@ -129,21 +129,21 @@ export default function CardDeckStack({
         : undefined;
 
   return (
-    <div className="flex flex-col items-center w-full max-w-[360px] mx-auto select-none">
+    <div className="flex flex-col items-center w-full max-w-[360px] mx-auto select-none font-barriecito">
       {/* Deck Indicator */}
       <div className="flex items-center justify-between w-full px-2 mb-3">
-        <span className="font-impact uppercase text-xs tracking-wider text-[#38BDF8] flex items-center gap-1.5">
+        <span className="text-sm tracking-wider text-[#38BDF8] flex items-center gap-1.5">
           <DoodleScroll size={18} />
-          CARD {currentIndex + 1} OF {cardCount}
+          Card {currentIndex + 1} of {cardCount}
         </span>
         <span
-          className={`font-impact uppercase text-xs px-3 py-1 rounded-full transition-colors ${
+          className={`text-xs px-3 py-1 rounded-full transition-colors ${
             wasStudied
               ? 'bg-[#005F73]/40 text-[#38BDF8] border border-[#0A9396]/60'
               : 'bg-[#0E1528] text-[#8E9DB8] border border-[#1C2B4B]'
           }`}
         >
-          {wasStudied ? '✓ STUDIED' : 'NOT FLIPPED'}
+          {wasStudied ? '✓ Studied' : 'Not Flipped'}
         </span>
       </div>
 
@@ -189,7 +189,7 @@ export default function CardDeckStack({
           <div className="absolute inset-0 w-full h-full rounded-[24px] bg-[#0E1528] p-6 flex flex-col justify-between backface-hidden border border-[#1C2C4E]">
             {/* Top row */}
             <div className="flex items-center justify-between">
-              <span className="font-impact uppercase text-xs tracking-wider px-3 py-1 rounded-full bg-[#005F73]/40 text-[#38BDF8] border border-[#0A9396]/40">
+              <span className="text-xs tracking-wider px-3 py-1 rounded-full bg-[#005F73]/40 text-[#38BDF8] border border-[#0A9396]/40 capitalize">
                 {currentCard.partOfSpeech}
               </span>
               <DoodleBook size={28} />
@@ -197,7 +197,7 @@ export default function CardDeckStack({
 
             {/* Center Word Display */}
             <div className="text-center my-auto">
-              <h2 className="font-impact uppercase text-3xl sm:text-4xl text-white tracking-wide break-words text-extrude">
+              <h2 className="text-4xl sm:text-5xl text-white tracking-wide break-words text-extrude">
                 {currentCard.word}
               </h2>
               <div className="w-16 h-1 bg-[#38BDF8] rounded-full mx-auto mt-4" />
@@ -205,8 +205,8 @@ export default function CardDeckStack({
 
             {/* Bottom prompt */}
             <div className="text-center pt-3 border-t border-[#1C2C4E]">
-              <span className="font-impact uppercase text-xs text-[#8E9DB8] flex items-center justify-center gap-2">
-                <span>TAP CARD TO FLIP</span>
+              <span className="text-xs text-[#8E9DB8] flex items-center justify-center gap-2">
+                <span>Tap Card to Flip</span>
                 <span className="text-[#38BDF8] text-base">↻</span>
               </span>
             </div>
@@ -216,10 +216,10 @@ export default function CardDeckStack({
           <div className="absolute inset-0 w-full h-full rounded-[24px] bg-[#111A30] p-6 flex flex-col justify-between backface-hidden rotate-y-180 border border-[#38BDF8]/60">
             {/* Back Header */}
             <div className="flex items-center justify-between border-b border-[#1C2C4E] pb-2">
-              <span className="font-impact uppercase text-xl text-white">
+              <span className="text-2xl text-white">
                 {currentCard.word}
               </span>
-              <span className="font-impact uppercase text-xs text-[#38BDF8] bg-[#005F73]/40 px-2.5 py-0.5 rounded-full border border-[#0A9396]/40">
+              <span className="text-xs text-[#38BDF8] bg-[#005F73]/40 px-2.5 py-0.5 rounded-full border border-[#0A9396]/40 capitalize">
                 {currentCard.partOfSpeech}
               </span>
             </div>
@@ -227,8 +227,8 @@ export default function CardDeckStack({
             {/* Definition & Example */}
             <div className="my-auto space-y-3 text-left">
               <div>
-                <span className="font-impact uppercase text-xs tracking-wider text-[#38BDF8] block mb-1">
-                  DEFINITION
+                <span className="text-xs tracking-wider text-[#38BDF8] block mb-1">
+                  Definition
                 </span>
                 <p className="font-body text-sm font-semibold text-white leading-relaxed">
                   {currentCard.definition}
@@ -236,8 +236,8 @@ export default function CardDeckStack({
               </div>
 
               <div className="p-3 rounded-xl bg-[#0A1020] border border-[#1C2C4E]">
-                <span className="font-impact uppercase text-xs tracking-wider text-[#EE9B00] block mb-1">
-                  EXAMPLE
+                <span className="text-xs tracking-wider text-[#EE9B00] block mb-1">
+                  Example
                 </span>
                 <p className="font-body text-xs text-[#BAE6FD] leading-relaxed italic">
                   "{currentCard.example}"
@@ -246,9 +246,9 @@ export default function CardDeckStack({
             </div>
 
             {/* Back Footer */}
-            <div className="text-center pt-2 border-t border-[#1C2C4E] flex items-center justify-between font-impact uppercase text-xs text-[#8E9DB8]">
-              <span>SWIPE LEFT FOR NEXT ➔</span>
-              <span className="text-[#10B981]">STUDIED ✓</span>
+            <div className="text-center pt-2 border-t border-[#1C2C4E] flex items-center justify-between text-xs text-[#8E9DB8]">
+              <span>Swipe left for next ➔</span>
+              <span className="text-[#10B981]">Studied ✓</span>
             </div>
           </div>
         </div>
@@ -261,7 +261,7 @@ export default function CardDeckStack({
           onClick={goToPrev}
           disabled={currentIndex === 0}
           className={[
-            'flex-1 py-3 px-3 rounded-xl border font-impact uppercase text-xs min-h-[48px] flex items-center justify-center gap-1.5 transition-all active:scale-95',
+            'flex-1 py-3 px-3 rounded-xl border text-sm min-h-[48px] flex items-center justify-center gap-1.5 transition-all active:scale-95',
             currentIndex === 0
               ? 'border-[#18233C] text-white/30 bg-[#0A1020] cursor-not-allowed'
               : 'border-[#1C2C4E] bg-[#0E1528] text-white hover:border-[#38BDF8] active:bg-[#121B32]',
@@ -269,17 +269,17 @@ export default function CardDeckStack({
           aria-label="Previous card"
         >
           <DoodleScroll size={18} />
-          <span>PREV</span>
+          <span>Prev</span>
         </button>
 
         <button
           type="button"
           onClick={handleFlip}
-          className="py-3 px-4 rounded-xl border border-[#38BDF8]/50 bg-[#0E1528] font-impact uppercase text-xs min-h-[48px] flex items-center justify-center gap-1.5 text-[#38BDF8] active:scale-95 transition-all hover:bg-[#121B32]"
+          className="py-3 px-4 rounded-xl border border-[#38BDF8]/50 bg-[#0E1528] text-sm min-h-[48px] flex items-center justify-center gap-1.5 text-[#38BDF8] active:scale-95 transition-all hover:bg-[#121B32]"
           aria-label="Flip card"
         >
           <DoodleBook size={18} />
-          <span>FLIP</span>
+          <span>Flip</span>
         </button>
 
         <button
@@ -287,7 +287,7 @@ export default function CardDeckStack({
           onClick={goToNext}
           disabled={currentIndex === cardCount - 1}
           className={[
-            'flex-1 py-3 px-3 rounded-xl border font-impact uppercase text-xs min-h-[48px] flex items-center justify-center gap-1.5 transition-all active:scale-95',
+            'flex-1 py-3 px-3 rounded-xl border text-sm min-h-[48px] flex items-center justify-center gap-1.5 transition-all active:scale-95',
             currentIndex === cardCount - 1
               ? 'border-[#18233C] text-white/30 bg-[#0A1020] cursor-not-allowed'
               : 'border-[#38BDF8]/60 bg-[#0A9396] text-white shadow-md hover:bg-[#005F73]',
@@ -295,7 +295,7 @@ export default function CardDeckStack({
           aria-label="Next card"
         >
           <DoodleSword size={18} />
-          <span>NEXT</span>
+          <span>Next</span>
         </button>
       </div>
     </div>

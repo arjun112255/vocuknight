@@ -66,7 +66,7 @@ export default function HomeScreen() {
   };
 
   return (
-    <div className="min-h-[100dvh] flex flex-col bg-[#060913] text-white safe-area">
+    <div className="min-h-[100dvh] flex flex-col bg-[#060913] text-white safe-area font-barriecito">
       {/* Top Horizontal Navigation Bar */}
       <TopNav
         activeTab="play"
@@ -79,15 +79,15 @@ export default function HomeScreen() {
         <div className="text-center pt-1">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#005F73]/30 border border-[#0A9396]/40 mb-2">
             <span className="w-2 h-2 rounded-full bg-[#38BDF8] animate-pulse" />
-            <span className="font-impact uppercase text-xs tracking-widest text-[#38BDF8]">
-              ARENA READY
+            <span className="font-barriecito text-xs tracking-widest text-[#38BDF8]">
+              Arena Ready
             </span>
           </div>
-          <h1 className="font-impact uppercase text-3xl sm:text-4xl text-white tracking-tight leading-none text-extrude-sm">
-            VOCABULARY DUEL
+          <h1 className="font-barriecito text-3xl sm:text-4xl text-white tracking-wide leading-tight text-extrude-sm">
+            Vocabulary Duel
           </h1>
-          <p className="font-impact uppercase text-xs text-[#38BDF8] mt-1.5 tracking-wider">
-            TIMED STUDY · 60s CARD DUEL · REAL-TIME OPPONENT
+          <p className="font-barriecito text-sm text-[#38BDF8] mt-1 tracking-wide">
+            Timed Study · 60s Card Duel · Real-time Opponent
           </p>
         </div>
 
@@ -100,11 +100,11 @@ export default function HomeScreen() {
                 <DoodleCrown size={34} />
               </div>
               <div>
-                <span className="inline-block font-impact uppercase text-[11px] tracking-wider text-[#38BDF8] bg-[#0E1B36] px-2 py-0.5 rounded-full border border-[#1E305C]">
-                  ALL DECKS MIXED · 140 CARDS
+                <span className="inline-block font-barriecito text-xs tracking-wider text-[#38BDF8] bg-[#0E1B36] px-2.5 py-0.5 rounded-full border border-[#1E305C]">
+                  All Decks Mixed · 140 Cards
                 </span>
-                <h2 className="font-impact uppercase text-2xl text-white tracking-wide leading-tight mt-0.5">
-                  RANDOM DECK
+                <h2 className="font-barriecito text-2xl text-white tracking-wide leading-tight mt-0.5">
+                  Random Deck
                 </h2>
               </div>
             </div>
@@ -117,11 +117,11 @@ export default function HomeScreen() {
           {/* Option Controls: 1. Study Window */}
           <div className="mb-3.5">
             <div className="flex items-center justify-between mb-2">
-              <span className="font-impact uppercase text-xs tracking-wider text-[#38BDF8] flex items-center gap-1.5">
-                <DoodleHourglass size={14} />
-                STUDY WINDOW
+              <span className="font-barriecito text-sm tracking-wider text-[#38BDF8] flex items-center gap-1.5">
+                <DoodleHourglass size={16} />
+                Study Window
               </span>
-              <span className="font-impact uppercase text-[11px] text-white/70">
+              <span className="font-barriecito text-xs text-white/70">
                 {randomWindow === 1 ? '10 Cards' : randomWindow === 3 ? '20 Cards' : '30 Cards'}
               </span>
             </div>
@@ -135,14 +135,14 @@ export default function HomeScreen() {
                     type="button"
                     onClick={() => setRandomWindow(w)}
                     className={[
-                      'py-2 px-2 rounded-xl font-impact uppercase text-center border min-h-[46px] transition-all duration-150 flex flex-col items-center justify-center active:scale-95',
+                      'py-2 px-2 rounded-xl font-barriecito text-center border min-h-[48px] transition-all duration-150 flex flex-col items-center justify-center active:scale-95',
                       isSelected
                         ? 'bg-[#0A9396]/25 border-[#38BDF8] text-white shadow-[0_0_10px_rgba(56,189,248,0.25)]'
                         : 'bg-[#090F1E] border-[#1C2B4B] text-white/70 hover:border-[#38BDF8]/40 hover:text-white',
                     ].join(' ')}
                   >
-                    <span className="text-sm leading-none">{w} MIN</span>
-                    <span className={`text-[10px] mt-0.5 ${isSelected ? 'text-[#38BDF8]' : 'text-[#8E9DB8]'}`}>
+                    <span className="text-base leading-none">{w} Min</span>
+                    <span className={`text-xs mt-0.5 ${isSelected ? 'text-[#38BDF8]' : 'text-[#8E9DB8]'}`}>
                       {w === 1 ? '10 cards' : w === 3 ? '20 cards' : '30 cards'}
                     </span>
                   </button>
@@ -153,9 +153,9 @@ export default function HomeScreen() {
 
           {/* Option Controls: 2. Opponent Tier */}
           <div className="mb-5">
-            <span className="font-impact uppercase text-xs tracking-wider text-[#38BDF8] flex items-center gap-1.5 mb-2">
-              <DoodleShield size={14} />
-              OPPONENT TIER
+            <span className="font-barriecito text-sm tracking-wider text-[#38BDF8] flex items-center gap-1.5 mb-2">
+              <DoodleShield size={16} />
+              Opponent Tier
             </span>
 
             <div className="grid grid-cols-2 gap-2.5">
@@ -164,7 +164,7 @@ export default function HomeScreen() {
                 type="button"
                 onClick={() => setRandomOpponent('squire')}
                 className={[
-                  'p-2.5 rounded-xl text-left border min-h-[52px] transition-all duration-150 flex items-center gap-2.5 active:scale-95',
+                  'p-2.5 rounded-xl text-left border min-h-[54px] transition-all duration-150 flex items-center gap-2.5 active:scale-95',
                   randomOpponent === 'squire'
                     ? 'bg-[#005F73]/25 border-[#38BDF8] text-white shadow-[0_0_10px_rgba(56,189,248,0.25)]'
                     : 'bg-[#090F1E] border-[#1C2B4B] text-white/70 hover:border-[#38BDF8]/40 hover:text-white',
@@ -172,8 +172,8 @@ export default function HomeScreen() {
               >
                 <DoodleSquire size={28} />
                 <div className="overflow-hidden">
-                  <span className="block font-impact uppercase text-sm leading-tight text-white">
-                    SQUIRE
+                  <span className="block font-barriecito text-base leading-tight text-white">
+                    Squire
                   </span>
                   <span className="block font-body text-[10px] text-[#8E9DB8] truncate">
                     Casual · No rating loss
@@ -186,7 +186,7 @@ export default function HomeScreen() {
                 type="button"
                 onClick={() => setRandomOpponent('knight')}
                 className={[
-                  'p-2.5 rounded-xl text-left border min-h-[52px] transition-all duration-150 flex items-center gap-2.5 active:scale-95',
+                  'p-2.5 rounded-xl text-left border min-h-[54px] transition-all duration-150 flex items-center gap-2.5 active:scale-95',
                   randomOpponent === 'knight'
                     ? 'bg-[#EE9B00]/20 border-[#EE9B00] text-white shadow-[0_0_10px_rgba(238,155,0,0.25)]'
                     : 'bg-[#090F1E] border-[#1C2B4B] text-white/70 hover:border-[#EE9B00]/40 hover:text-white',
@@ -194,8 +194,8 @@ export default function HomeScreen() {
               >
                 <DoodleKnight size={28} />
                 <div className="overflow-hidden">
-                  <span className="block font-impact uppercase text-sm leading-tight text-white">
-                    KNIGHT
+                  <span className="block font-barriecito text-base leading-tight text-white">
+                    Knight
                   </span>
                   <span className="block font-body text-[10px] text-[#EE9B00] truncate">
                     Ranked · Elo stakes
@@ -209,11 +209,11 @@ export default function HomeScreen() {
           <button
             type="button"
             onClick={handleStartRandomMatch}
-            className="w-full py-3.5 px-4 rounded-xl font-impact uppercase text-lg min-h-[52px] flex items-center justify-center gap-2.5 bg-[#0A9396] text-white border border-[#38BDF8]/60 shadow-[0_4px_16px_rgba(10,147,150,0.4)] transition-all duration-150 hover:bg-[#005F73] active:scale-[0.98]"
+            className="w-full py-3.5 px-4 rounded-xl font-barriecito text-xl min-h-[52px] flex items-center justify-center gap-2.5 bg-[#0A9396] text-white border border-[#38BDF8]/60 shadow-[0_4px_16px_rgba(10,147,150,0.4)] transition-all duration-150 hover:bg-[#005F73] active:scale-[0.98]"
             aria-label="Start Random Deck Match"
           >
             <DoodleTorch size={22} />
-            <span>START RANDOM DUEL ({randomWindow} MIN)</span>
+            <span>Start Random Duel ({randomWindow} Min)</span>
           </button>
         </section>
 
@@ -226,11 +226,11 @@ export default function HomeScreen() {
                 <DoodleBook size={34} />
               </div>
               <div>
-                <span className="inline-block font-impact uppercase text-[11px] tracking-wider text-[#EE9B00] bg-[#1E1910] px-2 py-0.5 rounded-full border border-[#422C10]">
-                  5 THEMATIC REALMS
+                <span className="inline-block font-barriecito text-xs tracking-wider text-[#EE9B00] bg-[#1E1910] px-2.5 py-0.5 rounded-full border border-[#422C10]">
+                  5 Thematic Realms
                 </span>
-                <h2 className="font-impact uppercase text-2xl text-white tracking-wide leading-tight mt-0.5">
-                  SELECT DECK
+                <h2 className="font-barriecito text-2xl text-white tracking-wide leading-tight mt-0.5">
+                  Select Deck
                 </h2>
               </div>
             </div>
@@ -258,7 +258,7 @@ export default function HomeScreen() {
                     {getDeckDoodle(deck.id)}
                   </div>
                   <div className="overflow-hidden">
-                    <span className="block font-impact uppercase text-base text-white tracking-wide truncate group-hover:text-[#38BDF8] transition-colors">
+                    <span className="block font-barriecito text-lg text-white tracking-wide truncate group-hover:text-[#38BDF8] transition-colors">
                       {deck.title}
                     </span>
                     <span className="block font-body text-[11px] text-[#8E9DB8] truncate">
@@ -269,8 +269,8 @@ export default function HomeScreen() {
 
                 <div className="shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#0E1628] border border-[#1E2D4E] group-hover:border-[#38BDF8] transition-colors">
                   <DoodleSword size={16} />
-                  <span className="font-impact uppercase text-xs text-white group-hover:text-[#38BDF8]">
-                    PLAY
+                  <span className="font-barriecito text-sm text-white group-hover:text-[#38BDF8]">
+                    Play
                   </span>
                 </div>
               </button>
@@ -288,7 +288,7 @@ export default function HomeScreen() {
               <div className="flex items-center gap-2.5">
                 {getDeckDoodle(selectedDeck.id)}
                 <div>
-                  <h3 className="font-impact uppercase text-xl text-white leading-none">
+                  <h3 className="font-barriecito text-2xl text-white leading-none">
                     {selectedDeck.title}
                   </h3>
                   <span className="font-body text-xs text-[#38BDF8]">
@@ -307,9 +307,9 @@ export default function HomeScreen() {
 
             {/* Study Window */}
             <div>
-              <span className="font-impact uppercase text-xs tracking-wider text-[#38BDF8] flex items-center gap-1.5 mb-2">
-                <DoodleHourglass size={14} />
-                STUDY WINDOW
+              <span className="font-barriecito text-sm tracking-wider text-[#38BDF8] flex items-center gap-1.5 mb-2">
+                <DoodleHourglass size={16} />
+                Study Window
               </span>
               <div className="grid grid-cols-3 gap-2">
                 {([1, 3, 5] as StudyWindow[]).map((w) => {
@@ -320,14 +320,14 @@ export default function HomeScreen() {
                       type="button"
                       onClick={() => setDeckWindow(w)}
                       className={[
-                        'py-2 px-1 rounded-xl font-impact uppercase text-center border min-h-[46px] transition-all flex flex-col items-center justify-center active:scale-95',
+                        'py-2 px-1 rounded-xl font-barriecito text-center border min-h-[48px] transition-all flex flex-col items-center justify-center active:scale-95',
                         isSelected
                           ? 'bg-[#0A9396]/25 border-[#38BDF8] text-white shadow-[0_0_10px_rgba(56,189,248,0.25)]'
                           : 'bg-[#090F1E] border-[#1C2B4B] text-white/70 hover:border-[#38BDF8]/40 hover:text-white',
                       ].join(' ')}
                     >
-                      <span className="text-sm leading-none">{w} MIN</span>
-                      <span className={`text-[10px] mt-0.5 ${isSelected ? 'text-[#38BDF8]' : 'text-[#8E9DB8]'}`}>
+                      <span className="text-base leading-none">{w} Min</span>
+                      <span className={`text-xs mt-0.5 ${isSelected ? 'text-[#38BDF8]' : 'text-[#8E9DB8]'}`}>
                         {w === 1 ? '10 cards' : w === 3 ? '20 cards' : `${Math.min(30, selectedDeck.words.length)} cards`}
                       </span>
                     </button>
@@ -338,16 +338,16 @@ export default function HomeScreen() {
 
             {/* Opponent Tier */}
             <div>
-              <span className="font-impact uppercase text-xs tracking-wider text-[#38BDF8] flex items-center gap-1.5 mb-2">
-                <DoodleShield size={14} />
-                OPPONENT TIER
+              <span className="font-barriecito text-sm tracking-wider text-[#38BDF8] flex items-center gap-1.5 mb-2">
+                <DoodleShield size={16} />
+                Opponent Tier
               </span>
               <div className="grid grid-cols-2 gap-2.5">
                 <button
                   type="button"
                   onClick={() => setDeckOpponent('squire')}
                   className={[
-                    'p-2.5 rounded-xl text-left border min-h-[50px] transition-all flex items-center gap-2 active:scale-95',
+                    'p-2.5 rounded-xl text-left border min-h-[52px] transition-all flex items-center gap-2 active:scale-95',
                     deckOpponent === 'squire'
                       ? 'bg-[#005F73]/25 border-[#38BDF8] text-white shadow-[0_0_10px_rgba(56,189,248,0.25)]'
                       : 'bg-[#090F1E] border-[#1C2B4B] text-white/70 hover:border-[#38BDF8]/40',
@@ -355,7 +355,7 @@ export default function HomeScreen() {
                 >
                   <DoodleSquire size={26} />
                   <div>
-                    <span className="block font-impact uppercase text-sm leading-tight text-white">SQUIRE</span>
+                    <span className="block font-barriecito text-base leading-tight text-white">Squire</span>
                     <span className="block font-body text-[10px] text-[#8E9DB8]">Practice</span>
                   </div>
                 </button>
@@ -364,7 +364,7 @@ export default function HomeScreen() {
                   type="button"
                   onClick={() => setDeckOpponent('knight')}
                   className={[
-                    'p-2.5 rounded-xl text-left border min-h-[50px] transition-all flex items-center gap-2 active:scale-95',
+                    'p-2.5 rounded-xl text-left border min-h-[52px] transition-all flex items-center gap-2 active:scale-95',
                     deckOpponent === 'knight'
                       ? 'bg-[#EE9B00]/20 border-[#EE9B00] text-white shadow-[0_0_10px_rgba(238,155,0,0.25)]'
                       : 'bg-[#090F1E] border-[#1C2B4B] text-white/70 hover:border-[#EE9B00]/40',
@@ -372,7 +372,7 @@ export default function HomeScreen() {
                 >
                   <DoodleKnight size={26} />
                   <div>
-                    <span className="block font-impact uppercase text-sm leading-tight text-white">KNIGHT</span>
+                    <span className="block font-barriecito text-base leading-tight text-white">Knight</span>
                     <span className="block font-body text-[10px] text-[#EE9B00]">Ranked Elo</span>
                   </div>
                 </button>
@@ -384,10 +384,10 @@ export default function HomeScreen() {
               <button
                 type="button"
                 onClick={() => handleStartDeckMatch(selectedDeck)}
-                className="w-full py-3.5 px-4 rounded-xl font-impact uppercase text-lg min-h-[52px] flex items-center justify-center gap-2 bg-[#0A9396] text-white border border-[#38BDF8]/60 shadow-[0_4px_16px_rgba(10,147,150,0.4)] transition-all hover:bg-[#005F73] active:scale-[0.98]"
+                className="w-full py-3.5 px-4 rounded-xl font-barriecito text-xl min-h-[52px] flex items-center justify-center gap-2 bg-[#0A9396] text-white border border-[#38BDF8]/60 shadow-[0_4px_16px_rgba(10,147,150,0.4)] transition-all hover:bg-[#005F73] active:scale-[0.98]"
               >
                 <DoodleSword size={22} />
-                <span>START DUEL ({deckWindow} MIN)</span>
+                <span>Start Duel ({deckWindow} Min)</span>
               </button>
             </div>
           </div>
@@ -402,8 +402,8 @@ export default function HomeScreen() {
             <div className="flex items-center justify-between pb-3 border-b border-[#1C2B4B]">
               <div className="flex items-center gap-2.5">
                 <DoodleGear size={26} />
-                <h3 className="font-impact uppercase text-2xl text-white leading-none">
-                  SETTINGS
+                <h3 className="font-barriecito text-2xl text-white leading-none">
+                  Settings
                 </h3>
               </div>
               <button
@@ -420,7 +420,7 @@ export default function HomeScreen() {
               {/* Audio */}
               <div className="flex items-center justify-between p-3.5 rounded-xl bg-[#090F1E] border border-[#1C2B4B]">
                 <div>
-                  <span className="block font-impact uppercase text-sm text-white">SOUND EFFECTS</span>
+                  <span className="block font-barriecito text-base text-white">Sound Effects</span>
                   <span className="block font-body text-xs text-[#8E9DB8]">Audio starts after user tap</span>
                 </div>
                 <button
@@ -443,7 +443,7 @@ export default function HomeScreen() {
               {/* Haptics */}
               <div className="flex items-center justify-between p-3.5 rounded-xl bg-[#090F1E] border border-[#1C2B4B]">
                 <div>
-                  <span className="block font-impact uppercase text-sm text-white">HAPTIC VIBRATION</span>
+                  <span className="block font-barriecito text-base text-white">Haptic Vibration</span>
                   <span className="block font-body text-xs text-[#8E9DB8]">Tactile feedback on mobile</span>
                 </div>
                 <button
@@ -465,17 +465,17 @@ export default function HomeScreen() {
 
               {/* Theme & Elo Stats */}
               <div className="p-3.5 rounded-xl bg-[#090F1E] border border-[#1C2B4B] flex flex-col gap-2">
-                <div className="flex justify-between items-center text-xs">
-                  <span className="font-impact uppercase text-white/70">THEME</span>
-                  <span className="font-impact uppercase text-[#38BDF8]">OCEAN SUNSET MEDIEVAL</span>
+                <div className="flex justify-between items-center text-sm">
+                  <span className="font-barriecito text-white/70">Theme</span>
+                  <span className="font-barriecito text-[#38BDF8]">Ocean Sunset Medieval</span>
                 </div>
-                <div className="flex justify-between items-center text-xs">
-                  <span className="font-impact uppercase text-white/70">PLAYER ELO</span>
-                  <span className="font-impact uppercase text-[#EE9B00]">1000 INITIAL</span>
+                <div className="flex justify-between items-center text-sm">
+                  <span className="font-barriecito text-white/70">Player Elo</span>
+                  <span className="font-barriecito text-[#EE9B00]">1000 Initial</span>
                 </div>
-                <div className="flex justify-between items-center text-xs">
-                  <span className="font-impact uppercase text-white/70">VERSION</span>
-                  <span className="font-impact uppercase text-[#8E9DB8]">BETA 1.0</span>
+                <div className="flex justify-between items-center text-sm">
+                  <span className="font-barriecito text-white/70">Version</span>
+                  <span className="font-barriecito text-[#8E9DB8]">Beta 1.0</span>
                 </div>
               </div>
             </div>
@@ -487,10 +487,10 @@ export default function HomeScreen() {
             <button
               type="button"
               onClick={() => setSettingsOpen(false)}
-              className="w-full py-3 rounded-xl font-impact uppercase text-base min-h-[46px] bg-[#141F38] border border-[#24355A] text-white hover:bg-[#1A284A] active:scale-[0.98] transition-all flex items-center justify-center gap-2"
+              className="w-full py-3 rounded-xl font-barriecito text-lg min-h-[48px] bg-[#141F38] border border-[#24355A] text-white hover:bg-[#1A284A] active:scale-[0.98] transition-all flex items-center justify-center gap-2"
             >
               <DoodleShield size={18} />
-              <span>RETURN TO ARENA</span>
+              <span>Return to Arena</span>
             </button>
           </div>
         </div>

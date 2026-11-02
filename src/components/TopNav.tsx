@@ -25,11 +25,11 @@ export default function TopNav({ activeTab = 'play', onOpenSettings }: TopNavPro
             <DoodleKnight size={32} />
           </div>
           <div>
-            <span className="block font-impact uppercase text-xl leading-none tracking-wider text-white">
-              VOCUKNIGHT
+            <span className="block font-barriecito text-2xl leading-none tracking-wide text-white">
+              Vocuknight
             </span>
-            <span className="block font-impact uppercase text-[10px] tracking-widest text-[#38BDF8]">
-              ARENA
+            <span className="block font-barriecito text-xs tracking-widest text-[#38BDF8]">
+              Arena
             </span>
           </div>
         </button>
@@ -42,7 +42,7 @@ export default function TopNav({ activeTab = 'play', onOpenSettings }: TopNavPro
             onMouseEnter={() => setHoveredTab('play')}
             onMouseLeave={() => setHoveredTab(null)}
             className={[
-              'flex items-center gap-1.5 px-3.5 py-2 rounded-xl font-impact uppercase text-sm tracking-wider border transition-all duration-200 min-h-[44px]',
+              'flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl font-barriecito text-base tracking-wide border transition-all duration-200 min-h-[44px]',
               hoveredTab === 'play' || (activeTab === 'play' && hoveredTab === null)
                 ? 'bg-[#0A9396]/20 border-[#0A9396] text-[#38BDF8] shadow-[0_0_12px_rgba(10,147,150,0.35)]'
                 : 'bg-[#0E1528] border-[#1C2B4B] text-white/90 hover:border-[#0A9396]/60',
@@ -50,7 +50,7 @@ export default function TopNav({ activeTab = 'play', onOpenSettings }: TopNavPro
             aria-label="Play Game Modes"
           >
             <DoodleSwords size={18} />
-            <span>PLAY</span>
+            <span>Play</span>
           </button>
 
           {/* SETTINGS Button: changes to Amber/Terracotta accent on hover/active */}
@@ -59,7 +59,7 @@ export default function TopNav({ activeTab = 'play', onOpenSettings }: TopNavPro
             onMouseEnter={() => setHoveredTab('settings')}
             onMouseLeave={() => setHoveredTab(null)}
             className={[
-              'flex items-center gap-1.5 px-3 py-2 rounded-xl font-impact uppercase text-sm tracking-wider border transition-all duration-200 min-h-[44px]',
+              'flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl font-barriecito text-base tracking-wide border transition-all duration-200 min-h-[44px]',
               hoveredTab === 'settings' || (activeTab === 'settings' && hoveredTab === null)
                 ? 'bg-[#EE9B00]/20 border-[#EE9B00] text-[#EE9B00] shadow-[0_0_12px_rgba(238,155,0,0.35)]'
                 : 'bg-[#0E1528] border-[#1C2B4B] text-white/90 hover:border-[#EE9B00]/60',
@@ -67,7 +67,7 @@ export default function TopNav({ activeTab = 'play', onOpenSettings }: TopNavPro
             aria-label="Open Settings"
           >
             <DoodleGear size={18} />
-            <span>SETTINGS</span>
+            <span>Settings</span>
           </button>
         </nav>
       </div>

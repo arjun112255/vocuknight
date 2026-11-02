@@ -73,14 +73,14 @@ export default function DuelScreen() {
 
   if (!opponentInfo || !engine) {
     return (
-      <div className="min-h-[100dvh] flex flex-col items-center justify-center p-5 safe-area bg-[#060913] text-white">
-        <p className="font-impact text-lg text-[#8E9DB8] mb-4">NO ACTIVE DUEL FOUND</p>
+      <div className="min-h-[100dvh] flex flex-col items-center justify-center p-5 safe-area bg-[#060913] text-white font-barriecito">
+        <p className="text-xl text-[#8E9DB8] mb-4">No Active Duel Found</p>
         <button
           onClick={() => navigate('/')}
-          className="px-5 py-2.5 rounded-xl bg-[#0E1528] border border-[#1E2D4E] font-impact uppercase text-sm text-[#38BDF8] flex items-center gap-2"
+          className="px-5 py-2.5 rounded-xl bg-[#0E1528] border border-[#1E2D4E] text-base text-[#38BDF8] flex items-center gap-2"
         >
           <DoodleCastle size={20} />
-          <span>RETURN TO ARENA</span>
+          <span>Return to Arena</span>
         </button>
       </div>
     );
@@ -90,16 +90,16 @@ export default function DuelScreen() {
   const leadPercent = totalPoints > 0 ? (playerScore / totalPoints) * 100 : 50;
 
   return (
-    <div className="min-h-[100dvh] flex flex-col justify-between safe-area max-w-[480px] mx-auto w-full px-4 py-4 bg-[#060913]">
+    <div className="min-h-[100dvh] flex flex-col justify-between safe-area max-w-[480px] mx-auto w-full px-4 py-4 bg-[#060913] font-barriecito">
       {/* Top Header: Live Battle HUD */}
       <div className="ios-matte-card rounded-[22px] p-3.5 shadow-lg">
         <div className="flex items-center justify-between mb-2">
           {/* Player Score */}
           <div className="flex flex-col">
-            <span className="font-impact uppercase text-[11px] tracking-wider text-[#38BDF8]">
-              YOU
+            <span className="text-sm tracking-wider text-[#38BDF8]">
+              You
             </span>
-            <span className="font-impact text-3xl text-[#38BDF8] tabular-nums leading-none">
+            <span className="text-4xl text-[#38BDF8] tabular-nums leading-none">
               {playerScore}
             </span>
           </div>
@@ -107,17 +107,17 @@ export default function DuelScreen() {
           {/* 60s Timer Pill */}
           <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#090F1E] border border-[#1C2C4E]">
             <DoodleHourglass size={18} />
-            <span className="font-impact text-sm text-white tabular-nums tracking-wide">
-              {secondsLeft}S
+            <span className="text-base text-white tabular-nums tracking-wide">
+              {secondsLeft}s
             </span>
           </div>
 
           {/* Opponent Score */}
           <div className="flex flex-col text-right">
-            <span className="font-impact uppercase text-[11px] tracking-wider text-[#EE9B00] truncate max-w-[90px]">
+            <span className="text-sm tracking-wider text-[#EE9B00] truncate max-w-[90px]">
               {opponentInfo.name}
             </span>
-            <span className="font-impact text-3xl text-[#EE9B00] tabular-nums leading-none">
+            <span className="text-4xl text-[#EE9B00] tabular-nums leading-none">
               {opponentScore}
             </span>
           </div>
@@ -144,18 +144,18 @@ export default function DuelScreen() {
       <div className="my-auto py-4 px-1 text-center w-full">
         {currentQuestion ? (
           <div className="ios-matte-card rounded-[24px] p-6 shadow-xl">
-            <span className="font-impact uppercase text-[11px] tracking-widest px-3 py-1 rounded-full bg-[#005F73]/40 text-[#38BDF8] border border-[#0A9396]/40">
+            <span className="text-xs tracking-widest px-3 py-1 rounded-full bg-[#005F73]/40 text-[#38BDF8] border border-[#0A9396]/40">
               {currentQuestion.type === 'word_to_meaning'
-                ? 'CHOOSE THE CORRECT MEANING'
-                : 'CHOOSE THE MATCHING WORD'}
+                ? 'Choose the Correct Meaning'
+                : 'Choose the Matching Word'}
             </span>
 
-            <h1 className="font-impact uppercase text-2xl sm:text-3xl text-white mt-4 break-words leading-tight text-extrude">
+            <h1 className="text-3xl sm:text-4xl text-white mt-4 break-words leading-tight text-extrude">
               {currentQuestion.prompt}
             </h1>
           </div>
         ) : (
-          <div className="font-impact uppercase text-sm text-[#8E9DB8]">SUMMONING NEXT CARD...</div>
+          <div className="text-base text-[#8E9DB8]">Summoning next card...</div>
         )}
       </div>
 
@@ -179,7 +179,7 @@ export default function DuelScreen() {
               onClick={() => handleSelectOption(idx)}
               disabled={selectedIdx !== null}
               className={[
-                'w-full text-left p-3 rounded-2xl border min-h-[52px]',
+                'w-full text-left p-3 rounded-2xl border min-h-[54px]',
                 'flex items-center gap-3 transition-all active:scale-[0.98]',
                 btnClass,
               ].join(' ')}
@@ -190,16 +190,16 @@ export default function DuelScreen() {
                 <OptionIcon size={20} />
               </div>
 
-              <span className="w-6 h-6 rounded-lg bg-[#141F38] text-[#38BDF8] font-impact text-xs flex items-center justify-center shrink-0">
+              <span className="w-6 h-6 rounded-lg bg-[#141F38] text-[#38BDF8] text-sm flex items-center justify-center shrink-0">
                 {idx + 1}
               </span>
 
-              <span className="font-body text-sm sm:text-base leading-snug font-semibold text-white flex-1">
+              <span className="text-base sm:text-lg leading-snug text-white flex-1">
                 {option}
               </span>
 
               {isSelected && feedback && (
-                <span className="font-impact text-lg shrink-0">
+                <span className="text-xl shrink-0">
                   {isRight ? '✓' : '✗'}
                 </span>
               )}
