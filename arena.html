@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vocuknight — Competitive Vocabulary Arena</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Fraunces:opsz,wght@9..144,600;9..144,700&family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      /* Watercolor Palette (#A57B95, #492926, #7D5C47, #D7C3B5, #B8B077) + Vocabulary App Sage (#85ACA6) */
+      --espresso-bg: #261513;
+      --espresso-card: #492926;
+      --umber-surface: #7D5C47;
+      --mauve-accent: #A57B95;
+      --sand-accent: #D7C3B5;
+      --olive-accent: #B8B077;
+      --vocab-sage: #85ACA6;
+      --vocab-sage-dark: #5E8780;
+      --danger-rose: #C86D6D;
+
+      --border-default: rgba(215, 195, 181, 0.24);
+      --border-strong: #D7C3B5;
+
+      /* Strict Rule: All default text is pure White; changes color on hover */
+      --text-white: #FFFFFF;
+
+      --font-display: 'Barlow Condensed', sans-serif;
+      --font-serif: 'Fraunces', serif;
+      --font-sans: 'Plus Jakarta Sans', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+
+    body {
+      background: radial-gradient(circle at 50% 0%, #492926 0%, #261513 75%);
+      color: var(--text-white);
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      padding-bottom: 80px;
+    }
+
+    /* Global Rule: All text stays white by default and shifts color when hovered */
+    h1, h2, h3, h4, p, span, div, button {
+      color: var(--text-white);
+      transition: color 0.18s ease, border-color 0.18s ease, background-color 0.18s ease, transform 0.18s ease;
+    }
+
+    h1:hover, h2:hover, h3:hover, p:hover, span:hover {
+      color: var(--sand-accent);
+    }
+
+    /* ====================================================
+       1. DESKTOP HORIZONTAL PILL NAVIGATION (Vocabulary Style)
+       ==================================================== */
+    .top-nav-wrapper {
+      position: sticky;
+      top: 18px;
+      z-index: 100;
+      display: flex;
+      justify-content: center;
+      padding: 0 24px;
+      margin-bottom: 28px;
+    }
+
+    .horizontal-nav-dock {
+      background: rgba(73, 41, 38, 0.92);
+      backdrop-filter: blur(12px);
+      border: 1.5px solid var(--border-default);
+      border-radius: 999px;
+      padding: 8px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.38);
+    }
+
+    .brand-pill {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 18px 8px 12px;
+      border-right: 1px solid var(--border-default);
+      margin-right: 4px;
+      cursor: pointer;
+    }
+
+    .brand-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 9px;
+      background: var(--vocab-sage);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-serif);
+      font-weight: 700;
+      font-size: 18px;
+    }
+
+    .brand-name {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .brand-pill:hover .brand-name {
+      color: var(--vocab-sage);
+    }
+
+    .dock-item {
+      background: transparent;
+      border: 1.5px solid transparent;
+      border-radius: 999px;
+      padding: 8px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      cursor: pointer;
+      min-width: 88px;
+    }
+
+    .dock-item svg {
+      width: 19px;
+      height: 19px;
+      stroke: var(--text-white);
+      transition: stroke 0.18s ease;
+    }
+
+    .dock-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .dock-item.active {
+      background: var(--vocab-sage);
+      border-color: var(--sand-accent);
+    }
+
+    .dock-item:hover {
+      background: var(--umber-surface);
+      border-color: var(--sand-accent);
+    }
+
+    .dock-item:hover .dock-label,
+    .dock-item:hover svg {
+      color: var(--olive-accent);
+      stroke: var(--olive-accent);
+    }
+
+    /* ====================================================
+       2. MAIN CONTAINER & SCREENS
+       ==================================================== */
+    .arena-container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .screen {
+      display: none;
+    }
+    .screen.active {
+      display: block;
+      animation: fadeUp 0.2s ease;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ====================================================
+       3. THE "BIG SQUARE" HERO RATING & PLAY HUB
+       ==================================================== */
+    .big-square-hub {
+      background: var(--espresso-card);
+      border: 2px solid var(--border-default);
+      border-radius: 28px;
+      padding: 32px 36px;
+      margin-bottom: 32px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.32);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .big-square-hub:hover {
+      border-color: var(--vocab-sage);
+    }
+
+    .hub-top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .hub-rating-number {
+      font-family: var(--font-serif);
+      font-size: 54px;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .hub-rating-number:hover {
+      color: var(--vocab-sage);
+    }
+
+    .hub-rating-unit {
+      font-size: 16px;
+      font-weight: 600;
+      margin-left: 6px;
+    }
+
+    .hub-outrank-line {
+      font-size: 16px;
+      font-weight: 700;
+      margin-top: 6px;
+    }
+
+    .hub-active-selection-pill {
+      background: var(--umber-surface);
+      border: 1.5px solid var(--sand-accent);
+      padding: 6px 16px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+    }
+
+    /* Vocabulary Bell Curve Visualization */
+    .bell-curve-box {
+      position: relative;
+      height: 150px;
+      margin: 18px 0 10px;
+    }
+
+    .bell-curve-svg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+
+    .curve-axis-labels {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      padding: 4px 4px 0;
+      border-top: 1px solid var(--border-default);
+    }
+
+    /* Study Window Selector Pills inside the Big Square */
+    .hub-study-bar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin: 22px 0 18px;
+      flex-wrap: wrap;
+    }
+
+    .study-chip {
+      background: var(--espresso-bg);
+      border: 1.5px solid var(--border-default);
+      padding: 7px 16px;
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .study-chip.active {
+      background: var(--mauve-accent);
+      border-color: var(--text-white);
+    }
+
+    .study-chip:hover {
+      color: var(--olive-accent);
+      border-color: var(--olive-accent);
+    }
+
+    /* Center Play Buttons Inside the Big Square (Matching Vocabulary Screenshot) */
+    .hub-play-actions {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    .vocab-play-btn {
+      background: var(--vocab-sage);
+      border: 2px solid var(--text-white);
+      border-radius: 999px;
+      padding: 14px 32px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 3px 0 var(--espresso-bg);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .vocab-play-btn.secondary {
+      background: var(--umber-surface);
+    }
+
+    .vocab-play-btn:hover {
+      background: var(--espresso-bg);
+      color: var(--vocab-sage);
+      border-color: var(--vocab-sage);
+      transform: translateY(-2px);
+    }
+
+    .vocab-play-btn:hover span {
+      color: var(--vocab-sage);
+    }
+
+    /* ====================================================
+       4. SQUARE MODE CARDS & SMALLER THEMATIC REALM SQUARES
+       ==================================================== */
+    .section-heading {
+      font-family: var(--font-serif);
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 14px;
+      letter-spacing: -0.2px;
+    }
+
+    /* Primary Duel Modes Row (Sprint Duels / Fastest Fingers / Perfection) */
+    .duel-squares-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    /* Smaller Square Boxes for the 5 Thematic Realms + Shuffle */
+    .realm-squares-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .square-box {
+      background: var(--espresso-card);
+      border: 2px solid var(--border-default);
+      border-radius: 20px;
+      padding: 20px;
+      aspect-ratio: 1 / 0.88;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .square-box.realm-small {
+      aspect-ratio: 1 / 0.78;
+      padding: 18px;
+      background: rgba(125, 92, 71, 0.38);
+    }
+
+    .square-box.selected {
+      border-color: var(--vocab-sage);
+      background: rgba(133, 172, 166, 0.22);
+      box-shadow: 0 0 0 2px var(--vocab-sage);
+    }
+
+    .square-box:hover {
+      border-color: var(--olive-accent);
+      transform: translateY(-3px);
+    }
+
+    /* Hovering a square box changes its text color */
+    .square-box:hover .sq-title {
+      color: var(--vocab-sage);
+    }
+    .square-box:hover .sq-sub {
+      color: var(--sand-accent);
+    }
+    .square-box:hover .sq-badge {
+      color: var(--olive-accent);
+      border-color: var(--olive-accent);
+    }
+
+    .sq-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sq-badge {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 8px;
+      background: var(--espresso-bg);
+      border: 1px solid var(--border-default);
+      text-transform: uppercase;
+    }
+
+    .sq-rating-tag {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 99px;
+      background: var(--mauve-accent);
+    }
+
+    .sq-title {
+      font-family: var(--font-display);
+      font-size: 32px;
+      font-weight: 800;
+      line-height: 0.96;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-top: auto;
+      margin-bottom: 6px;
+    }
+
+    .square-box.realm-small .sq-title {
+      font-size: 25px;
+    }
+
+    .sq-sub {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    /* ====================================================
+       5. STUDY FLASHCARD, BATTLE & POST-MATCH VERDICT
+       ==================================================== */
+    .hud-header {
+      background: var(--espresso-card);
+      border: 1.5px solid var(--border-default);
+      border-radius: 20px;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+
+    .hud-clock {
+      font-family: var(--font-mono);
+      font-size: 28px;
+      font-weight: 700;
+    }
+
+    .flashcard-3d {
+      perspective: 1200px;
+      height: 340px;
+      margin-bottom: 22px;
+      cursor: pointer;
+    }
+
+    .flashcard-inner {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .flashcard-3d.flipped .flashcard-inner {
+      transform: rotateY(180deg);
+    }
+
+    .flashcard-face {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      background: var(--espresso-card);
+      border: 2px solid var(--sand-accent);
+      border-radius: 24px;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      text-align: center;
+    }
+
+    .flashcard-face.back {
+      transform: rotateY(180deg);
+      background: var(--umber-surface);
+      border-color: var(--vocab-sage);
+    }
+
+    .card-headword {
+      font-family: var(--font-serif);
+      font-size: 52px;
+      font-weight: 700;
+    }
+
+    .card-headword:hover {
+      color: var(--vocab-sage);
+    }
+
+    .battle-choices-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .choice-card-btn {
+      background: var(--espresso-card);
+      border: 2px solid var(--border-default);
+      border-radius: 16px;
+      padding: 20px;
+      font-size: 15px;
+      font-weight: 600;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .choice-card-btn:hover:not(:disabled) {
+      border-color: var(--vocab-sage);
+      color: var(--vocab-sage);
+      background: var(--umber-surface);
+    }
+
+    .choice-card-btn.correct {
+      background: var(--vocab-sage-dark);
+      border-color: var(--text-white);
+    }
+
+    .choice-card-btn.wrong {
+      background: var(--danger-rose);
+      border-color: var(--text-white);
+    }
+
+    .review-row {
+      background: var(--espresso-card);
+      border: 1.5px solid var(--border-default);
+      border-radius: 16px;
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    @media (max-width: 820px) {
+      .duel-squares-grid,
+      .realm-squares-grid,
+      .battle-choices-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ====================================================
+       HORIZONTAL DESKTOP NAVIGATION BAR (Vocabulary Style)
+       ==================================================== -->
+  <header class="top-nav-wrapper">
+    <nav class="horizontal-nav-dock">
+      <div class="brand-pill" onclick="switchTab('screen-lobby', 0)">
+        <div class="brand-icon">V</div>
+        <span class="brand-name">VOCUKNIGHT</span>
+      </div>
+
+      <button class="dock-item active" onclick="switchTab('screen-lobby', 0)">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span class="dock-label">Words</span>
+      </button>
+
+      <button class="dock-item" onclick="scrollToRealms()">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+        <span class="dock-label">Topics</span>
+      </button>
+
+      <button class="dock-item" onclick="startStudySession('Knight')">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        <span class="dock-label">Practice</span>
+      </button>
+
+      <button class="dock-item" onclick="switchTab('screen-lexicon', 3)">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/></svg>
+        <span class="dock-label">Lexicon</span>
+      </button>
+    </nav>
+  </header>
+
+  <main class="arena-container">
+
+    <!-- ====================================================
+         SCREEN 1: HOME ARENA (BIG SQUARE + SQUARE CARDS)
+         ==================================================== -->
+    <section id="screen-lobby" class="screen active">
+
+      <!-- THE BIG SQUARE RATING & PLAY HUB (From Green-Circled Vocabulary Screenshot) -->
+      <div class="big-square-hub">
+        <div class="hub-top-bar">
+          <div>
+            <div>
+              <span class="hub-rating-number" id="hub-rating-val">1083</span>
+              <span class="hub-rating-unit">rating</span>
+            </div>
+            <div class="hub-outrank-line" id="hub-percentile-text">
+              You outrank 88% of learners in Sprint Duels
+            </div>
+          </div>
+
+          <div style="text-align: right;">
+            <span class="hub-active-selection-pill" id="hub-selected-label">
+              SPRINT DUELS • ALL REALMS MIXED
+            </span>
+          </div>
+        </div>
+
+        <!-- Vocabulary App Bell Curve Graph (#85ACA6 Sage Green) -->
+        <div class="bell-curve-box">
+          <svg class="bell-curve-svg" viewBox="0 0 600 135" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="vocabSageGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#85ACA6" stop-opacity="0.65" />
+                <stop offset="100%" stop-color="#85ACA6" stop-opacity="0.0" />
+              </linearGradient>
+            </defs>
+            <!-- Shaded Bell Area -->
+            <path d="M 10 125 C 140 125, 210 20, 300 20 C 390 20, 460 125, 590 125 L 590 130 L 10 130 Z" fill="url(#vocabSageGrad)" />
+            <!-- Center Average Dashed Line -->
+            <line x1="300" y1="20" x2="300" y2="128" stroke="rgba(255,255,255,0.35)" stroke-dasharray="4 4" stroke-width="1.5" />
+            <!-- Bell Curve Stroke -->
+            <path d="M 10 125 C 140 125, 210 20, 300 20 C 390 20, 460 125, 590 125" fill="none" stroke="#85ACA6" stroke-width="3.5" />
+            <!-- Dynamic "You" Pin on the Curve -->
+            <line id="curve-you-line" x1="410" y1="58" x2="410" y2="128" stroke="#85ACA6" stroke-width="2" />
+            <circle id="curve-you-dot" cx="410" cy="58" r="8" fill="#492926" stroke="#85ACA6" stroke-width="3.5" />
+            <text id="curve-you-text" x="410" y="42" text-anchor="middle" fill="#FFFFFF" font-size="13" font-weight="700">You</text>
+          </svg>
+          <div class="curve-axis-labels">
+            <span>400</span>
+            <span>Average (1000)</span>
+            <span>1600</span>
+          </div>
+        </div>
+
+        <!-- Study Window Duration Chips -->
+        <div class="hub-study-bar">
+          <button class="study-chip active" onclick="setStudyWindow(this, 60, 10)">1 MIN STUDY • 10 CARDS</button>
+          <button class="study-chip" onclick="setStudyWindow(this, 180, 20)">3 MIN STUDY • 20 CARDS</button>
+          <button class="study-chip" onclick="setStudyWindow(this, 300, 30)">5 MIN STUDY • 30 CARDS</button>
+        </div>
+
+        <!-- Central Play Squire / Play Knight Buttons inside the Big Square -->
+        <div class="hub-play-actions">
+          <button class="vocab-play-btn" onclick="startStudySession('Knight')">
+            <span id="btn-play-knight-text">Play Knight • Sprint Duels (Ranked)</span>
+          </button>
+          <button class="vocab-play-btn secondary" onclick="startStudySession('Squire')">
+            <span id="btn-play-squire-text">Play Squire • Casual Practice</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- CHALLENGES / DUEL MODES (3 Square Boxes) -->
+      <h2 class="section-heading">Challenges</h2>
+      <div class="duel-squares-grid">
+        <div class="square-box selected" id="mode-sprint" onclick="selectMode('Sprint Duels', 1083, 88, 410, 58, 'mode-sprint')">
+          <div class="sq-top">
+            <span class="sq-badge">TIMED STUDY + 60S</span>
+            <span class="sq-rating-tag" id="tag-rating-sprint">1083</span>
+          </div>
+          <div>
+            <div class="sq-title">SPRINT<br>DUELS</div>
+            <div class="sq-sub">STUDY DECK THEN RACE IN 1 MINUTE</div>
+          </div>
+        </div>
+
+        <div class="square-box" id="mode-fastest" onclick="selectMode('Fastest Fingers Duels', 1120, 92, 435, 72, 'mode-fastest')">
+          <div class="sq-top">
+            <span class="sq-badge">RANKED • ELO STAKES</span>
+            <span class="sq-rating-tag" id="tag-rating-fastest">1120</span>
+          </div>
+          <div>
+            <div class="sq-title">FASTEST FINGERS<br>DUELS</div>
+            <div class="sq-sub">BE THE FIRST TO ANSWER EACH CARD</div>
+          </div>
+        </div>
+
+        <div class="square-box" id="mode-perfection" onclick="selectMode('Perfection Duels', 1045, 79, 380, 40, 'mode-perfection')">
+          <div class="sq-top">
+            <span class="sq-badge">SUDDEN DEATH</span>
+            <span class="sq-rating-tag" id="tag-rating-perfection">1045</span>
+          </div>
+          <div>
+            <div class="sq-title">PERFECTION<br>DUELS</div>
+            <div class="sq-sub">ZERO MISTAKES ALLOWED UNDER PRESSURE</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- THEMATIC REALMS (Converted to Smaller Square Boxes just like Sprint Duels) -->
+      <h2 class="section-heading" id="realms-section-title">Thematic Realms // Square Decks</h2>
+      <div class="realm-squares-grid" id="realms-grid-container"></div>
+
+    </section>
+
+    <!-- ====================================================
+         SCREEN 2: FULL LEXICON BROWSER
+         ==================================================== -->
+    <section id="screen-lexicon" class="screen">
+      <div class="hud-header">
+        <div>
+          <h2 class="section-heading" style="margin-bottom: 2px;">All 5 Playable Vocabulary Realms</h2>
+          <p style="font-size: 13px;">Click any word card to inspect its definition and example sentence</p>
+        </div>
+        <button class="vocab-play-btn" onclick="startStudySession('Knight')">
+          <span>Play Selected Deck</span>
+        </button>
+      </div>
+      <div id="lexicon-full-list"></div>
+    </section>
+
+    <!-- ====================================================
+         SCREEN 3: TIMED FLASHCARD STUDY PHASE
+         ==================================================== -->
+    <section id="screen-study" class="screen">
+      <div class="hud-header">
+        <div>
+          <div class="hud-clock" id="study-timer-clock">01:00</div>
+          <div style="font-size: 12px; font-weight: 700;" id="study-sub-status">CARD 1 OF 10 • RIVAL TOVA IS STUDYING...</div>
+        </div>
+        <button class="vocab-play-btn" onclick="launchCountdown()">
+          <span>Ready for Duel →</span>
+        </button>
+      </div>
+
+      <div class="flashcard-3d" id="study-card-el" onclick="flipStudyCard()">
+        <div class="flashcard-inner">
+          <div class="flashcard-face">
+            <div class="sq-top" style="width: 100%;">
+              <span class="sq-badge" id="study-pos-badge">ADJECTIVE</span>
+              <span style="font-size: 12px; font-weight: 700;">CLICK OR PRESS [SPACE] TO FLIP</span>
+            </div>
+            <div>
+              <div class="card-headword" id="study-word-front">ephemeral</div>
+              <div style="font-size: 15px; margin-top: 8px;" id="study-syllables-front">e·phem·er·al</div>
+            </div>
+            <div style="font-size: 12px; font-weight: 700;" id="study-realm-footer">REALM: EVERYDAY ESSENTIALS</div>
+          </div>
+
+          <div class="flashcard-face back">
+            <div class="sq-top" style="width: 100%;">
+              <span class="sq-badge" id="study-word-back-tag">EPHEMERAL</span>
+              <span class="sq-rating-tag">✓ STUDIED</span>
+            </div>
+            <div>
+              <p style="font-size: 22px; font-weight: 700; margin-bottom: 14px;" id="study-def-back">
+                Lasting for a very short time; transitory.
+              </p>
+              <p style="font-size: 15px; font-style: italic;" id="study-example-back">
+                "Viral social trends are often ephemeral compared to enduring businesses."
+              </p>
+            </div>
+            <div style="font-size: 12px; font-weight: 700;">CLICK TO FLIP BACK</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hub-play-actions">
+        <button class="study-chip" onclick="prevStudyCard()">← PREV CARD</button>
+        <button class="study-chip" onclick="flipStudyCard()">FLIP CARD ↻</button>
+        <button class="vocab-play-btn" style="padding: 10px 26px;" onclick="nextStudyCard()">
+          <span>NEXT CARD →</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ====================================================
+         SCREEN 4: 3-2-1 COUNTDOWN
+         ==================================================== -->
+    <section id="screen-countdown" class="screen">
+      <div class="big-square-hub" style="text-align: center; padding: 72px 28px;">
+        <div style="font-size: 13px; font-weight: 700; letter-spacing: 1px;">STUDY COMPLETE • PREPARE FOR BATTLE</div>
+        <div style="font-family: var(--font-display); font-size: 140px; font-weight: 800; line-height: 1; margin: 12px 0;" id="countdown-digit">3</div>
+        <p style="font-size: 15px; font-weight: 600;" id="countdown-subtitle">DUELING TOVA — CARDS BEGIN IMMEDIATELY</p>
+      </div>
+    </section>
+
+    <!-- ====================================================
+         SCREEN 5: LIVE 60S DUEL
+         ==================================================== -->
+    <section id="screen-battle" class="screen">
+      <div class="hud-header">
+        <div>
+          <div style="font-size: 12px; font-weight: 700;">YOU</div>
+          <div class="hud-clock" id="battle-user-score">0</div>
+        </div>
+        <div style="text-align: center;">
+          <div class="hud-clock" id="battle-timer-clock">60s</div>
+          <div style="font-size: 12px; font-weight: 700;" id="battle-round-label">ROUND 1 OF 10</div>
+        </div>
+        <div style="text-align: right;">
+          <div style="font-size: 12px; font-weight: 700;">TOVA</div>
+          <div class="hud-clock" id="battle-rival-score">0</div>
+        </div>
+      </div>
+
+      <div class="big-square-hub" style="text-align: center; padding: 36px 24px; margin-bottom: 18px;">
+        <span class="sq-badge">SELECT THE EXACT DEFINITION</span>
+        <div class="card-headword" style="margin-top: 12px;" id="battle-word-prompt">ephemeral</div>
+        <div style="font-size: 14px; margin-top: 4px;" id="battle-syllables-prompt">e·phem·er·al</div>
+      </div>
+
+      <div class="battle-choices-grid" id="battle-choices-box"></div>
+    </section>
+
+    <!-- ====================================================
+         SCREEN 6: POST-MATCH VICTORY / DEFEAT VERDICT
+         ==================================================== -->
+    <section id="screen-verdict" class="screen">
+      <div class="big-square-hub" style="text-align: center;">
+        <span class="hub-active-selection-pill" id="verdict-elo-badge">+18 RATING • KNIGHT VICTORY</span>
+        <h1 style="font-family: var(--font-display); font-size: 64px; text-transform: uppercase; margin-top: 12px;" id="verdict-headline">
+          YOU WON THE DUEL!
+        </h1>
+        <p style="font-size: 16px; margin-top: 4px;" id="verdict-summary">
+          You defeated Tova and climbed the Arena rating curve.
+        </p>
+
+        <div class="hub-play-actions" style="margin: 28px 0;">
+          <div class="square-box realm-small" style="min-width: 170px; aspect-ratio: auto; text-align: center;">
+            <span class="sq-sub">YOUR SCORE</span>
+            <div class="hub-rating-number" id="verdict-user-pts">100</div>
+          </div>
+          <div class="square-box realm-small" style="min-width: 170px; aspect-ratio: auto; text-align: center;">
+            <span class="sq-sub">TOVA SCORE</span>
+            <div class="hub-rating-number" id="verdict-bot-pts">60</div>
+          </div>
+        </div>
+
+        <div class="hub-play-actions">
+          <button class="vocab-play-btn" onclick="startStudySession(activeStakesTier)">
+            <span>Rematch Same Deck ↻</span>
+          </button>
+          <button class="vocab-play-btn secondary" onclick="switchTab('screen-lobby', 0)">
+            <span>Return to Arena Hub</span>
+          </button>
+        </div>
+      </div>
+
+      <h2 class="section-heading">Match Word Review</h2>
+      <div id="verdict-word-breakdown"></div>
+    </section>
+
+  </main>
+
+  <script>
+    /* ====================================================
+       5 PLAYABLE REALM DECKS (40 WORDS TOTAL)
+       ==================================================== */
+    const REALM_DECKS = {
+      everyday: {
+        name: "Everyday Essentials",
+        code: "A2",
+        rating: 1060,
+        percentile: 84,
+        pinX: 395,
+        pinY: 48,
+        sub: "DAILY LIFE • LEVEL A2",
+        words: [
+          { word: "Ephemeral", syllables: "e·phem·er·al", pos: "ADJECTIVE", def: "Lasting for a very short time.", ex: "Autumn rainbows are ephemeral wonders." },
+          { word: "Candid", syllables: "can·did", pos: "ADJECTIVE", def: "Truthful and straightforward; frank.", ex: "She gave a candid review of the new cafe." },
+          { word: "Lucid", syllables: "lu·cid", pos: "ADJECTIVE", def: "Expressed clearly; easy to understand.", ex: "His instructions were lucid and concise." },
+          { word: "Frugal", syllables: "fru·gal", pos: "ADJECTIVE", def: "Sparing or economical with money or food.", ex: "Cooking at home is a frugal weekday habit." },
+          { word: "Prudent", syllables: "pru·dent", pos: "ADJECTIVE", def: "Acting with care and thought for the future.", ex: "Backing up your files daily is a prudent step." },
+          { word: "Versatile", syllables: "ver·sa·tile", pos: "ADJECTIVE", def: "Able to adapt to many different functions.", ex: "Denim jackets are versatile across seasons." },
+          { word: "Ameliorate", syllables: "a·me·lio·rate", pos: "VERB", def: "To make an unpleasant situation better.", ex: "Indoor plants help ameliorate stuffy rooms." },
+          { word: "Mundane", syllables: "mun·dane", pos: "ADJECTIVE", def: "Lacking excitement; dull and routine.", ex: "Podcasts make mundane commutes fly by." }
+        ]
+      },
+      business: {
+        name: "Work and Business",
+        code: "B1",
+        rating: 1105,
+        percentile: 90,
+        pinX: 425,
+        pinY: 65,
+        sub: "CAREER • LEVEL B1",
+        words: [
+          { word: "Lucrative", syllables: "lu·cra·tive", pos: "ADJECTIVE", def: "Producing a great deal of profit.", ex: "Enterprise software proved highly lucrative." },
+          { word: "Leverage", syllables: "lev·er·age", pos: "VERB", def: "Use something to maximum advantage.", ex: "Creators leverage distribution to launch funds." },
+          { word: "Pragmatic", syllables: "prag·mat·ic", pos: "ADJECTIVE", def: "Dealing with things sensibly and realistically.", ex: "Take a pragmatic approach to shipping v1." },
+          { word: "Negotiate", syllables: "ne·go·ti·ate", pos: "VERB", def: "Obtain or bring about by discussion.", ex: "Always negotiate long-term vendor contracts." },
+          { word: "Solvency", syllables: "sol·ven·cy", pos: "NOUN", def: "Possession of assets in excess of liabilities.", ex: "Strong cash flow protected their solvency." },
+          { word: "Catalyst", syllables: "cat·a·lyst", pos: "NOUN", def: "Something that precipitates an important event.", ex: "Lower rates acted as a catalyst for hiring." },
+          { word: "Autonomous", syllables: "au·ton·o·mous", pos: "ADJECTIVE", def: "Having the freedom to act independently.", ex: "Small autonomous teams move much faster." },
+          { word: "Meticulous", syllables: "me·tic·u·lous", pos: "ADJECTIVE", def: "Showing great attention to detail; precise.", ex: "She kept meticulous records of every pitch." }
+        ]
+      },
+      academic: {
+        name: "Academic Starters",
+        code: "B2",
+        rating: 1140,
+        percentile: 94,
+        pinX: 450,
+        pinY: 82,
+        sub: "STUDY • LEVEL B2",
+        words: [
+          { word: "Empirical", syllables: "em·pir·i·cal", pos: "ADJECTIVE", def: "Based on observation rather than pure theory.", ex: "The lab presented empirical data from trials." },
+          { word: "Ubiquitous", syllables: "u·biq·ui·tous", pos: "ADJECTIVE", def: "Present, appearing, or found everywhere.", ex: "Smartphones are ubiquitous in modern transit." },
+          { word: "Paradigm", syllables: "par·a·digm", pos: "NOUN", def: "A typical example, pattern, or model.", ex: "AI agents created a new software paradigm." },
+          { word: "Corroborate", syllables: "cor·rob·o·rate", pos: "VERB", def: "Confirm or give support to a finding.", ex: "Two witnesses corroborated the timeline." },
+          { word: "Anomaly", syllables: "a·nom·a·ly", pos: "NOUN", def: "Something that deviates from what is normal.", ex: "The sensor spike was a statistical anomaly." },
+          { word: "Ambiguous", syllables: "am·big·u·ous", pos: "ADJECTIVE", def: "Open to more than one interpretation.", ex: "The contract wording was too ambiguous." },
+          { word: "Qualitative", syllables: "qual·i·ta·tive", pos: "ADJECTIVE", def: "Measured by quality rather than quantity.", ex: "User interviews yield qualitative insights." },
+          { word: "Synthesize", syllables: "syn·the·size", pos: "VERB", def: "Combine elements into a coherent whole.", ex: "Good essays synthesize multiple sources." }
+        ]
+      },
+      feelings: {
+        name: "Feelings & Character",
+        code: "B1",
+        rating: 1075,
+        percentile: 86,
+        pinX: 405,
+        pinY: 54,
+        sub: "PERSONALITY • LEVEL B1",
+        words: [
+          { word: "Empathetic", syllables: "em·pa·thet·ic", pos: "ADJECTIVE", def: "Showing an ability to understand others' feelings.", ex: "An empathetic leader listens before judging." },
+          { word: "Stoic", syllables: "sto·ic", pos: "ADJECTIVE", def: "Enduring hardship without showing complaint.", ex: "He remained stoic during the final minutes." },
+          { word: "Benevolent", syllables: "be·nev·o·lent", pos: "ADJECTIVE", def: "Well-meaning, kind, and generous.", ex: "A benevolent donor funded the scholarship." },
+          { word: "Resilient", syllables: "re·sil·ient", pos: "ADJECTIVE", def: "Able to recover quickly from difficulty.", ex: "After the setback, the resilient team rebuilt." },
+          { word: "Capricious", syllables: "ca·pri·cious", pos: "ADJECTIVE", def: "Given to sudden changes of mood or behavior.", ex: "Sailors respect the capricious mountain winds." },
+          { word: "Melancholic", syllables: "mel·an·chol·ic", pos: "ADJECTIVE", def: "Feeling or expressing pensive sadness.", ex: "The cello solo carried a melancholic tone." },
+          { word: "Eccentric", syllables: "ec·cen·tric", pos: "ADJECTIVE", def: "Unconventional and slightly strange.", ex: "The eccentric inventor filled his home with clocks." },
+          { word: "Vivacious", syllables: "vi·va·cious", pos: "ADJECTIVE", def: "Attractively lively and animated.", ex: "Her vivacious energy lit up the podcast studio." }
+        ]
+      },
+      travel: {
+        name: "Travel and Places",
+        code: "A2–B1",
+        rating: 1030,
+        percentile: 76,
+        pinX: 365,
+        pinY: 34,
+        sub: "EXPLORATION • LEVEL A2–B1",
+        words: [
+          { word: "Tranquil", syllables: "tran·quil", pos: "ADJECTIVE", def: "Free from disturbance; calm and serene.", ex: "Dawn broke over the tranquil mountain lake." },
+          { word: "Itinerary", syllables: "i·tin·er·ar·y", pos: "NOUN", def: "A planned route or journey schedule.", ex: "Our rail itinerary covers four coastal towns." },
+          { word: "Sojourn", syllables: "so·journ", pos: "NOUN", def: "A temporary stay during a journey.", ex: "A weeklong sojourn in the hills restored us." },
+          { word: "Cosmopolitan", syllables: "cos·mo·pol·i·tan", pos: "ADJECTIVE", def: "Including people from many different countries.", ex: "Mumbai is a vibrant, cosmopolitan metropolis." },
+          { word: "Encumber", syllables: "en·cum·ber", pos: "VERB", def: "To weigh down or restrict free movement.", ex: "Heavy trunks encumber long walking tours." },
+          { word: "Vantage", syllables: "van·tage", pos: "NOUN", def: "A position affording a wide, commanding view.", ex: "The fort offered a clear vantage of the bay." },
+          { word: "Archipelago", syllables: "ar·chi·pel·a·go", pos: "NOUN", def: "An extensive group or chain of islands.", ex: "Ferries connect the volcanic archipelago." },
+          { word: "Wayfarer", syllables: "way·far·er", pos: "NOUN", def: "A person who travels on foot.", ex: "The inn welcomed every tired wayfarer." }
+        ]
+      }
+    };
+
+    /* State */
+    let activeModeName = "Sprint Duels";
+    let activeRealmKey = "all";
+    let activeStakesTier = "Knight";
+    let studySecondsConfig = 60;
+    let cardsCountConfig = 10;
+
+    let sessionDeck = [];
+    let studyCursor = 0;
+    let studyTimerRef = null;
+
+    let battleCursor = 0;
+    let battleSecondsLeft = 60;
+    let battleTimerRef = null;
+    let userPts = 0;
+    let rivalPts = 0;
+    let sessionHistory = [];
+
+    function getWordsForRealm(key) {
+      if (key === "all") {
+        return Object.values(REALM_DECKS).flatMap(r =>
+          r.words.map(w => ({ ...w, realmName: r.name }))
+        );
+      }
+      return REALM_DECKS[key].words.map(w => ({ ...w, realmName: REALM_DECKS[key].name }));
+    }
+
+    function renderRealmSquares() {
+      const grid = document.getElementById("realms-grid-container");
+      const items = [
+        {
+          key: "all",
+          code: "ALL",
+          name: "ALL REALMS SHUFFLE",
+          sub: "40 CARDS • FULL MIX",
+          rating: 1083,
+          percentile: 88,
+          pinX: 410,
+          pinY: 58
+        },
+        ...Object.entries(REALM_DECKS).map(([k, v]) => ({
+          key: k,
+          code: v.code,
+          name: v.name,
+          sub: `${v.sub} • ${v.words.length} CARDS`,
+          rating: v.rating,
+          percentile: v.percentile,
+          pinX: v.pinX,
+          pinY: v.pinY
+        }))
+      ];
+
+      grid.innerHTML = items.map(item => `
+        <div class="square-box realm-small ${activeRealmKey === item.key ? 'selected' : ''}"
+             onclick="selectRealmSquare('${item.key}', '${item.name}', ${item.rating}, ${item.percentile}, ${item.pinX}, ${item.pinY})">
+          <div class="sq-top">
+            <span class="sq-badge">${item.code}</span>
+            <span class="sq-rating-tag">${item.rating}</span>
+          </div>
+          <div>
+            <div class="sq-title">${item.name}</div>
+            <div class="sq-sub">${item.sub}</div>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function updateBigSquareHub(title, rating, percentile, pinX, pinY) {
+      document.getElementById("hub-rating-val").textContent = rating;
+      document.getElementById("hub-percentile-text").textContent =
+        `You outrank ${percentile}% of learners in ${title}`;
+
+      const realmTitle = activeRealmKey === "all" ? "ALL REALMS MIXED" : REALM_DECKS[activeRealmKey].name.toUpperCase();
+      document.getElementById("hub-selected-label").textContent = `${activeModeName.toUpperCase()} • ${realmTitle}`;
+
+      document.getElementById("curve-you-line").setAttribute("x1", pinX);
+      document.getElementById("curve-you-line").setAttribute("x2", pinX);
+      document.getElementById("curve-you-line").setAttribute("y1", pinY);
+      document.getElementById("curve-you-dot").setAttribute("cx", pinX);
+      document.getElementById("curve-you-dot").setAttribute("cy", pinY);
+      document.getElementById("curve-you-text").setAttribute("x", pinX);
+      document.getElementById("curve-you-text").setAttribute("y", pinY - 14);
+
+      document.getElementById("btn-play-knight-text").textContent =
+        `Play Knight • ${activeModeName} (Ranked)`;
+      document.getElementById("btn-play-squire-text").textContent =
+        `Play Squire • ${activeModeName} (Casual)`;
+    }
+
+    function selectMode(modeName, rating, percentile, pinX, pinY, cardId) {
+      activeModeName = modeName;
+      document.querySelectorAll(".duel-squares-grid .square-box").forEach(el => el.classList.remove("selected"));
+      document.getElementById(cardId).classList.add("selected");
+      updateBigSquareHub(modeName, rating, percentile, pinX, pinY);
+    }
+
+    function selectRealmSquare(key, name, rating, percentile, pinX, pinY) {
+      activeRealmKey = key;
+      renderRealmSquares();
+      updateBigSquareHub(name, rating, percentile, pinX, pinY);
+    }
+
+    function setStudyWindow(btn, seconds, cards) {
+      document.querySelectorAll(".study-chip").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      studySecondsConfig = seconds;
+      cardsCountConfig = cards;
+    }
+
+    function switchTab(screenId, dockIdx) {
+      document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+      document.getElementById(screenId).classList.add("active");
+      document.querySelectorAll(".dock-item").forEach((d, i) => d.classList.toggle("active", i === dockIdx));
+      if (screenId === "screen-lexicon") renderFullLexicon();
+    }
+
+    function scrollToRealms() {
+      switchTab("screen-lobby", 1);
+      document.getElementById("realms-section-title").scrollIntoView({ behavior: "smooth" });
+    }
+
+    function renderFullLexicon() {
+      const allWords = getWordsForRealm("all");
+      document.getElementById("lexicon-full-list").innerHTML = allWords.map(w => `
+        <div class="review-row">
+          <div>
+            <div style="font-family: var(--font-serif); font-size: 22px; font-weight: 700;">
+              ${w.word} <span style="font-size: 13px; font-family: var(--font-sans); opacity: 0.85;">(${w.syllables} • ${w.pos})</span>
+            </div>
+            <div style="font-size: 14px; margin-top: 4px;">${w.def}</div>
+          </div>
+          <span class="sq-badge">${w.realmName}</span>
+        </div>
+      `).join("");
+    }
+
+    /* ====================================================
+       STUDY -> COUNTDOWN -> BATTLE -> VERDICT ENGINE
+       ==================================================== */
+    function startStudySession(stakesTier) {
+      activeStakesTier = stakesTier;
+      const pool = [...getWordsForRealm(activeRealmKey)].sort(() => Math.random() - 0.5);
+      sessionDeck = pool.slice(0, Math.min(cardsCountConfig, pool.length));
+      studyCursor = 0;
+
+      renderStudyFlashcard();
+      switchTab("screen-study", 2);
+
+      clearInterval(studyTimerRef);
+      let sec = studySecondsConfig;
+      formatClock("study-timer-clock", sec);
+      studyTimerRef = setInterval(() => {
+        sec--;
+        formatClock("study-timer-clock", sec);
+        if (sec <= 0) {
+          clearInterval(studyTimerRef);
+          launchCountdown();
+        }
+      }, 1000);
+    }
+
+    function formatClock(id, totalSec) {
+      const m = String(Math.floor(totalSec / 60)).padStart(2, "0");
+      const s = String(totalSec % 60).padStart(2, "0");
+      document.getElementById(id).textContent = `${m}:${s}`;
+    }
+
+    function renderStudyFlashcard() {
+      const item = sessionDeck[studyCursor];
+      document.getElementById("study-card-el").classList.remove("flipped");
+      document.getElementById("study-sub-status").textContent =
+        `CARD ${studyCursor + 1} OF ${sessionDeck.length} • ${activeStakesTier.toUpperCase()} TIER`;
+      document.getElementById("study-pos-badge").textContent = item.pos;
+      document.getElementById("study-word-front").textContent = item.word;
+      document.getElementById("study-syllables-front").textContent = item.syllables;
+      document.getElementById("study-realm-footer").textContent = `REALM: ${item.realmName.toUpperCase()}`;
+
+      document.getElementById("study-word-back-tag").textContent = item.word.toUpperCase();
+      document.getElementById("study-def-back").textContent = item.def;
+      document.getElementById("study-example-back").textContent = `"${item.ex}"`;
+    }
+
+    function flipStudyCard() {
+      document.getElementById("study-card-el").classList.toggle("flipped");
+    }
+
+    function nextStudyCard() {
+      studyCursor = (studyCursor + 1) % sessionDeck.length;
+      renderStudyFlashcard();
+    }
+
+    function prevStudyCard() {
+      studyCursor = (studyCursor - 1 + sessionDeck.length) % sessionDeck.length;
+      renderStudyFlashcard();
+    }
+
+    function launchCountdown() {
+      clearInterval(studyTimerRef);
+      switchTab("screen-countdown", 2);
+      let count = 3;
+      const el = document.getElementById("countdown-digit");
+      el.textContent = count;
+
+      const cd = setInterval(() => {
+        count--;
+        if (count > 0) {
+          el.textContent = count;
+        } else {
+          clearInterval(cd);
+          startLiveBattle();
+        }
+      }, 750);
+    }
+
+    function startLiveBattle() {
+      battleCursor = 0;
+      userPts = 0;
+      rivalPts = 0;
+      battleSecondsLeft = 60;
+      sessionHistory = [];
+
+      document.getElementById("battle-user-score").textContent = "0";
+      document.getElementById("battle-rival-score").textContent = "0";
+      document.getElementById("battle-timer-clock").textContent = "60s";
+
+      switchTab("screen-battle", 2);
+      renderBattleRound();
+
+      clearInterval(battleTimerRef);
+      battleTimerRef = setInterval(() => {
+        battleSecondsLeft--;
+        document.getElementById("battle-timer-clock").textContent = `${battleSecondsLeft}s`;
+        if (battleSecondsLeft <= 0) {
+          concludeDuel();
+        }
+      }, 1000);
+    }
+
+    function renderBattleRound() {
+      if (battleCursor >= sessionDeck.length) {
+        concludeDuel();
+        return;
+      }
+
+      const current = sessionDeck[battleCursor];
+      document.getElementById("battle-round-label").textContent =
+        `ROUND ${battleCursor + 1} OF ${sessionDeck.length}`;
+      document.getElementById("battle-word-prompt").textContent = current.word;
+      document.getElementById("battle-syllables-prompt").textContent =
+        `${current.syllables} • ${current.pos}`;
+
+      const distractors = getWordsForRealm("all")
+        .filter(w => w.word !== current.word)
+        .sort(() => Math.random() - 0.5)
+        .slice(0, 3);
+
+      const choices = [
+        { text: current.def, correct: true },
+        ...distractors.map(d => ({ text: d.def, correct: false }))
+      ].sort(() => Math.random() - 0.5);
+
+      const box = document.getElementById("battle-choices-box");
+      box.innerHTML = "";
+      choices.forEach(c => {
+        const btn = document.createElement("button");
+        btn.className = "choice-card-btn";
+        btn.textContent = c.text;
+        btn.onclick = () => handleBattleChoice(btn, c.correct, current);
+        box.appendChild(btn);
+      });
+    }
+
+    function handleBattleChoice(btn, isCorrect, wordObj) {
+      document.querySelectorAll(".choice-card-btn").forEach(b => {
+        b.disabled = true;
+        if (b.textContent === wordObj.def) b.classList.add("correct");
+      });
+
+      if (isCorrect) {
+        userPts += 20;
+        document.getElementById("battle-user-score").textContent = userPts;
+      } else {
+        btn.classList.add("wrong");
+      }
+
+      const botHitChance = activeStakesTier === "Knight" ? 0.65 : 0.45;
+      if (Math.random() < botHitChance) {
+        rivalPts += 20;
+        document.getElementById("battle-rival-score").textContent = rivalPts;
+      }
+
+      sessionHistory.push({ ...wordObj, correct: isCorrect });
+
+      setTimeout(() => {
+        battleCursor++;
+        renderBattleRound();
+      }, 750);
+    }
+
+    function concludeDuel() {
+      clearInterval(battleTimerRef);
+      const won = userPts > rivalPts;
+      const draw = userPts === rivalPts;
+
+      const currentRating = parseInt(document.getElementById("hub-rating-val").textContent, 10) || 1083;
+      const delta = activeStakesTier === "Knight" ? (won ? 18 : draw ? 0 : -12) : 0;
+      const updatedRating = currentRating + delta;
+      document.getElementById("hub-rating-val").textContent = updatedRating;
+
+      document.getElementById("verdict-elo-badge").textContent =
+        activeStakesTier === "Knight"
+          ? `${delta >= 0 ? "+" + delta : delta} RATING • ${won ? "KNIGHT VICTORY" : draw ? "DRAW" : "DEFEAT"}`
+          : `SQUIRE CASUAL • ${won ? "VICTORY" : draw ? "DRAW" : "COMPLETED"}`;
+
+      document.getElementById("verdict-headline").textContent =
+        won ? "YOU WON THE DUEL!" : draw ? "HONOURABLE DRAW!" : "YOU LOST THIS ROUND";
+
+      document.getElementById("verdict-summary").textContent =
+        won
+          ? `You outscored Tova (${userPts} to ${rivalPts}) in ${activeModeName}.`
+          : `Final tally: You ${userPts} — Tova ${rivalPts}. Review the words below and run it back!`;
+
+      document.getElementById("verdict-user-pts").textContent = userPts;
+      document.getElementById("verdict-bot-pts").textContent = rivalPts;
+
+      document.getElementById("verdict-word-breakdown").innerHTML = sessionHistory.map(w => `
+        <div class="review-row">
+          <div>
+            <div style="font-family: var(--font-serif); font-size: 20px; font-weight: 700;">
+              ${w.word} <span style="font-size: 12px; font-family: var(--font-mono);">(${w.syllables})</span>
+            </div>
+            <div style="font-size: 13px; margin-top: 3px;">${w.def}</div>
+          </div>
+          <span class="sq-badge" style="background: ${w.correct ? 'var(--vocab-sage-dark)' : 'var(--danger-rose)'};">
+            ${w.correct ? "✓ CORRECT" : "✕ MISSED"}
+          </span>
+        </div>
+      `).join("");
+
+      switchTab("screen-verdict", 0);
+    }
+
+    window.addEventListener("keydown", e => {
+      if (document.getElementById("screen-study").classList.contains("active") && e.code === "Space") {
+        e.preventDefault();
+        flipStudyCard();
+      }
+    });
+
+    renderRealmSquares();
+  </script>
+</body>
+</html>
